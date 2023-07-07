@@ -7,13 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		A5D8D37E2A53B0F9002F0E3E /* TAK_SpikeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D8D37D2A53B0F9002F0E3E /* TAK_SpikeApp.swift */; };
+		A5A49D902A5459B5009764C1 /* TAKManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5A49D8F2A5459B5009764C1 /* TAKManager.swift */; };
+		A5A49D952A5572C1009764C1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A5A49D942A5572C1009764C1 /* Assets.xcassets */; };
+		A5D8D37E2A53B0F9002F0E3E /* TAKTrackerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D8D37D2A53B0F9002F0E3E /* TAKTrackerApp.swift */; };
 		A5D8D3802A53B0F9002F0E3E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D8D37F2A53B0F9002F0E3E /* ContentView.swift */; };
-		A5D8D3822A53B0FA002F0E3E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A5D8D3812A53B0FA002F0E3E /* Assets.xcassets */; };
 		A5D8D3852A53B0FA002F0E3E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A5D8D3842A53B0FA002F0E3E /* Preview Assets.xcassets */; };
-		A5D8D38F2A53B0FB002F0E3E /* TAK_SpikeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D8D38E2A53B0FB002F0E3E /* TAK_SpikeTests.swift */; };
-		A5D8D3992A53B0FB002F0E3E /* TAK_SpikeUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D8D3982A53B0FB002F0E3E /* TAK_SpikeUITests.swift */; };
-		A5D8D39B2A53B0FB002F0E3E /* TAK_SpikeUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D8D39A2A53B0FB002F0E3E /* TAK_SpikeUITestsLaunchTests.swift */; };
+		A5D8D38F2A53B0FB002F0E3E /* TAKTrackerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D8D38E2A53B0FB002F0E3E /* TAKTrackerTests.swift */; };
+		A5D8D3992A53B0FB002F0E3E /* TAKTrackerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D8D3982A53B0FB002F0E3E /* TAKTrackerUITests.swift */; };
+		A5D8D39B2A53B0FB002F0E3E /* TAKTrackerUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D8D39A2A53B0FB002F0E3E /* TAKTrackerUITestsLaunchTests.swift */; };
+		A5D8D3A82A53B465002F0E3E /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D8D3A72A53B465002F0E3E /* LocationManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,16 +36,19 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		A5D8D37A2A53B0F9002F0E3E /* TAK Spike.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "TAK Spike.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		A5D8D37D2A53B0F9002F0E3E /* TAK_SpikeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TAK_SpikeApp.swift; sourceTree = "<group>"; };
+		A5A49D8F2A5459B5009764C1 /* TAKManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TAKManager.swift; sourceTree = "<group>"; };
+		A5A49D912A547378009764C1 /* TAKTracker-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TAKTracker-Info.plist"; sourceTree = SOURCE_ROOT; };
+		A5A49D942A5572C1009764C1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = "../../../../Downloads/AppIcons(1)/Assets.xcassets"; sourceTree = "<group>"; };
+		A5D8D37A2A53B0F9002F0E3E /* TAKTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TAKTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A5D8D37D2A53B0F9002F0E3E /* TAKTrackerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TAKTrackerApp.swift; sourceTree = "<group>"; };
 		A5D8D37F2A53B0F9002F0E3E /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		A5D8D3812A53B0FA002F0E3E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A5D8D3842A53B0FA002F0E3E /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		A5D8D38A2A53B0FA002F0E3E /* TAK SpikeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "TAK SpikeTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		A5D8D38E2A53B0FB002F0E3E /* TAK_SpikeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TAK_SpikeTests.swift; sourceTree = "<group>"; };
-		A5D8D3942A53B0FB002F0E3E /* TAK SpikeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "TAK SpikeUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		A5D8D3982A53B0FB002F0E3E /* TAK_SpikeUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TAK_SpikeUITests.swift; sourceTree = "<group>"; };
-		A5D8D39A2A53B0FB002F0E3E /* TAK_SpikeUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TAK_SpikeUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		A5D8D38A2A53B0FA002F0E3E /* TAKTrackerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TAKTrackerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		A5D8D38E2A53B0FB002F0E3E /* TAKTrackerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TAKTrackerTests.swift; sourceTree = "<group>"; };
+		A5D8D3942A53B0FB002F0E3E /* TAKTrackerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TAKTrackerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		A5D8D3982A53B0FB002F0E3E /* TAKTrackerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TAKTrackerUITests.swift; sourceTree = "<group>"; };
+		A5D8D39A2A53B0FB002F0E3E /* TAKTrackerUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TAKTrackerUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		A5D8D3A72A53B465002F0E3E /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,9 +79,9 @@
 		A5D8D3712A53B0F9002F0E3E = {
 			isa = PBXGroup;
 			children = (
-				A5D8D37C2A53B0F9002F0E3E /* TAK Spike */,
-				A5D8D38D2A53B0FB002F0E3E /* TAK SpikeTests */,
-				A5D8D3972A53B0FB002F0E3E /* TAK SpikeUITests */,
+				A5D8D37C2A53B0F9002F0E3E /* TAKTracker */,
+				A5D8D38D2A53B0FB002F0E3E /* TAKTrackerTests */,
+				A5D8D3972A53B0FB002F0E3E /* TAKTrackerUITests */,
 				A5D8D37B2A53B0F9002F0E3E /* Products */,
 			);
 			sourceTree = "<group>";
@@ -84,22 +89,25 @@
 		A5D8D37B2A53B0F9002F0E3E /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				A5D8D37A2A53B0F9002F0E3E /* TAK Spike.app */,
-				A5D8D38A2A53B0FA002F0E3E /* TAK SpikeTests.xctest */,
-				A5D8D3942A53B0FB002F0E3E /* TAK SpikeUITests.xctest */,
+				A5D8D37A2A53B0F9002F0E3E /* TAKTracker.app */,
+				A5D8D38A2A53B0FA002F0E3E /* TAKTrackerTests.xctest */,
+				A5D8D3942A53B0FB002F0E3E /* TAKTrackerUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		A5D8D37C2A53B0F9002F0E3E /* TAK Spike */ = {
+		A5D8D37C2A53B0F9002F0E3E /* TAKTracker */ = {
 			isa = PBXGroup;
 			children = (
-				A5D8D37D2A53B0F9002F0E3E /* TAK_SpikeApp.swift */,
+				A5A49D942A5572C1009764C1 /* Assets.xcassets */,
+				A5A49D912A547378009764C1 /* TAKTracker-Info.plist */,
+				A5D8D37D2A53B0F9002F0E3E /* TAKTrackerApp.swift */,
 				A5D8D37F2A53B0F9002F0E3E /* ContentView.swift */,
-				A5D8D3812A53B0FA002F0E3E /* Assets.xcassets */,
+				A5A49D8F2A5459B5009764C1 /* TAKManager.swift */,
+				A5D8D3A72A53B465002F0E3E /* LocationManager.swift */,
 				A5D8D3832A53B0FA002F0E3E /* Preview Content */,
 			);
-			path = "TAK Spike";
+			path = TAKTracker;
 			sourceTree = "<group>";
 		};
 		A5D8D3832A53B0FA002F0E3E /* Preview Content */ = {
@@ -110,29 +118,29 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
-		A5D8D38D2A53B0FB002F0E3E /* TAK SpikeTests */ = {
+		A5D8D38D2A53B0FB002F0E3E /* TAKTrackerTests */ = {
 			isa = PBXGroup;
 			children = (
-				A5D8D38E2A53B0FB002F0E3E /* TAK_SpikeTests.swift */,
+				A5D8D38E2A53B0FB002F0E3E /* TAKTrackerTests.swift */,
 			);
-			path = "TAK SpikeTests";
+			path = TAKTrackerTests;
 			sourceTree = "<group>";
 		};
-		A5D8D3972A53B0FB002F0E3E /* TAK SpikeUITests */ = {
+		A5D8D3972A53B0FB002F0E3E /* TAKTrackerUITests */ = {
 			isa = PBXGroup;
 			children = (
-				A5D8D3982A53B0FB002F0E3E /* TAK_SpikeUITests.swift */,
-				A5D8D39A2A53B0FB002F0E3E /* TAK_SpikeUITestsLaunchTests.swift */,
+				A5D8D3982A53B0FB002F0E3E /* TAKTrackerUITests.swift */,
+				A5D8D39A2A53B0FB002F0E3E /* TAKTrackerUITestsLaunchTests.swift */,
 			);
-			path = "TAK SpikeUITests";
+			path = TAKTrackerUITests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		A5D8D3792A53B0F9002F0E3E /* TAK Spike */ = {
+		A5D8D3792A53B0F9002F0E3E /* TAKTracker */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A5D8D39E2A53B0FB002F0E3E /* Build configuration list for PBXNativeTarget "TAK Spike" */;
+			buildConfigurationList = A5D8D39E2A53B0FB002F0E3E /* Build configuration list for PBXNativeTarget "TAKTracker" */;
 			buildPhases = (
 				A5D8D3762A53B0F9002F0E3E /* Sources */,
 				A5D8D3772A53B0F9002F0E3E /* Frameworks */,
@@ -142,14 +150,14 @@
 			);
 			dependencies = (
 			);
-			name = "TAK Spike";
+			name = TAKTracker;
 			productName = "TAK Spike";
-			productReference = A5D8D37A2A53B0F9002F0E3E /* TAK Spike.app */;
+			productReference = A5D8D37A2A53B0F9002F0E3E /* TAKTracker.app */;
 			productType = "com.apple.product-type.application";
 		};
-		A5D8D3892A53B0FA002F0E3E /* TAK SpikeTests */ = {
+		A5D8D3892A53B0FA002F0E3E /* TAKTrackerTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A5D8D3A12A53B0FB002F0E3E /* Build configuration list for PBXNativeTarget "TAK SpikeTests" */;
+			buildConfigurationList = A5D8D3A12A53B0FB002F0E3E /* Build configuration list for PBXNativeTarget "TAKTrackerTests" */;
 			buildPhases = (
 				A5D8D3862A53B0FA002F0E3E /* Sources */,
 				A5D8D3872A53B0FA002F0E3E /* Frameworks */,
@@ -160,14 +168,14 @@
 			dependencies = (
 				A5D8D38C2A53B0FA002F0E3E /* PBXTargetDependency */,
 			);
-			name = "TAK SpikeTests";
+			name = TAKTrackerTests;
 			productName = "TAK SpikeTests";
-			productReference = A5D8D38A2A53B0FA002F0E3E /* TAK SpikeTests.xctest */;
+			productReference = A5D8D38A2A53B0FA002F0E3E /* TAKTrackerTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		A5D8D3932A53B0FB002F0E3E /* TAK SpikeUITests */ = {
+		A5D8D3932A53B0FB002F0E3E /* TAKTrackerUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A5D8D3A42A53B0FB002F0E3E /* Build configuration list for PBXNativeTarget "TAK SpikeUITests" */;
+			buildConfigurationList = A5D8D3A42A53B0FB002F0E3E /* Build configuration list for PBXNativeTarget "TAKTrackerUITests" */;
 			buildPhases = (
 				A5D8D3902A53B0FB002F0E3E /* Sources */,
 				A5D8D3912A53B0FB002F0E3E /* Frameworks */,
@@ -178,9 +186,9 @@
 			dependencies = (
 				A5D8D3962A53B0FB002F0E3E /* PBXTargetDependency */,
 			);
-			name = "TAK SpikeUITests";
+			name = TAKTrackerUITests;
 			productName = "TAK SpikeUITests";
-			productReference = A5D8D3942A53B0FB002F0E3E /* TAK SpikeUITests.xctest */;
+			productReference = A5D8D3942A53B0FB002F0E3E /* TAKTrackerUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -206,7 +214,7 @@
 					};
 				};
 			};
-			buildConfigurationList = A5D8D3752A53B0F9002F0E3E /* Build configuration list for PBXProject "TAK Spike" */;
+			buildConfigurationList = A5D8D3752A53B0F9002F0E3E /* Build configuration list for PBXProject "TAKTracker" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -219,9 +227,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				A5D8D3792A53B0F9002F0E3E /* TAK Spike */,
-				A5D8D3892A53B0FA002F0E3E /* TAK SpikeTests */,
-				A5D8D3932A53B0FB002F0E3E /* TAK SpikeUITests */,
+				A5D8D3792A53B0F9002F0E3E /* TAKTracker */,
+				A5D8D3892A53B0FA002F0E3E /* TAKTrackerTests */,
+				A5D8D3932A53B0FB002F0E3E /* TAKTrackerUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -232,7 +240,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A5D8D3852A53B0FA002F0E3E /* Preview Assets.xcassets in Resources */,
-				A5D8D3822A53B0FA002F0E3E /* Assets.xcassets in Resources */,
+				A5A49D952A5572C1009764C1 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -258,7 +266,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				A5D8D3802A53B0F9002F0E3E /* ContentView.swift in Sources */,
-				A5D8D37E2A53B0F9002F0E3E /* TAK_SpikeApp.swift in Sources */,
+				A5D8D37E2A53B0F9002F0E3E /* TAKTrackerApp.swift in Sources */,
+				A5A49D902A5459B5009764C1 /* TAKManager.swift in Sources */,
+				A5D8D3A82A53B465002F0E3E /* LocationManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -266,7 +276,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A5D8D38F2A53B0FB002F0E3E /* TAK_SpikeTests.swift in Sources */,
+				A5D8D38F2A53B0FB002F0E3E /* TAKTrackerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -274,8 +284,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A5D8D39B2A53B0FB002F0E3E /* TAK_SpikeUITestsLaunchTests.swift in Sources */,
-				A5D8D3992A53B0FB002F0E3E /* TAK_SpikeUITests.swift in Sources */,
+				A5D8D39B2A53B0FB002F0E3E /* TAKTrackerUITestsLaunchTests.swift in Sources */,
+				A5D8D3992A53B0FB002F0E3E /* TAKTrackerUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -284,12 +294,12 @@
 /* Begin PBXTargetDependency section */
 		A5D8D38C2A53B0FA002F0E3E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = A5D8D3792A53B0F9002F0E3E /* TAK Spike */;
+			target = A5D8D3792A53B0F9002F0E3E /* TAKTracker */;
 			targetProxy = A5D8D38B2A53B0FA002F0E3E /* PBXContainerItemProxy */;
 		};
 		A5D8D3962A53B0FB002F0E3E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = A5D8D3792A53B0F9002F0E3E /* TAK Spike */;
+			target = A5D8D3792A53B0F9002F0E3E /* TAKTracker */;
 			targetProxy = A5D8D3952A53B0FB002F0E3E /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -414,23 +424,30 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"TAK Spike/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "TAKTracker/Preview\\ Content";
 				DEVELOPMENT_TEAM = 5LZ5HR44P3;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "TAKTracker-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "TAK Tracker";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.navigation";
+				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "Allow TAK Tracker to access the local network to broadcast CoT?";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Allow TAK Tracker to use your location?";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.flighttactics.TAK-Spike";
+				PRODUCT_BUNDLE_IDENTIFIER = com.flighttactics.TAKTracker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -443,23 +460,30 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"TAK Spike/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "TAKTracker/Preview\\ Content";
 				DEVELOPMENT_TEAM = 5LZ5HR44P3;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "TAKTracker-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "TAK Tracker";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.navigation";
+				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "Allow TAK Tracker to access the local network to broadcast CoT?";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Allow TAK Tracker to use your location?";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.flighttactics.TAK-Spike";
+				PRODUCT_BUNDLE_IDENTIFIER = com.flighttactics.TAKTracker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -483,7 +507,7 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TAK Spike.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/TAK Spike";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TAKTracker.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/TAKTracker";
 			};
 			name = Debug;
 		};
@@ -503,7 +527,7 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TAK Spike.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/TAK Spike";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TAKTracker.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/TAKTracker";
 			};
 			name = Release;
 		};
@@ -546,7 +570,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		A5D8D3752A53B0F9002F0E3E /* Build configuration list for PBXProject "TAK Spike" */ = {
+		A5D8D3752A53B0F9002F0E3E /* Build configuration list for PBXProject "TAKTracker" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A5D8D39C2A53B0FB002F0E3E /* Debug */,
@@ -555,7 +579,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A5D8D39E2A53B0FB002F0E3E /* Build configuration list for PBXNativeTarget "TAK Spike" */ = {
+		A5D8D39E2A53B0FB002F0E3E /* Build configuration list for PBXNativeTarget "TAKTracker" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A5D8D39F2A53B0FB002F0E3E /* Debug */,
@@ -564,7 +588,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A5D8D3A12A53B0FB002F0E3E /* Build configuration list for PBXNativeTarget "TAK SpikeTests" */ = {
+		A5D8D3A12A53B0FB002F0E3E /* Build configuration list for PBXNativeTarget "TAKTrackerTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A5D8D3A22A53B0FB002F0E3E /* Debug */,
@@ -573,7 +597,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A5D8D3A42A53B0FB002F0E3E /* Build configuration list for PBXNativeTarget "TAK SpikeUITests" */ = {
+		A5D8D3A42A53B0FB002F0E3E /* Build configuration list for PBXNativeTarget "TAKTrackerUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A5D8D3A52A53B0FB002F0E3E /* Debug */,

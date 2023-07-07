@@ -8,7 +8,7 @@
 import SwiftUI
 
 @main
-struct TAK_SpikeApp: App {
+struct TAKTrackerApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()

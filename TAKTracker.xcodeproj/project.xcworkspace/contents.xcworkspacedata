@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:">
+      location = "self:/Users/foyc/Workspace/flight-tactics/TAK Spike/TAKTracker.xcodeproj">
    </FileRef>
 </Workspace>

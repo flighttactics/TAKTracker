@@ -7,7 +7,7 @@
 
 import XCTest
 
-final class TAK_SpikeUITestsLaunchTests: XCTestCase {
+final class TAKTrackerUITestsLaunchTests: XCTestCase {
 
     override class var runsForEachTargetApplicationUIConfiguration: Bool {
         true
