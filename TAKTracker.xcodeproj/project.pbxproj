@@ -36,6 +36,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A58B372C2A57B0390002B984 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		A58B372D2A57B38A0002B984 /* LICENSE.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = LICENSE.md; sourceTree = "<group>"; };
 		A5A49D8F2A5459B5009764C1 /* TAKManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TAKManager.swift; sourceTree = "<group>"; };
 		A5A49D912A547378009764C1 /* TAKTracker-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TAKTracker-Info.plist"; sourceTree = SOURCE_ROOT; };
 		A5A49D942A5572C1009764C1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = "../../../../Downloads/AppIcons(1)/Assets.xcassets"; sourceTree = "<group>"; };
@@ -79,6 +81,8 @@
 		A5D8D3712A53B0F9002F0E3E = {
 			isa = PBXGroup;
 			children = (
+				A58B372C2A57B0390002B984 /* README.md */,
+				A58B372D2A57B38A0002B984 /* LICENSE.md */,
 				A5D8D37C2A53B0F9002F0E3E /* TAKTracker */,
 				A5D8D38D2A53B0FB002F0E3E /* TAKTrackerTests */,
 				A5D8D3972A53B0FB002F0E3E /* TAKTrackerUITests */,
