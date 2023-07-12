@@ -9,6 +9,9 @@ import SwiftUI
 import MapKit
 
 struct ContentView: View {
+    
+    let broadcastRepeatTime = 5.0
+    
     @StateObject var manager = LocationManager()
     var takManager = TAKManager()
     
@@ -30,6 +33,17 @@ struct ContentView: View {
             )
         }
         .padding()
+        .onAppear {
+            NSLog("Appeared")
+            Timer.scheduledTimer(withTimeInterval: broadcastRepeatTime, repeats: true) { timer in
+                broadcastLocation()
+           }
+        }
+    }
+    
+    func broadcastLocation() {
+        NSLog("timer fired!")
+        takManager.broadcastLocation(location: $manager.region.wrappedValue.center, userId: "TayTay")
     }
 }
 

@@ -11,7 +11,7 @@ import SwiftUI
 struct TAKTrackerApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ContentView(manager: LocationManager())
         }
     }
 }

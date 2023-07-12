@@ -7,8 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8261AEB565B83AFA6DBDCD5A /* Pods_TAKTracker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1655978DE7071F3A6C4459D6 /* Pods_TAKTracker.framework */; };
+		A519D7302A5D8EBD00E78D3D /* WebSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = A519D72F2A5D8EBD00E78D3D /* WebSocket.swift */; };
+		A519D7342A5DB3F700E78D3D /* foyc.p12 in Resources */ = {isa = PBXBuildFile; fileRef = A519D7322A5DB3F600E78D3D /* foyc.p12 */; };
+		A519D7352A5DB3F700E78D3D /* truststore-root.p12 in Resources */ = {isa = PBXBuildFile; fileRef = A519D7332A5DB3F700E78D3D /* truststore-root.p12 */; };
+		A519D7372A5DB42600E78D3D /* PKCS12.swift in Sources */ = {isa = PBXBuildFile; fileRef = A519D7362A5DB42600E78D3D /* PKCS12.swift */; };
+		A519D7392A5DD6D300E78D3D /* takserver.p12 in Resources */ = {isa = PBXBuildFile; fileRef = A519D7382A5DD6D300E78D3D /* takserver.p12 */; };
+		A599D66B2A5E3A7600B507D9 /* TAKManagerV2.swift in Sources */ = {isa = PBXBuildFile; fileRef = A599D66A2A5E3A7600B507D9 /* TAKManagerV2.swift */; };
 		A5A49D902A5459B5009764C1 /* TAKManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5A49D8F2A5459B5009764C1 /* TAKManager.swift */; };
 		A5A49D952A5572C1009764C1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A5A49D942A5572C1009764C1 /* Assets.xcassets */; };
+		A5BF02002A5EB7440043065B /* UDPMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5BF01FF2A5EB63F0043065B /* UDPMessage.swift */; };
+		A5BF02022A5EBCA40043065B /* TCPMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5BF02012A5EBCA40043065B /* TCPMessage.swift */; };
+		A5BF02042A5EBCC10043065B /* COTMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5BF02032A5EBCC10043065B /* COTMessage.swift */; };
 		A5D8D37E2A53B0F9002F0E3E /* TAKTrackerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D8D37D2A53B0F9002F0E3E /* TAKTrackerApp.swift */; };
 		A5D8D3802A53B0F9002F0E3E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D8D37F2A53B0F9002F0E3E /* ContentView.swift */; };
 		A5D8D3852A53B0FA002F0E3E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A5D8D3842A53B0FA002F0E3E /* Preview Assets.xcassets */; };
@@ -36,11 +46,22 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1655978DE7071F3A6C4459D6 /* Pods_TAKTracker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TAKTracker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A519D72F2A5D8EBD00E78D3D /* WebSocket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebSocket.swift; sourceTree = "<group>"; };
+		A519D7322A5DB3F600E78D3D /* foyc.p12 */ = {isa = PBXFileReference; lastKnownFileType = file; name = foyc.p12; path = ../../../takcerts/iTAK/foyc.p12; sourceTree = "<group>"; };
+		A519D7332A5DB3F700E78D3D /* truststore-root.p12 */ = {isa = PBXFileReference; lastKnownFileType = file; name = "truststore-root.p12"; path = "../../../takcerts/iTAK/truststore-root.p12"; sourceTree = "<group>"; };
+		A519D7362A5DB42600E78D3D /* PKCS12.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PKCS12.swift; sourceTree = "<group>"; };
+		A519D7382A5DD6D300E78D3D /* takserver.p12 */ = {isa = PBXFileReference; lastKnownFileType = file; name = takserver.p12; path = ../../../takcerts/files/takserver.p12; sourceTree = "<group>"; };
 		A58B372C2A57B0390002B984 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		A58B372D2A57B38A0002B984 /* LICENSE.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = LICENSE.md; sourceTree = "<group>"; };
+		A599D66A2A5E3A7600B507D9 /* TAKManagerV2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TAKManagerV2.swift; sourceTree = "<group>"; };
+		A599D66C2A5E45CD00B507D9 /* TAKTracker.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TAKTracker.entitlements; sourceTree = "<group>"; };
 		A5A49D8F2A5459B5009764C1 /* TAKManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TAKManager.swift; sourceTree = "<group>"; };
 		A5A49D912A547378009764C1 /* TAKTracker-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TAKTracker-Info.plist"; sourceTree = SOURCE_ROOT; };
 		A5A49D942A5572C1009764C1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = "../../../../Downloads/AppIcons(1)/Assets.xcassets"; sourceTree = "<group>"; };
+		A5BF01FF2A5EB63F0043065B /* UDPMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UDPMessage.swift; sourceTree = "<group>"; };
+		A5BF02012A5EBCA40043065B /* TCPMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TCPMessage.swift; sourceTree = "<group>"; };
+		A5BF02032A5EBCC10043065B /* COTMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = COTMessage.swift; sourceTree = "<group>"; };
 		A5D8D37A2A53B0F9002F0E3E /* TAKTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TAKTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A5D8D37D2A53B0F9002F0E3E /* TAKTrackerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TAKTrackerApp.swift; sourceTree = "<group>"; };
 		A5D8D37F2A53B0F9002F0E3E /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -58,6 +79,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8261AEB565B83AFA6DBDCD5A /* Pods_TAKTracker.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,6 +100,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0BDEAF4B3C40C861B829E84C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1655978DE7071F3A6C4459D6 /* Pods_TAKTracker.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A519D7312A5DB3C500E78D3D /* Certs */ = {
+			isa = PBXGroup;
+			children = (
+				A519D7322A5DB3F600E78D3D /* foyc.p12 */,
+				A519D7382A5DD6D300E78D3D /* takserver.p12 */,
+				A519D7332A5DB3F700E78D3D /* truststore-root.p12 */,
+			);
+			path = Certs;
+			sourceTree = "<group>";
+		};
 		A5D8D3712A53B0F9002F0E3E = {
 			isa = PBXGroup;
 			children = (
@@ -87,6 +127,7 @@
 				A5D8D38D2A53B0FB002F0E3E /* TAKTrackerTests */,
 				A5D8D3972A53B0FB002F0E3E /* TAKTrackerUITests */,
 				A5D8D37B2A53B0F9002F0E3E /* Products */,
+				0BDEAF4B3C40C861B829E84C /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -103,13 +144,21 @@
 		A5D8D37C2A53B0F9002F0E3E /* TAKTracker */ = {
 			isa = PBXGroup;
 			children = (
+				A5BF01FF2A5EB63F0043065B /* UDPMessage.swift */,
+				A599D66C2A5E45CD00B507D9 /* TAKTracker.entitlements */,
+				A519D7312A5DB3C500E78D3D /* Certs */,
 				A5A49D942A5572C1009764C1 /* Assets.xcassets */,
 				A5A49D912A547378009764C1 /* TAKTracker-Info.plist */,
 				A5D8D37D2A53B0F9002F0E3E /* TAKTrackerApp.swift */,
 				A5D8D37F2A53B0F9002F0E3E /* ContentView.swift */,
 				A5A49D8F2A5459B5009764C1 /* TAKManager.swift */,
+				A5BF02032A5EBCC10043065B /* COTMessage.swift */,
+				A5BF02012A5EBCA40043065B /* TCPMessage.swift */,
+				A599D66A2A5E3A7600B507D9 /* TAKManagerV2.swift */,
+				A519D72F2A5D8EBD00E78D3D /* WebSocket.swift */,
 				A5D8D3A72A53B465002F0E3E /* LocationManager.swift */,
 				A5D8D3832A53B0FA002F0E3E /* Preview Content */,
+				A519D7362A5DB42600E78D3D /* PKCS12.swift */,
 			);
 			path = TAKTracker;
 			sourceTree = "<group>";
@@ -146,6 +195,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = A5D8D39E2A53B0FB002F0E3E /* Build configuration list for PBXNativeTarget "TAKTracker" */;
 			buildPhases = (
+				A8CED442FEA209C785B8F386 /* [CP] Check Pods Manifest.lock */,
 				A5D8D3762A53B0F9002F0E3E /* Sources */,
 				A5D8D3772A53B0F9002F0E3E /* Frameworks */,
 				A5D8D3782A53B0F9002F0E3E /* Resources */,
@@ -243,8 +293,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A519D7352A5DB3F700E78D3D /* truststore-root.p12 in Resources */,
+				A519D7342A5DB3F700E78D3D /* foyc.p12 in Resources */,
 				A5D8D3852A53B0FA002F0E3E /* Preview Assets.xcassets in Resources */,
 				A5A49D952A5572C1009764C1 /* Assets.xcassets in Resources */,
+				A519D7392A5DD6D300E78D3D /* takserver.p12 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -264,15 +317,46 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		A8CED442FEA209C785B8F386 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-TAKTracker-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		A5D8D3762A53B0F9002F0E3E /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A5BF02042A5EBCC10043065B /* COTMessage.swift in Sources */,
 				A5D8D3802A53B0F9002F0E3E /* ContentView.swift in Sources */,
+				A5BF02002A5EB7440043065B /* UDPMessage.swift in Sources */,
+				A519D7372A5DB42600E78D3D /* PKCS12.swift in Sources */,
 				A5D8D37E2A53B0F9002F0E3E /* TAKTrackerApp.swift in Sources */,
 				A5A49D902A5459B5009764C1 /* TAKManager.swift in Sources */,
 				A5D8D3A82A53B465002F0E3E /* LocationManager.swift in Sources */,
+				A5BF02022A5EBCA40043065B /* TCPMessage.swift in Sources */,
+				A519D7302A5D8EBD00E78D3D /* WebSocket.swift in Sources */,
+				A599D66B2A5E3A7600B507D9 /* TAKManagerV2.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -428,7 +512,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = "";
+				CODE_SIGN_ENTITLEMENTS = TAKTracker/TAKTracker.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "TAKTracker/Preview\\ Content";
@@ -464,7 +548,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = "";
+				CODE_SIGN_ENTITLEMENTS = TAKTracker/TAKTracker.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "TAKTracker/Preview\\ Content";
