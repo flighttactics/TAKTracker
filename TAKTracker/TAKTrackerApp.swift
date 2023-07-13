@@ -9,9 +9,12 @@ import SwiftUI
 
 @main
 struct TAKTrackerApp: App {
+    @StateObject var settingsStore = SettingsStore()
+
     var body: some Scene {
         WindowGroup {
             ContentView(manager: LocationManager())
+                .environmentObject(settingsStore)
         }
     }
 }

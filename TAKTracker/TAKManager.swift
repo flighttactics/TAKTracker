@@ -86,10 +86,10 @@ class TAKManager: NSObject, URLSessionDelegate {
             })))
     }
     
-    func broadcastLocation(location: CLLocationCoordinate2D, userId: String) {
+    func broadcastLocation(location: CLLocationCoordinate2D) {
         //speed, course, altitude, coordinate.latitude, coordinate.longitude
         
-        let message = cotMessage.generateCOTXml(location: location, userId: userId)
+        let message = cotMessage.generateCOTXml(location: location)
 
         NSLog("Getting Ready to send to ALL THE THINGS")
         NSLog(message)
