@@ -13,7 +13,7 @@ struct TAKTrackerApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView(manager: LocationManager())
+            MainScreen(manager: LocationManager())
                 .environmentObject(settingsStore)
         }
     }

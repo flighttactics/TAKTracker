@@ -25,12 +25,6 @@ class SettingsStore: ObservableObject {
         }
     }
     
-    @Published var userID: String {
-        didSet {
-            UserDefaults.standard.set(userID, forKey: "userID")
-        }
-    }
-    
     @Published var cotType: String {
         didSet {
             UserDefaults.standard.set(cotType, forKey: "cotType")
@@ -84,11 +78,9 @@ class SettingsStore: ObservableObject {
         let defaultSign = "TRACKER-\(Int.random(in: 1..<40))"
         self.callSign = (UserDefaults.standard.object(forKey: "callSign") == nil ? defaultSign : UserDefaults.standard.object(forKey: "callSign") as! String)
         
-        self.userID = (UserDefaults.standard.object(forKey: "userID") == nil ? defaultSign : UserDefaults.standard.object(forKey: "userID") as! String)
+        self.cotType = (UserDefaults.standard.object(forKey: "cotType") == nil ? "a-f-G-U-C" : UserDefaults.standard.object(forKey: "cotType") as! String)
         
-        self.cotType = (UserDefaults.standard.object(forKey: "cotType") == nil ? "" : UserDefaults.standard.object(forKey: "cotType") as! String)
-        
-        self.cotHow = (UserDefaults.standard.object(forKey: "cotHow") == nil ? "" : UserDefaults.standard.object(forKey: "cotHow") as! String)
+        self.cotHow = (UserDefaults.standard.object(forKey: "cotHow") == nil ? "m-g" : UserDefaults.standard.object(forKey: "cotHow") as! String)
         
         self.takServerIP = (UserDefaults.standard.object(forKey: "takServerIP") == nil ? "" : UserDefaults.standard.object(forKey: "takServerIP") as! String)
         

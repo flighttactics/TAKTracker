@@ -8,13 +8,16 @@
 import Foundation
 import Network
 
-class UDPMessage: NSObject {
+class UDPMessage: NSObject, ObservableObject {
     var connection: NWConnection?
     
     var host: NWEndpoint.Host = "239.2.3.1"
     var port: NWEndpoint.Port = 6969
     
+    @Published var connected: Bool?
+    
     func send(_ payload: Data) {
+        NSLog("Sending UDP Data")
         connection!.send(content: payload, completion: .contentProcessed({ sendError in
             if let error = sendError {
                 NSLog("Unable to process and send the data: \(error)")
@@ -29,14 +32,17 @@ class UDPMessage: NSObject {
     }
     
     func connect() {
+        NSLog("Connecting to UDP")
         connection = NWConnection(host: host, port: port, using: .udp)
         
         connection!.stateUpdateHandler = { (newState) in
+            self.connected = false
             switch (newState) {
             case .preparing:
                 NSLog("Entered state: preparing")
             case .ready:
                 NSLog("Entered state: ready")
+                self.connected = true
             case .setup:
                 NSLog("Entered state: setup")
             case .cancelled:
@@ -65,7 +71,7 @@ class UDPMessage: NSObject {
                 NSLog("No better path is available")
             }
         }
-        
+        NSLog("Starting UDP Connection")
         connection!.start(queue: .global())
     }
 }

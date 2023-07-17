@@ -8,7 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		A50C5F5B2A5F92FF001E52E6 /* SettingsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A50C5F5A2A5F92FF001E52E6 /* SettingsStore.swift */; };
-		A519D7302A5D8EBD00E78D3D /* WebSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = A519D72F2A5D8EBD00E78D3D /* WebSocket.swift */; };
+		A50C5F5D2A601CF0001E52E6 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A50C5F5C2A601CF0001E52E6 /* SettingsView.swift */; };
+		A50C5F5F2A6032D2001E52E6 /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A50C5F5E2A6032D2001E52E6 /* AlertView.swift */; };
+		A50C5F612A6032E8001E52E6 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A50C5F602A6032E8001E52E6 /* ChatView.swift */; };
 		A519D7342A5DB3F700E78D3D /* foyc.p12 in Resources */ = {isa = PBXBuildFile; fileRef = A519D7322A5DB3F600E78D3D /* foyc.p12 */; };
 		A519D7352A5DB3F700E78D3D /* truststore-root.p12 in Resources */ = {isa = PBXBuildFile; fileRef = A519D7332A5DB3F700E78D3D /* truststore-root.p12 */; };
 		A519D7372A5DB42600E78D3D /* PKCS12.swift in Sources */ = {isa = PBXBuildFile; fileRef = A519D7362A5DB42600E78D3D /* PKCS12.swift */; };
@@ -20,7 +22,7 @@
 		A5BF02022A5EBCA40043065B /* TCPMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5BF02012A5EBCA40043065B /* TCPMessage.swift */; };
 		A5BF02042A5EBCC10043065B /* COTMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5BF02032A5EBCC10043065B /* COTMessage.swift */; };
 		A5D8D37E2A53B0F9002F0E3E /* TAKTrackerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D8D37D2A53B0F9002F0E3E /* TAKTrackerApp.swift */; };
-		A5D8D3802A53B0F9002F0E3E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D8D37F2A53B0F9002F0E3E /* ContentView.swift */; };
+		A5D8D3802A53B0F9002F0E3E /* MainScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D8D37F2A53B0F9002F0E3E /* MainScreen.swift */; };
 		A5D8D3852A53B0FA002F0E3E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A5D8D3842A53B0FA002F0E3E /* Preview Assets.xcassets */; };
 		A5D8D38F2A53B0FB002F0E3E /* TAKTrackerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D8D38E2A53B0FB002F0E3E /* TAKTrackerTests.swift */; };
 		A5D8D3992A53B0FB002F0E3E /* TAKTrackerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D8D3982A53B0FB002F0E3E /* TAKTrackerUITests.swift */; };
@@ -47,7 +49,9 @@
 
 /* Begin PBXFileReference section */
 		A50C5F5A2A5F92FF001E52E6 /* SettingsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsStore.swift; sourceTree = "<group>"; };
-		A519D72F2A5D8EBD00E78D3D /* WebSocket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebSocket.swift; sourceTree = "<group>"; };
+		A50C5F5C2A601CF0001E52E6 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		A50C5F5E2A6032D2001E52E6 /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
+		A50C5F602A6032E8001E52E6 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
 		A519D7322A5DB3F600E78D3D /* foyc.p12 */ = {isa = PBXFileReference; lastKnownFileType = file; name = foyc.p12; path = ../../../takcerts/iTAK/foyc.p12; sourceTree = "<group>"; };
 		A519D7332A5DB3F700E78D3D /* truststore-root.p12 */ = {isa = PBXFileReference; lastKnownFileType = file; name = "truststore-root.p12"; path = "../../../takcerts/iTAK/truststore-root.p12"; sourceTree = "<group>"; };
 		A519D7362A5DB42600E78D3D /* PKCS12.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PKCS12.swift; sourceTree = "<group>"; };
@@ -64,7 +68,7 @@
 		A5BF02032A5EBCC10043065B /* COTMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = COTMessage.swift; sourceTree = "<group>"; };
 		A5D8D37A2A53B0F9002F0E3E /* TAKTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TAKTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A5D8D37D2A53B0F9002F0E3E /* TAKTrackerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TAKTrackerApp.swift; sourceTree = "<group>"; };
-		A5D8D37F2A53B0F9002F0E3E /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		A5D8D37F2A53B0F9002F0E3E /* MainScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreen.swift; sourceTree = "<group>"; };
 		A5D8D3842A53B0FA002F0E3E /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		A5D8D38A2A53B0FA002F0E3E /* TAKTrackerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TAKTrackerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A5D8D38E2A53B0FB002F0E3E /* TAKTrackerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TAKTrackerTests.swift; sourceTree = "<group>"; };
@@ -136,7 +140,8 @@
 			children = (
 				A599D66C2A5E45CD00B507D9 /* TAKTracker.entitlements */,
 				A5A49D912A547378009764C1 /* TAKTracker-Info.plist */,
-				A5D8D37F2A53B0F9002F0E3E /* ContentView.swift */,
+				A5D8D37F2A53B0F9002F0E3E /* MainScreen.swift */,
+				A50C5F5C2A601CF0001E52E6 /* SettingsView.swift */,
 				A5BF02032A5EBCC10043065B /* COTMessage.swift */,
 				A5D8D3A72A53B465002F0E3E /* LocationManager.swift */,
 				A519D7362A5DB42600E78D3D /* PKCS12.swift */,
@@ -145,11 +150,12 @@
 				A5D8D37D2A53B0F9002F0E3E /* TAKTrackerApp.swift */,
 				A5BF02012A5EBCA40043065B /* TCPMessage.swift */,
 				A5BF01FF2A5EB63F0043065B /* UDPMessage.swift */,
-				A519D72F2A5D8EBD00E78D3D /* WebSocket.swift */,
 				A5A49D942A5572C1009764C1 /* Assets.xcassets */,
 				A519D7312A5DB3C500E78D3D /* Certs */,
 				A5D8D3832A53B0FA002F0E3E /* Preview Content */,
 				A50C5F5A2A5F92FF001E52E6 /* SettingsStore.swift */,
+				A50C5F5E2A6032D2001E52E6 /* AlertView.swift */,
+				A50C5F602A6032E8001E52E6 /* ChatView.swift */,
 			);
 			path = TAKTracker;
 			sourceTree = "<group>";
@@ -313,14 +319,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				A5BF02042A5EBCC10043065B /* COTMessage.swift in Sources */,
-				A5D8D3802A53B0F9002F0E3E /* ContentView.swift in Sources */,
+				A5D8D3802A53B0F9002F0E3E /* MainScreen.swift in Sources */,
 				A5BF02002A5EB7440043065B /* UDPMessage.swift in Sources */,
 				A519D7372A5DB42600E78D3D /* PKCS12.swift in Sources */,
+				A50C5F612A6032E8001E52E6 /* ChatView.swift in Sources */,
 				A5D8D37E2A53B0F9002F0E3E /* TAKTrackerApp.swift in Sources */,
 				A5A49D902A5459B5009764C1 /* TAKManager.swift in Sources */,
 				A5D8D3A82A53B465002F0E3E /* LocationManager.swift in Sources */,
 				A5BF02022A5EBCA40043065B /* TCPMessage.swift in Sources */,
-				A519D7302A5D8EBD00E78D3D /* WebSocket.swift in Sources */,
+				A50C5F5F2A6032D2001E52E6 /* AlertView.swift in Sources */,
+				A50C5F5D2A601CF0001E52E6 /* SettingsView.swift in Sources */,
 				A599D66B2A5E3A7600B507D9 /* TAKManagerV2.swift in Sources */,
 				A50C5F5B2A5F92FF001E52E6 /* SettingsStore.swift in Sources */,
 			);
