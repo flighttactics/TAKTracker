@@ -17,61 +17,61 @@ class UDPMessage: NSObject, ObservableObject {
     @Published var connected: Bool?
     
     func send(_ payload: Data) {
-        NSLog("Sending UDP Data")
+        NSLog("[UDPMessage]: Sending UDP Data")
         connection!.send(content: payload, completion: .contentProcessed({ sendError in
             if let error = sendError {
-                NSLog("Unable to process and send the data: \(error)")
+                NSLog("[UDPMessage]: Unable to process and send the data: \(error)")
             } else {
-                NSLog("Data has been sent")
+                NSLog("[UDPMessage]: Data has been sent")
                 self.connection!.receiveMessage { (data, context, isComplete, error) in
                     guard let myData = data else { return }
-                    NSLog("Received message: " + String(decoding: myData, as: UTF8.self))
+                    NSLog("[UDPMessage]: Received message: " + String(decoding: myData, as: UTF8.self))
                 }
             }
         }))
     }
     
     func connect() {
-        NSLog("Connecting to UDP")
+        NSLog("[UDPMessage]: Connecting to UDP")
         connection = NWConnection(host: host, port: port, using: .udp)
         
         connection!.stateUpdateHandler = { (newState) in
             self.connected = false
             switch (newState) {
             case .preparing:
-                NSLog("Entered state: preparing")
+                NSLog("[UDPMessage]: Entered state: preparing")
             case .ready:
-                NSLog("Entered state: ready")
+                NSLog("[UDPMessage]: Entered state: ready")
                 self.connected = true
             case .setup:
-                NSLog("Entered state: setup")
+                NSLog("[UDPMessage]: Entered state: setup")
             case .cancelled:
-                NSLog("Entered state: cancelled")
+                NSLog("[UDPMessage]: Entered state: cancelled")
             case .waiting:
-                NSLog("Entered state: waiting")
+                NSLog("[UDPMessage]: Entered state: waiting")
             case .failed:
-                NSLog("Entered state: failed")
+                NSLog("[UDPMessage]: Entered state: failed")
             default:
-                NSLog("Entered an unknown state")
+                NSLog("[UDPMessage]: Entered an unknown state")
             }
         }
         
         connection!.viabilityUpdateHandler = { (isViable) in
             if (isViable) {
-                NSLog("Connection is viable")
+                NSLog("[UDPMessage]: Connection is viable")
             } else {
-                NSLog("Connection is not viable")
+                NSLog("[UDPMessage]: Connection is not viable")
             }
         }
         
         connection!.betterPathUpdateHandler = { (betterPathAvailable) in
             if (betterPathAvailable) {
-                NSLog("A better path is availble")
+                NSLog("[UDPMessage]: A better path is availble")
             } else {
-                NSLog("No better path is available")
+                NSLog("[UDPMessage]: No better path is available")
             }
         }
-        NSLog("Starting UDP Connection")
+        NSLog("[UDPMessage]: Starting UDP Connection")
         connection!.start(queue: .global())
     }
 }

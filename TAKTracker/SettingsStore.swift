@@ -84,7 +84,7 @@ class SettingsStore: ObservableObject {
         
         self.takServerIP = (UserDefaults.standard.object(forKey: "takServerIP") == nil ? "" : UserDefaults.standard.object(forKey: "takServerIP") as! String)
         
-        self.takServerPort = (UserDefaults.standard.object(forKey: "takServerPort") == nil ? "" : UserDefaults.standard.object(forKey: "takServerPort") as! String)
+        self.takServerPort = (UserDefaults.standard.object(forKey: "takServerPort") == nil ? "8089" : UserDefaults.standard.object(forKey: "takServerPort") as! String)
         
         self.staleTimeMinutes = (UserDefaults.standard.object(forKey: "staleTimeMinutes") == nil ? 5.0 : UserDefaults.standard.object(forKey: "staleTimeMinutes") as! Double)
         

@@ -10,92 +10,140 @@ import Network
 
 class TCPMessage: NSObject, ObservableObject {
     
-    private let host = NWEndpoint.Host("192.168.0.49")
-    private let port = NWEndpoint.Port(8089)
+    private let settingsStore = SettingsStore()
     
     @Published var connected: Bool?
 
     var connection: NWConnection?
     
-    func loadCerts() {
-        let password = "atakatak" // Obviously this should be stored or entered more securely.
-        guard let userFile = Bundle.main.url(forResource: "foyc", withExtension: "p12"),
-              let userP12Data = try? Data(contentsOf: userFile) else {
-            NSLog("BAD MOON RISING 1. BYE!")
-            return
-        }
-        
-        guard let rootFile = Bundle.main.url(forResource: "truststore-root", withExtension: "p12"),
-              let rootP12Data = try? Data(contentsOf: rootFile) else {
-            NSLog("BAD MOON RISING 2. BYE!")
-            return
-        }
-        
-        let rootP12Contents = PKCS12(data: rootP12Data, password: password)
-        //let rootCert = rootP12Contents
-
-        let userP12Contents = PKCS12(data: userP12Data, password: password)
-        
-        let clientIdentity = userP12Contents.identity!
-        
-        let options = NWProtocolTLS.Options()
-        sec_protocol_options_set_local_identity(options.securityProtocolOptions, sec_identity_create(clientIdentity)!)
-
-        sec_protocol_options_set_challenge_block(options.securityProtocolOptions, { (_, completionHandler) in
-            completionHandler(sec_identity_create(clientIdentity)!)
-        }, .main)
-
-        let parameters = NWParameters(tls: options)
-    }
-    
     func send(_ payload: Data) {
-        NSLog("Sending TCP Data")
+        NSLog("[TCPMessage]: Sending TCP Data")
         connection!.send(content: payload, completion: .contentProcessed({ sendError in
             if let error = sendError {
-                NSLog("Unable to process and send the data: \(error)")
+                NSLog("[TCPMessage]: Unable to process and send the data: \(error)")
             } else {
-                NSLog("Data has been sent")
+                NSLog("[TCPMessage]: Data has been sent")
             }
         }))
     }
     
     func connect() {
-        connection = NWConnection(host: host, port: port, using: .tcp)
+        let host = NWEndpoint.Host(settingsStore.takServerIP)
+        let port = NWEndpoint.Port(settingsStore.takServerPort)!
+        
+        let password = "atakatak" // Obviously this should be stored or entered more securely.
+        guard let userFile = Bundle.main.url(forResource: "foyc", withExtension: "p12"),
+              let userP12Data = try? Data(contentsOf: userFile) else {
+            NSLog("[TCPMessage]: Unable to load TLS certificate. Cancelling connection.")
+            return
+        }
+        
+        let userP12Contents = PKCS12(data: userP12Data, password: password)
+        
+        let clientIdentity = userP12Contents.identity!
+        
+        let options = NWProtocolTLS.Options()
+        let securityOptions = options.securityProtocolOptions
+        
+        sec_protocol_options_set_local_identity(
+           securityOptions,
+           sec_identity_create(clientIdentity)!
+        )
+        
+        sec_protocol_options_set_verify_block(securityOptions, { (_, trust, completionHandler) in
+            let isTrusted = true
+            completionHandler(isTrusted)
+        }, .main)
+        
+        let params = NWParameters(tls: options)
+        connection = NWConnection(host: host, port: port, using: params)
         
         connection!.stateUpdateHandler = { (newState) in
             self.connected = false
             switch (newState) {
             case .preparing:
-                NSLog("Entered state: preparing")
+                NSLog("[TCPMessage]: Entered state: preparing")
             case .ready:
-                NSLog("Entered state: ready")
+                NSLog("[TCPMessage]: Entered state: ready")
                 self.connected = true
             case .setup:
-                NSLog("Entered state: setup")
+                NSLog("[TCPMessage]: Entered state: setup")
             case .cancelled:
-                NSLog("Entered state: cancelled")
+                NSLog("[TCPMessage]: Entered state: cancelled")
             case .waiting:
-                NSLog("Entered state: waiting")
+                NSLog("[TCPMessage]: Entered state: waiting")
             case .failed:
-                NSLog("Entered state: failed")
+                NSLog("[TCPMessage]: Entered state: failed")
             default:
-                NSLog("Entered an unknown state")
+                NSLog("[TCPMessage]: Entered an unknown state")
             }
         }
         
         connection!.viabilityUpdateHandler = { (isViable) in
             if (isViable) {
-                NSLog("Connection is viable")
+                NSLog("[TCPMessage]: Connection is viable")
             } else {
-                NSLog("Connection is not viable")
+                NSLog("[TCPMessage]: Connection is not viable")
             }
         }
         
         connection!.betterPathUpdateHandler = { (betterPathAvailable) in
             if (betterPathAvailable) {
-                NSLog("A better path is availble")
+                NSLog("[TCPMessage]: A better path is availble")
             } else {
-                NSLog("No better path is available")
+                NSLog("[TCPMessage]: No better path is available")
+            }
+        }
+        
+        connection!.start(queue: .global())
+    }
+    
+    func connectNonTls() {
+        
+        if(settingsStore.takServerIP.isEmpty || settingsStore.takServerPort.isEmpty) {
+            NSLog("[TCPMessage]: No TAK Server Endpoint configured")
+            return
+        }
+        
+        let host = NWEndpoint.Host(settingsStore.takServerIP)
+        let port = NWEndpoint.Port(settingsStore.takServerPort)!
+        
+        connection = NWConnection(host: host, port: port, using: .tls)
+        
+        connection!.stateUpdateHandler = { (newState) in
+            self.connected = false
+            switch (newState) {
+            case .preparing:
+                NSLog("[TCPMessage]: Entered state: preparing")
+            case .ready:
+                NSLog("[TCPMessage]: Entered state: ready")
+                self.connected = true
+            case .setup:
+                NSLog("[TCPMessage]: Entered state: setup")
+            case .cancelled:
+                NSLog("[TCPMessage]: Entered state: cancelled")
+            case .waiting:
+                NSLog("[TCPMessage]: Entered state: waiting")
+            case .failed:
+                NSLog("[TCPMessage]: Entered state: failed")
+            default:
+                NSLog("[TCPMessage]: Entered an unknown state")
+            }
+        }
+        
+        connection!.viabilityUpdateHandler = { (isViable) in
+            if (isViable) {
+                NSLog("[TCPMessage]: Connection is viable")
+            } else {
+                NSLog("[TCPMessage]: Connection is not viable")
+            }
+        }
+        
+        connection!.betterPathUpdateHandler = { (betterPathAvailable) in
+            if (betterPathAvailable) {
+                NSLog("[TCPMessage]: A better path is availble")
+            } else {
+                NSLog("[TCPMessage]: No better path is available")
             }
         }
         
