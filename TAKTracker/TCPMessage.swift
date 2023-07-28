@@ -17,6 +17,10 @@ class TCPMessage: NSObject, ObservableObject {
     var connection: NWConnection?
     
     func send(_ payload: Data) {
+        guard let connected = connected else {
+            return
+        }
+        if(!connected) { return }
         NSLog("[TCPMessage]: Sending TCP Data")
         connection!.send(content: payload, completion: .contentProcessed({ sendError in
             if let error = sendError {
@@ -28,35 +32,43 @@ class TCPMessage: NSObject, ObservableObject {
     }
     
     func connect() {
-        let host = NWEndpoint.Host(settingsStore.takServerIP)
+        let host = NWEndpoint.Host(settingsStore.takServerUrl)
         let port = NWEndpoint.Port(settingsStore.takServerPort)!
         
-        let password = "atakatak" // Obviously this should be stored or entered more securely.
-        guard let userFile = Bundle.main.url(forResource: "foyc", withExtension: "p12"),
-              let userP12Data = try? Data(contentsOf: userFile) else {
+        let password = settingsStore.userCertificatePassword
+        let userP12Data = settingsStore.userCertificate
+        if(userP12Data.count == 0) {
             NSLog("[TCPMessage]: Unable to load TLS certificate. Cancelling connection.")
             return
         }
         
         let userP12Contents = PKCS12(data: userP12Data, password: password)
-        
         let clientIdentity = userP12Contents.identity!
+        NSLog("Client Identity")
+        NSLog(String(describing: clientIdentity))
+        
         
         let options = NWProtocolTLS.Options()
         let securityOptions = options.securityProtocolOptions
+        let params = NWParameters(tls: options, tcp: .init())
         
         sec_protocol_options_set_local_identity(
            securityOptions,
            sec_identity_create(clientIdentity)!
         )
         
+        NSLog("sic-ci")
+        NSLog(String(describing: sec_identity_create(clientIdentity)!))
+        
         sec_protocol_options_set_verify_block(securityOptions, { (_, trust, completionHandler) in
+            NSLog("Entering Verify Block")
             let isTrusted = true
             completionHandler(isTrusted)
         }, .main)
         
-        let params = NWParameters(tls: options)
+        NSLog(String(describing: params))
         connection = NWConnection(host: host, port: port, using: params)
+        NSLog(String(describing: connection))
         
         connection!.stateUpdateHandler = { (newState) in
             self.connected = false
@@ -100,12 +112,12 @@ class TCPMessage: NSObject, ObservableObject {
     
     func connectNonTls() {
         
-        if(settingsStore.takServerIP.isEmpty || settingsStore.takServerPort.isEmpty) {
+        if(settingsStore.takServerUrl.isEmpty || settingsStore.takServerPort.isEmpty) {
             NSLog("[TCPMessage]: No TAK Server Endpoint configured")
             return
         }
         
-        let host = NWEndpoint.Host(settingsStore.takServerIP)
+        let host = NWEndpoint.Host(settingsStore.takServerUrl)
         let port = NWEndpoint.Port(settingsStore.takServerPort)!
         
         connection = NWConnection(host: host, port: port, using: .tls)

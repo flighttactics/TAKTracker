@@ -16,6 +16,8 @@ struct SettingsView: View {
         nf.numberStyle = .decimal
         return nf
     }()
+    
+    @State var isShowingFilePicker = false
 
     var body: some View {
         ScrollView {
@@ -61,7 +63,7 @@ struct SettingsView: View {
                                 .foregroundColor(.secondary)
                             Spacer()
                         }
-                        TextField("Server Address", text: $settingsStore.takServerIP)
+                        TextField("Server Address", text: $settingsStore.takServerUrl)
                     }
                     .padding(.top, 20)
                     Divider()
@@ -76,6 +78,39 @@ struct SettingsView: View {
                             Spacer()
                         }
                         TextField("Server Port", text: $settingsStore.takServerPort)
+                    }
+                    .padding(.top, 20)
+                    Divider()
+                }
+                
+                Group {
+                    VStack {
+                        HStack {
+                            Text("Data Package")
+                                .font(.system(size: 18, weight: .medium))
+                                .foregroundColor(.secondary)
+                            Spacer()
+                        }
+                        Button {
+                            isShowingFilePicker.toggle()
+                        } label: {
+                            Text("Data Package")
+                        }
+                        .fileImporter(isPresented: $isShowingFilePicker, allowedContentTypes: [.zip], allowsMultipleSelection: false, onCompletion: { results in
+                            
+                            switch results {
+                            case .success(let fileurls):
+                                for fileurl in fileurls {
+                                    NSLog("Processing Package")
+                                    let tdpp = TAKDataPackageParser(fileLocation: fileurl)
+                                    tdpp.parse()
+                                }
+                                
+                            case .failure(let error):
+                                NSLog(String(describing: error))
+                            }
+                            
+                        })
                     }
                     .padding(.top, 20)
                     Divider()

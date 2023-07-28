@@ -37,15 +37,23 @@ class SettingsStore: ObservableObject {
         }
     }
     
-    @Published var takServerIP: String {
+    @Published var takServerUrl: String {
         didSet {
-            UserDefaults.standard.set(takServerIP, forKey: "takServerIP")
+            NSLog("Setting takServerURL")
+            UserDefaults.standard.set(takServerUrl, forKey: "takServerUrl")
         }
     }
     
     @Published var takServerPort: String {
         didSet {
+            NSLog("Setting takServerPort")
             UserDefaults.standard.set(takServerPort, forKey: "takServerPort")
+        }
+    }
+    
+    @Published var takServerProtocol: String {
+        didSet {
+            UserDefaults.standard.set(takServerProtocol, forKey: "takServerProtocol")
         }
     }
     
@@ -72,6 +80,42 @@ class SettingsStore: ObservableObject {
             UserDefaults.standard.set(disableScreenSleep, forKey: "disableScreenSleep")
         }
     }
+    
+    @Published var serverCertificate: Data {
+        didSet {
+            UserDefaults.standard.set(serverCertificate, forKey: "serverCertificate")
+        }
+    }
+    
+    @Published var serverCertificatePassword: String {
+        didSet {
+            UserDefaults.standard.set(serverCertificatePassword, forKey: "serverCertificatePassword")
+        }
+    }
+    
+    @Published var userCertificate: Data {
+        didSet {
+            UserDefaults.standard.set(userCertificate, forKey: "userCertificate")
+        }
+    }
+    
+    @Published var userCertificatePassword: String {
+        didSet {
+            UserDefaults.standard.set(userCertificatePassword, forKey: "userCertificatePassword")
+        }
+    }
+    
+    @Published var takServerUsername: String {
+        didSet {
+            UserDefaults.standard.set(takServerUsername, forKey: "takServerUsername")
+        }
+    }
+    
+    @Published var takServerPassword: String {
+        didSet {
+            UserDefaults.standard.set(takServerPassword, forKey: "takServerPassword")
+        }
+    }
 
     
     init() {
@@ -82,9 +126,11 @@ class SettingsStore: ObservableObject {
         
         self.cotHow = (UserDefaults.standard.object(forKey: "cotHow") == nil ? "m-g" : UserDefaults.standard.object(forKey: "cotHow") as! String)
         
-        self.takServerIP = (UserDefaults.standard.object(forKey: "takServerIP") == nil ? "" : UserDefaults.standard.object(forKey: "takServerIP") as! String)
+        self.takServerUrl = (UserDefaults.standard.object(forKey: "takServerUrl") == nil ? "" : UserDefaults.standard.object(forKey: "takServerUrl") as! String)
         
         self.takServerPort = (UserDefaults.standard.object(forKey: "takServerPort") == nil ? "8089" : UserDefaults.standard.object(forKey: "takServerPort") as! String)
+        
+        self.takServerProtocol = (UserDefaults.standard.object(forKey: "takServerProtocol") == nil ? "ssl" : UserDefaults.standard.object(forKey: "takServerProtocol") as! String)
         
         self.staleTimeMinutes = (UserDefaults.standard.object(forKey: "staleTimeMinutes") == nil ? 5.0 : UserDefaults.standard.object(forKey: "staleTimeMinutes") as! Double)
         
@@ -93,6 +139,18 @@ class SettingsStore: ObservableObject {
         self.enableAdvancedMode = (UserDefaults.standard.object(forKey: "enableAdvancedMode") == nil ? false : UserDefaults.standard.object(forKey: "enableAdvancedMode") as! Bool)
         
         self.disableScreenSleep = (UserDefaults.standard.object(forKey: "disableScreenSleep") == nil ? true : UserDefaults.standard.object(forKey: "disableScreenSleep") as! Bool)
+        
+        self.serverCertificate = (UserDefaults.standard.object(forKey: "serverCertificate") == nil ? Data() : UserDefaults.standard.object(forKey: "serverCertificate") as! Data)
+        
+        self.serverCertificatePassword = (UserDefaults.standard.object(forKey: "serverCertificatePassword") == nil ? "" : UserDefaults.standard.object(forKey: "serverCertificatePassword") as! String)
+        
+        self.userCertificate = (UserDefaults.standard.object(forKey: "userCertificate") == nil ? Data() : UserDefaults.standard.object(forKey: "userCertificate") as! Data)
+        
+        self.userCertificatePassword = (UserDefaults.standard.object(forKey: "userCertificatePassword") == nil ? "" : UserDefaults.standard.object(forKey: "userCertificatePassword") as! String)
+        
+        self.takServerUsername = (UserDefaults.standard.object(forKey: "takServerUsername") == nil ? "" : UserDefaults.standard.object(forKey: "takServerUsername") as! String)
+        
+        self.takServerPassword = (UserDefaults.standard.object(forKey: "takServerPassword") == nil ? "" : UserDefaults.standard.object(forKey: "takServerPassword") as! String)
 
     }
 }
