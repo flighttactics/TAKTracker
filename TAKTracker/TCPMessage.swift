@@ -9,9 +9,6 @@ import Foundation
 import Network
 
 class TCPMessage: NSObject, ObservableObject {
-    
-    private let settingsStore = SettingsStore()
-    
     @Published var connected: Bool?
 
     var connection: NWConnection?
@@ -21,31 +18,36 @@ class TCPMessage: NSObject, ObservableObject {
             return
         }
         if(!connected) { return }
-        NSLog("[TCPMessage]: Sending TCP Data")
+        TAKLogger.debug("[TCPMessage]: Sending TCP Data")
         connection!.send(content: payload, completion: .contentProcessed({ sendError in
             if let error = sendError {
-                NSLog("[TCPMessage]: Unable to process and send the data: \(error)")
+                TAKLogger.debug("[TCPMessage]: Unable to process and send the data: \(error)")
             } else {
-                NSLog("[TCPMessage]: Data has been sent")
+                TAKLogger.debug("[TCPMessage]: Data has been sent")
             }
         }))
     }
     
     func connect() {
-        let host = NWEndpoint.Host(settingsStore.takServerUrl)
-        let port = NWEndpoint.Port(settingsStore.takServerPort)!
+        let host = NWEndpoint.Host(SettingsStore.global.takServerUrl)
+        let port = NWEndpoint.Port(SettingsStore.global.takServerPort)!
         
-        let password = settingsStore.userCertificatePassword
-        let userP12Data = settingsStore.userCertificate
+        let password = SettingsStore.global.userCertificatePassword
+        let userP12Data = SettingsStore.global.userCertificate
         if(userP12Data.count == 0) {
-            NSLog("[TCPMessage]: Unable to load TLS certificate. Cancelling connection.")
+            TAKLogger.debug("[TCPMessage]: Unable to load TLS certificate. Cancelling connection.")
             return
         }
+        TAKLogger.debug("userP12Data: \(String(describing: userP12Data))")
         
         let userP12Contents = PKCS12(data: userP12Data, password: password)
-        let clientIdentity = userP12Contents.identity!
-        NSLog("Client Identity")
-        NSLog(String(describing: clientIdentity))
+        
+        guard let clientIdentity = userP12Contents.identity else {
+            TAKLogger.debug("[TCPMessage]: Unable to load TLS identity. Cancelling connection.")
+            return
+        }
+        TAKLogger.debug("Client Identity")
+        TAKLogger.debug(String(describing: clientIdentity))
         
         
         let options = NWProtocolTLS.Options()
@@ -57,53 +59,63 @@ class TCPMessage: NSObject, ObservableObject {
            sec_identity_create(clientIdentity)!
         )
         
-        NSLog("sic-ci")
-        NSLog(String(describing: sec_identity_create(clientIdentity)!))
+        TAKLogger.debug("sic-ci")
+        TAKLogger.debug(String(describing: sec_identity_create(clientIdentity)!))
         
         sec_protocol_options_set_verify_block(securityOptions, { (_, trust, completionHandler) in
-            NSLog("Entering Verify Block")
+            TAKLogger.debug("Entering Verify Block")
             let isTrusted = true
             completionHandler(isTrusted)
         }, .main)
         
-        NSLog(String(describing: params))
+        TAKLogger.debug(String(describing: params))
         connection = NWConnection(host: host, port: port, using: params)
-        NSLog(String(describing: connection))
+        TAKLogger.debug(String(describing: connection))
         
         connection!.stateUpdateHandler = { (newState) in
             self.connected = false
+            DispatchQueue.main.async {
+                SettingsStore.global.isConnectedToServer = false
+            }
+            
             switch (newState) {
             case .preparing:
-                NSLog("[TCPMessage]: Entered state: preparing")
+                TAKLogger.debug("[TCPMessage]: Entered state: preparing")
             case .ready:
-                NSLog("[TCPMessage]: Entered state: ready")
+                TAKLogger.debug("[TCPMessage]: Entered state: ready")
                 self.connected = true
+                DispatchQueue.main.async {
+                    SettingsStore.global.isConnectedToServer = true
+                }
             case .setup:
-                NSLog("[TCPMessage]: Entered state: setup")
+                TAKLogger.debug("[TCPMessage]: Entered state: setup")
             case .cancelled:
-                NSLog("[TCPMessage]: Entered state: cancelled")
+                TAKLogger.debug("[TCPMessage]: Entered state: cancelled")
             case .waiting:
-                NSLog("[TCPMessage]: Entered state: waiting")
+                TAKLogger.debug("[TCPMessage]: Entered state: waiting")
             case .failed:
-                NSLog("[TCPMessage]: Entered state: failed")
+                TAKLogger.debug("[TCPMessage]: Entered state: failed")
+                DispatchQueue.main.async {
+                    SettingsStore.global.isConnectedToServer = false
+                }
             default:
-                NSLog("[TCPMessage]: Entered an unknown state")
+                TAKLogger.debug("[TCPMessage]: Entered an unknown state")
             }
         }
         
         connection!.viabilityUpdateHandler = { (isViable) in
             if (isViable) {
-                NSLog("[TCPMessage]: Connection is viable")
+                TAKLogger.debug("[TCPMessage]: Connection is viable")
             } else {
-                NSLog("[TCPMessage]: Connection is not viable")
+                TAKLogger.debug("[TCPMessage]: Connection is not viable")
             }
         }
         
         connection!.betterPathUpdateHandler = { (betterPathAvailable) in
             if (betterPathAvailable) {
-                NSLog("[TCPMessage]: A better path is availble")
+                TAKLogger.debug("[TCPMessage]: A better path is availble")
             } else {
-                NSLog("[TCPMessage]: No better path is available")
+                TAKLogger.debug("[TCPMessage]: No better path is available")
             }
         }
         
@@ -112,13 +124,13 @@ class TCPMessage: NSObject, ObservableObject {
     
     func connectNonTls() {
         
-        if(settingsStore.takServerUrl.isEmpty || settingsStore.takServerPort.isEmpty) {
-            NSLog("[TCPMessage]: No TAK Server Endpoint configured")
+        if(SettingsStore.global.takServerUrl.isEmpty || SettingsStore.global.takServerPort.isEmpty) {
+            TAKLogger.debug("[TCPMessage]: No TAK Server Endpoint configured")
             return
         }
         
-        let host = NWEndpoint.Host(settingsStore.takServerUrl)
-        let port = NWEndpoint.Port(settingsStore.takServerPort)!
+        let host = NWEndpoint.Host(SettingsStore.global.takServerUrl)
+        let port = NWEndpoint.Port(SettingsStore.global.takServerPort)!
         
         connection = NWConnection(host: host, port: port, using: .tls)
         
@@ -126,36 +138,36 @@ class TCPMessage: NSObject, ObservableObject {
             self.connected = false
             switch (newState) {
             case .preparing:
-                NSLog("[TCPMessage]: Entered state: preparing")
+                TAKLogger.debug("[TCPMessage]: Entered state: preparing")
             case .ready:
-                NSLog("[TCPMessage]: Entered state: ready")
+                TAKLogger.debug("[TCPMessage]: Entered state: ready")
                 self.connected = true
             case .setup:
-                NSLog("[TCPMessage]: Entered state: setup")
+                TAKLogger.debug("[TCPMessage]: Entered state: setup")
             case .cancelled:
-                NSLog("[TCPMessage]: Entered state: cancelled")
+                TAKLogger.debug("[TCPMessage]: Entered state: cancelled")
             case .waiting:
-                NSLog("[TCPMessage]: Entered state: waiting")
+                TAKLogger.debug("[TCPMessage]: Entered state: waiting")
             case .failed:
-                NSLog("[TCPMessage]: Entered state: failed")
+                TAKLogger.debug("[TCPMessage]: Entered state: failed")
             default:
-                NSLog("[TCPMessage]: Entered an unknown state")
+                TAKLogger.debug("[TCPMessage]: Entered an unknown state")
             }
         }
         
         connection!.viabilityUpdateHandler = { (isViable) in
             if (isViable) {
-                NSLog("[TCPMessage]: Connection is viable")
+                TAKLogger.debug("[TCPMessage]: Connection is viable")
             } else {
-                NSLog("[TCPMessage]: Connection is not viable")
+                TAKLogger.debug("[TCPMessage]: Connection is not viable")
             }
         }
         
         connection!.betterPathUpdateHandler = { (betterPathAvailable) in
             if (betterPathAvailable) {
-                NSLog("[TCPMessage]: A better path is availble")
+                TAKLogger.debug("[TCPMessage]: A better path is availble")
             } else {
-                NSLog("[TCPMessage]: No better path is available")
+                TAKLogger.debug("[TCPMessage]: No better path is available")
             }
         }
         

@@ -22,6 +22,7 @@ class LocationManager: NSObject,CLLocationManagerDelegate, ObservableObject {
         manager.desiredAccuracy = kCLLocationAccuracyBest
         manager.requestWhenInUseAuthorization()
         manager.startUpdatingLocation()
+        manager.startUpdatingHeading()
     }
     
     var statusString: String {
@@ -44,7 +45,7 @@ class LocationManager: NSObject,CLLocationManagerDelegate, ObservableObject {
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        guard let location = locations.last else { NSLog("No Locations!"); return }
+        guard let location = locations.last else { TAKLogger.debug("No Locations!"); return }
         lastLocation = location
         locations.last.map {
             region = MKCoordinateRegion(
@@ -53,7 +54,7 @@ class LocationManager: NSObject,CLLocationManagerDelegate, ObservableObject {
             )
         }
         
-        guard let heading = manager.heading else { NSLog("No heading!"); return }
+        guard let heading = manager.heading else { TAKLogger.debug("No heading!"); return }
         lastHeading = heading
     }
     

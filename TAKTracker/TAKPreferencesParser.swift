@@ -19,13 +19,13 @@ struct TAKPreferences {
     
     func userCertificateFileName() -> String {
         let splitFile = userCertificateFile.components(separatedBy: "/")
-        NSLog(String(describing: splitFile))
+        TAKLogger.debug(String(describing: splitFile))
         return splitFile[splitFile.count-1]
     }
     
     func serverCertificateFileName() -> String {
         let splitFile = serverCertificateFile.components(separatedBy: "/")
-        NSLog(String(describing: splitFile))
+        TAKLogger.debug(String(describing: splitFile))
         return splitFile[splitFile.count-1]
     }
     

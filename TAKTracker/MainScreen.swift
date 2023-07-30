@@ -9,9 +9,8 @@ import SwiftUI
 import MapKit
 
 struct MainScreen: View {
-    @EnvironmentObject var settingsStore: SettingsStore
-    
     @StateObject var manager = LocationManager()
+    @StateObject var settingsStore = SettingsStore.global
     var takManager = TAKManager()
     
     @State var tracking:MapUserTrackingMode = .none
@@ -20,6 +19,13 @@ struct MainScreen: View {
     let lightGray = Color(hue: 0.94, saturation: 0.03, brightness: 0.35)
     //header: #3d3739
     let darkGray = Color(hue: 0.94, saturation: 0.05, brightness: 0.23)
+    
+    func formatOrZero(item: Double?, formatter: String = "%.0f") -> String {
+        guard let item = item else {
+            return "0"
+        }
+        return String(format: formatter, item)
+    }
     
     var body: some View {
         NavigationView {
@@ -59,14 +65,15 @@ struct MainScreen: View {
                             Spacer()
                             Text("Lat").font(.system(size: 30))
                             Spacer()
-                            Text("\(manager.lastLocation?.coordinate.latitude.formatted() ?? "0")")
+                            Text(formatOrZero(item: manager.lastLocation?.coordinate.latitude, formatter: "%.4f"))
                             Spacer()
                         }.font(.system(size: 30))
                         HStack {
                             Spacer()
                             Text("Lon")
                             Spacer()
-                            Text("\(manager.lastLocation?.coordinate.longitude.formatted() ?? "0")")
+                            Text(formatOrZero(item: manager.lastLocation?.coordinate.longitude,
+                                formatter: "%.4f"))
                             Spacer()
                         }.font(.system(size: 30))
                     }
@@ -75,25 +82,31 @@ struct MainScreen: View {
                     .background(.black)
                     .padding(10)
                     
-                    HStack {
+                    HStack(alignment: .center) {
                         VStack {
-                            Text("Heading (°TN)")
+                            Text("Heading")
                                 .frame(maxWidth: .infinity)
-                            Text("\(manager.lastHeading?.trueHeading.formatted() ?? "0")").font(.system(size: 30))
+                            Text("(°TN)")
+                                .frame(maxWidth: .infinity)
+                            Text(formatOrZero(item: manager.lastHeading?.trueHeading) + "°").font(.system(size: 30))
                         }
                         .background(.black)
                         .border(.blue)
                         VStack {
-                            Text("Compass (°MN)")
+                            Text("Compass")
                                 .frame(maxWidth: .infinity)
-                            Text("\(manager.lastHeading?.magneticHeading.formatted() ?? "0")").font(.system(size: 30))
+                            Text("(°MN)")
+                                .frame(maxWidth: .infinity)
+                            Text(formatOrZero(item: manager.lastHeading?.magneticHeading) + "°").font(.system(size: 30))
                         }
                         .background(.black)
                         .border(.blue)
                         VStack {
-                            Text("Speed (m/s)")
+                            Text("Speed")
                                 .frame(maxWidth: .infinity)
-                            Text("\(manager.lastLocation?.speed.formatted() ?? "0")").font(.system(size: 30))
+                            Text("(m/s)")
+                                .frame(maxWidth: .infinity)
+                            Text(formatOrZero(item: manager.lastLocation?.speed)).font(.system(size: 30))
                         }
                         .background(.black)
                         .border(.blue)
@@ -111,11 +124,18 @@ struct MainScreen: View {
                         .border(.black)
                     }
                     Spacer()
+                    HStack {
+                        if(settingsStore.isConnectedToServer) {
+                            Text("Server: Connected").foregroundColor(.green)
+                        } else {
+                            Text("Server: Disconnected").foregroundColor(.red)
+                        }
+                    }
+                    .font(.system(size: 15))
                 }
                 .background(lightGray)
                 .padding()
                 .onAppear {
-                    UIApplication.shared.isIdleTimerDisabled = settingsStore.disableScreenSleep
                     Timer.scheduledTimer(withTimeInterval: settingsStore.broadcastIntervalSeconds, repeats: true) { timer in
                         broadcastLocation()
                    }

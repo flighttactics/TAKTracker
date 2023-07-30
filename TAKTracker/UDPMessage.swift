@@ -17,61 +17,61 @@ class UDPMessage: NSObject, ObservableObject {
     @Published var connected: Bool?
     
     func send(_ payload: Data) {
-        NSLog("[UDPMessage]: Sending UDP Data")
+        TAKLogger.debug("[UDPMessage]: Sending UDP Data")
         connection!.send(content: payload, completion: .contentProcessed({ sendError in
             if let error = sendError {
-                NSLog("[UDPMessage]: Unable to process and send the data: \(error)")
+                TAKLogger.debug("[UDPMessage]: Unable to process and send the data: \(error)")
             } else {
-                NSLog("[UDPMessage]: Data has been sent")
+                TAKLogger.debug("[UDPMessage]: Data has been sent")
                 self.connection!.receiveMessage { (data, context, isComplete, error) in
                     guard let myData = data else { return }
-                    NSLog("[UDPMessage]: Received message: " + String(decoding: myData, as: UTF8.self))
+                    TAKLogger.debug("[UDPMessage]: Received message: " + String(decoding: myData, as: UTF8.self))
                 }
             }
         }))
     }
     
     func connect() {
-        NSLog("[UDPMessage]: Connecting to UDP")
+        TAKLogger.debug("[UDPMessage]: Connecting to UDP")
         connection = NWConnection(host: host, port: port, using: .udp)
         
         connection!.stateUpdateHandler = { (newState) in
             self.connected = false
             switch (newState) {
             case .preparing:
-                NSLog("[UDPMessage]: Entered state: preparing")
+                TAKLogger.debug("[UDPMessage]: Entered state: preparing")
             case .ready:
-                NSLog("[UDPMessage]: Entered state: ready")
+                TAKLogger.debug("[UDPMessage]: Entered state: ready")
                 self.connected = true
             case .setup:
-                NSLog("[UDPMessage]: Entered state: setup")
+                TAKLogger.debug("[UDPMessage]: Entered state: setup")
             case .cancelled:
-                NSLog("[UDPMessage]: Entered state: cancelled")
+                TAKLogger.debug("[UDPMessage]: Entered state: cancelled")
             case .waiting:
-                NSLog("[UDPMessage]: Entered state: waiting")
+                TAKLogger.debug("[UDPMessage]: Entered state: waiting")
             case .failed:
-                NSLog("[UDPMessage]: Entered state: failed")
+                TAKLogger.debug("[UDPMessage]: Entered state: failed")
             default:
-                NSLog("[UDPMessage]: Entered an unknown state")
+                TAKLogger.debug("[UDPMessage]: Entered an unknown state")
             }
         }
         
         connection!.viabilityUpdateHandler = { (isViable) in
             if (isViable) {
-                NSLog("[UDPMessage]: Connection is viable")
+                TAKLogger.debug("[UDPMessage]: Connection is viable")
             } else {
-                NSLog("[UDPMessage]: Connection is not viable")
+                TAKLogger.debug("[UDPMessage]: Connection is not viable")
             }
         }
         
         connection!.betterPathUpdateHandler = { (betterPathAvailable) in
             if (betterPathAvailable) {
-                NSLog("[UDPMessage]: A better path is availble")
+                TAKLogger.debug("[UDPMessage]: A better path is availble")
             } else {
-                NSLog("[UDPMessage]: No better path is available")
+                TAKLogger.debug("[UDPMessage]: No better path is available")
             }
         }
-        NSLog("[UDPMessage]: Starting UDP Connection")
+        TAKLogger.debug("[UDPMessage]: Starting UDP Connection")
         connection!.start(queue: .global())
     }
 }

@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 struct SettingsView: View {
-    @EnvironmentObject var settingsStore: SettingsStore
+    @StateObject var settingsStore: SettingsStore = SettingsStore.global
     
     @State private var numberFormatter: NumberFormatter = {
         var nf = NumberFormatter()
@@ -101,13 +101,15 @@ struct SettingsView: View {
                             switch results {
                             case .success(let fileurls):
                                 for fileurl in fileurls {
-                                    NSLog("Processing Package")
-                                    let tdpp = TAKDataPackageParser(fileLocation: fileurl)
+                                    TAKLogger.debug("Processing Package")
+                                    let tdpp = TAKDataPackageParser(
+                                        fileLocation: fileurl
+                                    )
                                     tdpp.parse()
                                 }
                                 
                             case .failure(let error):
-                                NSLog(String(describing: error))
+                                TAKLogger.debug(String(describing: error))
                             }
                             
                         })

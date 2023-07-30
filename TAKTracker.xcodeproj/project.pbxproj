@@ -28,6 +28,7 @@
 		A5E7B00E2A70B95E00D9203F /* ZIPFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = A5E7B00D2A70B95E00D9203F /* ZIPFoundation */; };
 		A5E7B0102A714ECC00D9203F /* TAKManifestParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E7B00F2A714ECC00D9203F /* TAKManifestParser.swift */; };
 		A5E7B0122A7184FB00D9203F /* TAKPreferencesParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E7B0112A7184FB00D9203F /* TAKPreferencesParser.swift */; };
+		A5E7B0182A76AA8B00D9203F /* TAKLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E7B0172A76AA8B00D9203F /* TAKLogger.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -75,6 +76,7 @@
 		A5E7B00A2A70B5F900D9203F /* TAKDataPackageParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TAKDataPackageParser.swift; sourceTree = "<group>"; };
 		A5E7B00F2A714ECC00D9203F /* TAKManifestParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TAKManifestParser.swift; sourceTree = "<group>"; };
 		A5E7B0112A7184FB00D9203F /* TAKPreferencesParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TAKPreferencesParser.swift; sourceTree = "<group>"; };
+		A5E7B0172A76AA8B00D9203F /* TAKLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TAKLogger.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -147,6 +149,7 @@
 				A50C5F602A6032E8001E52E6 /* ChatView.swift */,
 				A5E7B00F2A714ECC00D9203F /* TAKManifestParser.swift */,
 				A5E7B0112A7184FB00D9203F /* TAKPreferencesParser.swift */,
+				A5E7B0172A76AA8B00D9203F /* TAKLogger.swift */,
 			);
 			path = TAKTracker;
 			sourceTree = "<group>";
@@ -322,6 +325,7 @@
 				A5D8D37E2A53B0F9002F0E3E /* TAKTrackerApp.swift in Sources */,
 				A5E7B00B2A70B5FA00D9203F /* TAKDataPackageParser.swift in Sources */,
 				A5A49D902A5459B5009764C1 /* TAKManager.swift in Sources */,
+				A5E7B0182A76AA8B00D9203F /* TAKLogger.swift in Sources */,
 				A5D8D3A82A53B465002F0E3E /* LocationManager.swift in Sources */,
 				A5BF02022A5EBCA40043065B /* TCPMessage.swift in Sources */,
 				A50C5F5F2A6032D2001E52E6 /* AlertView.swift in Sources */,

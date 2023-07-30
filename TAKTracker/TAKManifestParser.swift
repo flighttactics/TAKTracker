@@ -26,7 +26,7 @@ class TAKManifestParser: NSObject, XMLParserDelegate {
                 if(attr_key == "zipEntry") {
                     let splitFile = attr_val.components(separatedBy: "\\")
                     let file = splitFile[splitFile.count-1]
-                    NSLog("ManifestParser: Adding file \(file)")
+                    TAKLogger.debug("ManifestParser: Adding file \(file)")
                     fileNames.append(file)
                 }
             }

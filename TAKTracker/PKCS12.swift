@@ -27,13 +27,21 @@ public class PKCS12 {
         let secError: OSStatus
           = SecPKCS12Import(data as NSData,
                             importPasswordOption, &items)
-        NSLog(String(describing: secError))
         guard secError == errSecSuccess else {
             if secError == errSecAuthFailed {
-                NSLog("Incorrect password?")
-
+                TAKLogger.debug("Fatal Error trying to import PKCS12 data: Incorrect password?")
+            } else {
+                TAKLogger.debug("Fatal Error trying to import PKCS12 data")
+                TAKLogger.debug("Error code: \(String(describing: secError))")
             }
-            fatalError("Error trying to import PKCS12 data")
+            SettingsStore.global.isConnectedToServer = false
+            SettingsStore.global.shouldTryReconnect = false
+            self.label = nil
+            self.keyID = nil
+            self.trust = nil
+            self.certChain = nil
+            self.identity = nil
+            return
         }
 
         guard let theItemsCFArray = items else { fatalError() }
@@ -79,8 +87,8 @@ public class PKCS12 {
 //
 //        if securityError == errSecSuccess {
 //            let certItems:Array = (items! as Array)
-//            NSLog("PKCS12: Unwrapping")
-//            NSLog(String(describing: certItems))
+//            TAKLogger.debug("PKCS12: Unwrapping")
+//            TAKLogger.debug(String(describing: certItems))
 //            let dict:Dictionary<String, AnyObject> = certItems.first! as! Dictionary<String, AnyObject>;
 //
 //            self.label = dict[kSecImportItemLabel as String] as? String;

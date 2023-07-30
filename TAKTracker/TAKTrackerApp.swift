@@ -9,12 +9,14 @@ import SwiftUI
 
 @main
 struct TAKTrackerApp: App {
-    @StateObject var settingsStore = SettingsStore()
-
     var body: some Scene {
         WindowGroup {
             MainScreen(manager: LocationManager())
-                .environmentObject(settingsStore)
+                .onAppear {
+                    UIApplication.shared.isIdleTimerDisabled = SettingsStore.global.disableScreenSleep
+                    SettingsStore.global.isConnectedToServer = false
+                    SettingsStore.global.shouldTryReconnect = true
+                }
         }
     }
 }

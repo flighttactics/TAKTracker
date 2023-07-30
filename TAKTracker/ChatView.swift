@@ -26,7 +26,7 @@ struct ChatView: View {
             HStack {
                 TextField("Message", text: $chatMessage.message)
                 Button("Send") {
-                    NSLog("Send")
+                    TAKLogger.debug("Send")
                 }
             }
             .background(darkGray)

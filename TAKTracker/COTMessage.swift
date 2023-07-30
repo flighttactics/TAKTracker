@@ -9,19 +9,17 @@ import Foundation
 import MapKit
 
 class COTMessage: NSObject {
-    private let settingsStore = SettingsStore()
-    
     public func generateCOTXml(location: CLLocation) -> String {
-        let cotTimeout = settingsStore.staleTimeMinutes * 60.0
+        let cotTimeout = SettingsStore.global.staleTimeMinutes * 60.0
         let stale = Date().addingTimeInterval(cotTimeout) //needs to be to ISOString Maybe?
         let staleString = ISO8601DateFormatter().string(from: stale)
         let nowString = ISO8601DateFormatter().string(from: Date())
         
         var eventAttributes: [String: String] = [:]
         eventAttributes["version"] = "2.0"
-        eventAttributes["uid"] = settingsStore.callSign
-        eventAttributes["type"] = settingsStore.cotType
-        eventAttributes["how"] = settingsStore.cotHow
+        eventAttributes["uid"] = SettingsStore.global.callSign
+        eventAttributes["type"] = SettingsStore.global.cotType
+        eventAttributes["how"] = SettingsStore.global.cotHow
         eventAttributes["time"] = nowString
         eventAttributes["start"] = nowString
         eventAttributes["stale"] = staleString
@@ -35,7 +33,7 @@ class COTMessage: NSObject {
         
         let point = "<point " + mapXmlAttrs(nodeAttributes: pointAttributes) + "></point>"
         
-        let detail = "<detail><contact callsign=\"\(settingsStore.callSign)\" /><remarks></remarks></detail>"
+        let detail = "<detail><contact callsign=\"\(SettingsStore.global.callSign)\" /><remarks></remarks></detail>"
         
         return "<?xml version=\"1.0\" standalone=\"yes\"?>" +
             "<event " + mapXmlAttrs(nodeAttributes: eventAttributes) + ">" +

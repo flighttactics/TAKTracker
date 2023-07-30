@@ -9,6 +9,7 @@
 import UIKit
 
 class SettingsStore: ObservableObject {
+    static let global = SettingsStore()
     
     /*
      Settings Remaining:
@@ -39,21 +40,24 @@ class SettingsStore: ObservableObject {
     
     @Published var takServerUrl: String {
         didSet {
-            NSLog("Setting takServerURL")
+            TAKLogger.debug("Setting takServerURL")
             UserDefaults.standard.set(takServerUrl, forKey: "takServerUrl")
+            UserDefaults.standard.set(true, forKey: "shouldTryReconnect")
         }
     }
     
     @Published var takServerPort: String {
         didSet {
-            NSLog("Setting takServerPort")
+            TAKLogger.debug("Setting takServerPort")
             UserDefaults.standard.set(takServerPort, forKey: "takServerPort")
+            UserDefaults.standard.set(true, forKey: "shouldTryReconnect")
         }
     }
     
     @Published var takServerProtocol: String {
         didSet {
             UserDefaults.standard.set(takServerProtocol, forKey: "takServerProtocol")
+            UserDefaults.standard.set(true, forKey: "shouldTryReconnect")
         }
     }
     
@@ -84,41 +88,58 @@ class SettingsStore: ObservableObject {
     @Published var serverCertificate: Data {
         didSet {
             UserDefaults.standard.set(serverCertificate, forKey: "serverCertificate")
+            UserDefaults.standard.set(true, forKey: "shouldTryReconnect")
         }
     }
     
     @Published var serverCertificatePassword: String {
         didSet {
             UserDefaults.standard.set(serverCertificatePassword, forKey: "serverCertificatePassword")
+            UserDefaults.standard.set(true, forKey: "shouldTryReconnect")
         }
     }
     
     @Published var userCertificate: Data {
         didSet {
             UserDefaults.standard.set(userCertificate, forKey: "userCertificate")
+            UserDefaults.standard.set(true, forKey: "shouldTryReconnect")
         }
     }
     
     @Published var userCertificatePassword: String {
         didSet {
             UserDefaults.standard.set(userCertificatePassword, forKey: "userCertificatePassword")
+            UserDefaults.standard.set(true, forKey: "shouldTryReconnect")
         }
     }
     
     @Published var takServerUsername: String {
         didSet {
             UserDefaults.standard.set(takServerUsername, forKey: "takServerUsername")
+            UserDefaults.standard.set(true, forKey: "shouldTryReconnect")
         }
     }
     
     @Published var takServerPassword: String {
         didSet {
             UserDefaults.standard.set(takServerPassword, forKey: "takServerPassword")
+            UserDefaults.standard.set(true, forKey: "shouldTryReconnect")
         }
     }
-
     
-    init() {
+    @Published var shouldTryReconnect: Bool {
+        didSet {
+            UserDefaults.standard.set(shouldTryReconnect, forKey: "shouldTryReconnect")
+        }
+    }
+    
+    @Published var isConnectedToServer: Bool {
+        didSet {
+            UserDefaults.standard.set(isConnectedToServer, forKey: "isConnectedToServer")
+        }
+    }
+    
+    private init() {
         let defaultSign = "TRACKER-\(Int.random(in: 1..<40))"
         self.callSign = (UserDefaults.standard.object(forKey: "callSign") == nil ? defaultSign : UserDefaults.standard.object(forKey: "callSign") as! String)
         
@@ -151,6 +172,10 @@ class SettingsStore: ObservableObject {
         self.takServerUsername = (UserDefaults.standard.object(forKey: "takServerUsername") == nil ? "" : UserDefaults.standard.object(forKey: "takServerUsername") as! String)
         
         self.takServerPassword = (UserDefaults.standard.object(forKey: "takServerPassword") == nil ? "" : UserDefaults.standard.object(forKey: "takServerPassword") as! String)
+        
+        self.shouldTryReconnect = (UserDefaults.standard.object(forKey: "shouldTryReconnect") == nil ? true : UserDefaults.standard.object(forKey: "shouldTryReconnect") as! Bool)
+        
+        self.isConnectedToServer = (UserDefaults.standard.object(forKey: "isConnectedToServer") == nil ? false : UserDefaults.standard.object(forKey: "isConnectedToServer") as! Bool)
 
     }
 }

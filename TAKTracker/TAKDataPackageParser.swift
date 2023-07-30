@@ -10,11 +10,10 @@ import ZIPFoundation
 
 class TAKDataPackageParser: NSObject {
     var archiveLocation: URL?
-    private let settingsStore = SettingsStore()
     
     init (fileLocation:URL) {
-        super.init()
         archiveLocation = fileLocation
+        super.init()
     }
     
     func parse() {
@@ -37,40 +36,41 @@ class TAKDataPackageParser: NSObject {
     
     func storeUserCertificate(archive: Archive, fileName: String) {
         guard let certFile = archive[fileName]
-        else { NSLog("userCertificate \(fileName) not found in archive"); return }
+        else { TAKLogger.debug("userCertificate \(fileName) not found in archive"); return }
 
         _ = try? archive.extract(certFile) { data in
-            settingsStore.userCertificate = data
+            SettingsStore.global.userCertificate = data
         }
     }
     
     func storeServerCertificate(archive: Archive, fileName: String) {
         guard let certFile = archive[fileName]
-        else { NSLog("serverCertificate \(fileName) not found in archive"); return }
+        else { TAKLogger.debug("serverCertificate \(fileName) not found in archive"); return }
 
         _ = try? archive.extract(certFile) { data in
-            settingsStore.serverCertificate = data
+            SettingsStore.global.serverCertificate = data
         }
     }
     
     func storePreferences(preferences: TAKPreferences) {
-        settingsStore.userCertificatePassword = preferences.userCertificatePassword
-        settingsStore.serverCertificatePassword = preferences.serverCertificatePassword
+        SettingsStore.global.userCertificatePassword = preferences.userCertificatePassword
+        SettingsStore.global.serverCertificatePassword = preferences.serverCertificatePassword
         
-        settingsStore.takServerUrl = preferences.serverConnectionAddress()
-        settingsStore.takServerPort = preferences.serverConnectionPort()
-        settingsStore.takServerProtocol = preferences.serverConnectionProtocol()
+        SettingsStore.global.takServerUrl = preferences.serverConnectionAddress()
+        SettingsStore.global.takServerPort = preferences.serverConnectionPort()
+        SettingsStore.global.takServerProtocol = preferences.serverConnectionProtocol()
+        SettingsStore.global.shouldTryReconnect = true
     }
     
     func parsePrefsFile(archive:Archive, prefsFile: String) -> TAKPreferences {
         let prefsParser = TAKPreferencesParser()
         
         guard let prefFile = archive[prefsFile]
-        else { NSLog("prefFile not in archive"); return prefsParser.preferences }
+        else { TAKLogger.debug("prefFile not in archive"); return prefsParser.preferences }
 
         _ = try? archive.extract(prefFile) { data in
             let xmlParser = XMLParser(data: data)
-            NSLog(String(describing: xmlParser))
+            TAKLogger.debug(String(describing: xmlParser))
             xmlParser.delegate = prefsParser
             xmlParser.parse()
         }
@@ -88,7 +88,7 @@ class TAKDataPackageParser: NSObject {
             let manifestParser = TAKManifestParser()
             xmlParser.delegate = manifestParser
             xmlParser.parse()
-            NSLog("Prefs file: \(manifestParser.prefsFile())")
+            TAKLogger.debug("Prefs file: \(manifestParser.prefsFile())")
             prefsFile = manifestParser.prefsFile()
         }
         return prefsFile
