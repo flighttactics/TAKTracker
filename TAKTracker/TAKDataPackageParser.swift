@@ -69,7 +69,7 @@ class TAKDataPackageParser: NSObject {
         SettingsStore.global.takServerUrl = preferences.serverConnectionAddress()
         SettingsStore.global.takServerPort = preferences.serverConnectionPort()
         SettingsStore.global.takServerProtocol = preferences.serverConnectionProtocol()
-        SettingsStore.global.shouldTryReconnect = true
+        SettingsStore.global.takServerChanged = true
     }
     
     func parsePrefsFile(archive:Archive, prefsFile: String) -> TAKPreferences {

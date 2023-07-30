@@ -20,8 +20,14 @@ class TCPMessage: NSObject, ObservableObject {
         if(!connected &&
            SettingsStore.global.shouldTryReconnect &&
            SettingsStore.global.connectionStatus == "Failed") {
+            TAKLogger.debug("Connection should be retried, so retrying")
             reconnect()
-        } else {
+            return
+//        } else if (SettingsStore.global.takServerChanged) {
+//            TAKLogger.debug("TAKServer was marked as changing, so reconnecting")
+//            reconnect()
+//            return
+        } else if (!connected) {
             return
         }
         TAKLogger.debug("[TCPMessage]: Sending TCP Data")

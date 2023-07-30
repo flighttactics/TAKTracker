@@ -145,6 +145,12 @@ class SettingsStore: ObservableObject {
         }
     }
     
+    @Published var takServerChanged: Bool {
+        didSet {
+            UserDefaults.standard.set(takServerChanged, forKey: "takServerChanged")
+        }
+    }
+    
     private init() {
         let defaultSign = "TRACKER-\(Int.random(in: 1..<40))"
         self.callSign = (UserDefaults.standard.object(forKey: "callSign") == nil ? defaultSign : UserDefaults.standard.object(forKey: "callSign") as! String)
@@ -184,6 +190,8 @@ class SettingsStore: ObservableObject {
         self.isConnectedToServer = (UserDefaults.standard.object(forKey: "isConnectedToServer") == nil ? false : UserDefaults.standard.object(forKey: "isConnectedToServer") as! Bool)
         
         self.connectionStatus = (UserDefaults.standard.object(forKey: "connectionStatus") == nil ? "Disconnected" : UserDefaults.standard.object(forKey: "connectionStatus") as! String)
+        
+        self.takServerChanged = (UserDefaults.standard.object(forKey: "takServerChanged") == nil ? false : UserDefaults.standard.object(forKey: "takServerChanged") as! Bool)
 
     }
 }
