@@ -128,7 +128,7 @@ struct MainScreen: View {
                         if(settingsStore.isConnectedToServer) {
                             Text("Server: Connected").foregroundColor(.green)
                         } else {
-                            Text("Server: Disconnected").foregroundColor(.red)
+                            Text("Server: \(settingsStore.connectionStatus)").foregroundColor(.red)
                         }
                     }
                     .font(.system(size: 15))

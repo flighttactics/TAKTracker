@@ -139,6 +139,12 @@ class SettingsStore: ObservableObject {
         }
     }
     
+    @Published var connectionStatus: String {
+        didSet {
+            UserDefaults.standard.set(connectionStatus, forKey: "connectionStatus")
+        }
+    }
+    
     private init() {
         let defaultSign = "TRACKER-\(Int.random(in: 1..<40))"
         self.callSign = (UserDefaults.standard.object(forKey: "callSign") == nil ? defaultSign : UserDefaults.standard.object(forKey: "callSign") as! String)
@@ -176,6 +182,8 @@ class SettingsStore: ObservableObject {
         self.shouldTryReconnect = (UserDefaults.standard.object(forKey: "shouldTryReconnect") == nil ? true : UserDefaults.standard.object(forKey: "shouldTryReconnect") as! Bool)
         
         self.isConnectedToServer = (UserDefaults.standard.object(forKey: "isConnectedToServer") == nil ? false : UserDefaults.standard.object(forKey: "isConnectedToServer") as! Bool)
+        
+        self.connectionStatus = (UserDefaults.standard.object(forKey: "connectionStatus") == nil ? "Disconnected" : UserDefaults.standard.object(forKey: "connectionStatus") as! String)
 
     }
 }

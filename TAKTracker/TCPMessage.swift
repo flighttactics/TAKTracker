@@ -17,7 +17,13 @@ class TCPMessage: NSObject, ObservableObject {
         guard let connected = connected else {
             return
         }
-        if(!connected) { return }
+        if(!connected &&
+           SettingsStore.global.shouldTryReconnect &&
+           SettingsStore.global.connectionStatus == "Failed") {
+            connect()
+        } else {
+            return
+        }
         TAKLogger.debug("[TCPMessage]: Sending TCP Data")
         connection!.send(content: payload, completion: .contentProcessed({ sendError in
             if let error = sendError {
@@ -76,30 +82,49 @@ class TCPMessage: NSObject, ObservableObject {
             self.connected = false
             DispatchQueue.main.async {
                 SettingsStore.global.isConnectedToServer = false
+                SettingsStore.global.shouldTryReconnect = false
+                SettingsStore.global.connectionStatus = "Starting"
             }
             
             switch (newState) {
             case .preparing:
                 TAKLogger.debug("[TCPMessage]: Entered state: preparing")
+                DispatchQueue.main.async {
+                    SettingsStore.global.connectionStatus = "Attempting to Connect"
+                }
             case .ready:
                 TAKLogger.debug("[TCPMessage]: Entered state: ready")
                 self.connected = true
                 DispatchQueue.main.async {
                     SettingsStore.global.isConnectedToServer = true
+                    SettingsStore.global.connectionStatus = "Connected"
                 }
             case .setup:
                 TAKLogger.debug("[TCPMessage]: Entered state: setup")
+                DispatchQueue.main.async {
+                    SettingsStore.global.connectionStatus = "Setup"
+                }
             case .cancelled:
                 TAKLogger.debug("[TCPMessage]: Entered state: cancelled")
+                DispatchQueue.main.async {
+                    SettingsStore.global.connectionStatus = "Cancelled"
+                }
             case .waiting:
                 TAKLogger.debug("[TCPMessage]: Entered state: waiting")
+                DispatchQueue.main.async {
+                    SettingsStore.global.connectionStatus = "Waiting"
+                }
             case .failed:
                 TAKLogger.debug("[TCPMessage]: Entered state: failed")
                 DispatchQueue.main.async {
                     SettingsStore.global.isConnectedToServer = false
+                    SettingsStore.global.connectionStatus = "Failed"
                 }
             default:
                 TAKLogger.debug("[TCPMessage]: Entered an unknown state")
+                DispatchQueue.main.async {
+                    SettingsStore.global.connectionStatus = "Unknown"
+                }
             }
         }
         
@@ -107,6 +132,11 @@ class TCPMessage: NSObject, ObservableObject {
             if (isViable) {
                 TAKLogger.debug("[TCPMessage]: Connection is viable")
             } else {
+                DispatchQueue.main.async {
+                    SettingsStore.global.connectionStatus = "Disconnected"
+                    SettingsStore.global.isConnectedToServer = false
+                    SettingsStore.global.shouldTryReconnect = true
+                }
                 TAKLogger.debug("[TCPMessage]: Connection is not viable")
             }
         }

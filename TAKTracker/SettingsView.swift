@@ -101,13 +101,17 @@ struct SettingsView: View {
                             switch results {
                             case .success(let fileurls):
                                 for fileurl in fileurls {
-                                    TAKLogger.debug("Processing Package")
-                                    let tdpp = TAKDataPackageParser(
-                                        fileLocation: fileurl
-                                    )
-                                    tdpp.parse()
+                                    if(fileurl.startAccessingSecurityScopedResource()) {
+                                        TAKLogger.debug("Processing Package at \(String(describing: fileurl))")
+                                        let tdpp = TAKDataPackageParser(
+                                            fileLocation: fileurl
+                                        )
+                                        tdpp.parse()
+                                        fileurl.stopAccessingSecurityScopedResource()
+                                    } else {
+                                        TAKLogger.error("Unable to securely access  \(String(describing: fileurl))")
+                                    }
                                 }
-                                
                             case .failure(let error):
                                 TAKLogger.debug(String(describing: error))
                             }

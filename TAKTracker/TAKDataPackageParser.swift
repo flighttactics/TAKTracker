@@ -12,6 +12,7 @@ class TAKDataPackageParser: NSObject {
     var archiveLocation: URL?
     
     init (fileLocation:URL) {
+        TAKLogger.debug("Initializing TAKDPP")
         archiveLocation = fileLocation
         super.init()
     }
@@ -22,16 +23,25 @@ class TAKDataPackageParser: NSObject {
     
     private
     func processArchive() {
-        guard let sourceURL = archiveLocation,
-            let archive = Archive(url: sourceURL, accessMode: .read)
-        else { return }
+        TAKLogger.debug("Entering processArchive")
+        guard let sourceURL = archiveLocation
+        else {
+            TAKLogger.error("Unable to access sourceURL variable \(String(describing: archiveLocation))")
+            return
+        }
+
+        guard let archive = Archive(url: sourceURL, accessMode: .read)
+        else {
+            TAKLogger.error("Unable to access archive at location \(String(describing: archiveLocation))")
+            return
+        }
         
         let prefsFile = retrievePrefsFile(archive: archive)
         let prefs = parsePrefsFile(archive: archive, prefsFile: prefsFile)
         storeUserCertificate(archive: archive, fileName: prefs.userCertificateFileName())
         storeServerCertificate(archive: archive, fileName: prefs.serverCertificateFileName())
         storePreferences(preferences: prefs)
-        
+        TAKLogger.debug("processArchive Complete")
     }
     
     func storeUserCertificate(archive: Archive, fileName: String) {

@@ -11,4 +11,12 @@ class TAKLogger: NSObject {
     static func debug(_ message: String) {
         NSLog(message)
     }
+    
+    static func info(_ message: String) {
+        NSLog(message)
+    }
+    
+    static func error(_ message: String) {
+        NSLog(message)
+    }
 }
