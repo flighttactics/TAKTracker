@@ -20,7 +20,7 @@ class TCPMessage: NSObject, ObservableObject {
         if(!connected &&
            SettingsStore.global.shouldTryReconnect &&
            SettingsStore.global.connectionStatus == "Failed") {
-            connect()
+            reconnect()
         } else {
             return
         }
@@ -34,7 +34,19 @@ class TCPMessage: NSObject, ObservableObject {
         }))
     }
     
+    func reconnect() {
+        guard let connection = connection else {
+            TAKLogger.debug("Connection was already not viable on reconnect")
+            connect()
+            return
+        }
+        connection.cancel()
+        TAKLogger.debug("TCP Message Reconnect calling connect")
+        connect()
+    }
+    
     func connect() {
+        TAKLogger.debug("TCP Message Connect called")
         let host = NWEndpoint.Host(SettingsStore.global.takServerUrl)
         let port = NWEndpoint.Port(SettingsStore.global.takServerPort)!
         

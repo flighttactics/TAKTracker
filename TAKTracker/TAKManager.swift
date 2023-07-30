@@ -20,6 +20,7 @@ class TAKManager: NSObject, URLSessionDelegate, ObservableObject {
     override init() {
         super.init()
         udpMessage.connect()
+        TAKLogger.debug("TAKManager establishing TCP Message Connect")
         tcpMessage.connect()
     }
     
@@ -29,12 +30,8 @@ class TAKManager: NSObject, URLSessionDelegate, ObservableObject {
     }
     
     private func sendToTCP(message: String) {
-        if(!SettingsStore.global.isConnectedToServer && SettingsStore.global.shouldTryReconnect) {
-            tcpMessage.connect()
-        } else {
-            let messageContent = Data(message.utf8)
-            tcpMessage.send(messageContent)
-        }
+        let messageContent = Data(message.utf8)
+        tcpMessage.send(messageContent)
     }
     
     func broadcastLocation(location: CLLocation) {
