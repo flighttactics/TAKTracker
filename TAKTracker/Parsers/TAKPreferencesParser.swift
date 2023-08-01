@@ -31,17 +31,17 @@ struct TAKPreferences {
     
     func serverConnectionAddress() -> String {
         let splitFile = serverConnectionString.components(separatedBy: ":")
-        return splitFile[0]
+        return splitFile.count > 0 ? splitFile[0] : ""
     }
     
     func serverConnectionPort() -> String {
         let splitFile = serverConnectionString.components(separatedBy: ":")
-        return splitFile[1]
+        return splitFile.count > 1 ? splitFile[1] : ""
     }
     
     func serverConnectionProtocol() -> String {
         let splitFile = serverConnectionString.components(separatedBy: ":")
-        return splitFile[2]
+        return splitFile.count > 2 ? splitFile[2] : ""
     }
 }
 
