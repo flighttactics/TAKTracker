@@ -130,26 +130,17 @@
 		A5D8D37C2A53B0F9002F0E3E /* TAKTracker */ = {
 			isa = PBXGroup;
 			children = (
-				A599D66C2A5E45CD00B507D9 /* TAKTracker.entitlements */,
-				A5A49D912A547378009764C1 /* TAKTracker-Info.plist */,
-				A5D8D37F2A53B0F9002F0E3E /* MainScreen.swift */,
-				A50C5F5C2A601CF0001E52E6 /* SettingsView.swift */,
-				A5E7B00A2A70B5F900D9203F /* TAKDataPackageParser.swift */,
-				A5BF02032A5EBCC10043065B /* COTMessage.swift */,
-				A5D8D3A72A53B465002F0E3E /* LocationManager.swift */,
-				A519D7362A5DB42600E78D3D /* PKCS12.swift */,
-				A5A49D8F2A5459B5009764C1 /* TAKManager.swift */,
-				A5D8D37D2A53B0F9002F0E3E /* TAKTrackerApp.swift */,
-				A5BF02012A5EBCA40043065B /* TCPMessage.swift */,
-				A5BF01FF2A5EB63F0043065B /* UDPMessage.swift */,
 				A5A49D942A5572C1009764C1 /* Assets.xcassets */,
+				A5E2F8FC2A791F0600EDD0B4 /* Communications */,
+				A5E2F8FE2A791F5600EDD0B4 /* Data Models */,
+				A5D8D3A72A53B465002F0E3E /* LocationManager.swift */,
+				A5E2F8FA2A791EC100EDD0B4 /* Parsers */,
 				A5D8D3832A53B0FA002F0E3E /* Preview Content */,
-				A50C5F5A2A5F92FF001E52E6 /* SettingsStore.swift */,
-				A50C5F5E2A6032D2001E52E6 /* AlertView.swift */,
-				A50C5F602A6032E8001E52E6 /* ChatView.swift */,
-				A5E7B00F2A714ECC00D9203F /* TAKManifestParser.swift */,
-				A5E7B0112A7184FB00D9203F /* TAKPreferencesParser.swift */,
-				A5E7B0172A76AA8B00D9203F /* TAKLogger.swift */,
+				A5E2F8FD2A791F3000EDD0B4 /* Screens */,
+				A5E2F9002A791FD900EDD0B4 /* TAK */,
+				A5A49D912A547378009764C1 /* TAKTracker-Info.plist */,
+				A599D66C2A5E45CD00B507D9 /* TAKTracker.entitlements */,
+				A5E2F8FF2A791F6B00EDD0B4 /* Utilities */,
 			);
 			path = TAKTracker;
 			sourceTree = "<group>";
@@ -177,6 +168,63 @@
 				A5D8D39A2A53B0FB002F0E3E /* TAKTrackerUITestsLaunchTests.swift */,
 			);
 			path = TAKTrackerUITests;
+			sourceTree = "<group>";
+		};
+		A5E2F8FA2A791EC100EDD0B4 /* Parsers */ = {
+			isa = PBXGroup;
+			children = (
+				A5E7B00F2A714ECC00D9203F /* TAKManifestParser.swift */,
+				A5E7B0112A7184FB00D9203F /* TAKPreferencesParser.swift */,
+				A5E7B00A2A70B5F900D9203F /* TAKDataPackageParser.swift */,
+			);
+			path = Parsers;
+			sourceTree = "<group>";
+		};
+		A5E2F8FC2A791F0600EDD0B4 /* Communications */ = {
+			isa = PBXGroup;
+			children = (
+				A519D7362A5DB42600E78D3D /* PKCS12.swift */,
+				A5BF02012A5EBCA40043065B /* TCPMessage.swift */,
+				A5BF01FF2A5EB63F0043065B /* UDPMessage.swift */,
+			);
+			path = Communications;
+			sourceTree = "<group>";
+		};
+		A5E2F8FD2A791F3000EDD0B4 /* Screens */ = {
+			isa = PBXGroup;
+			children = (
+				A5D8D37F2A53B0F9002F0E3E /* MainScreen.swift */,
+				A50C5F5C2A601CF0001E52E6 /* SettingsView.swift */,
+				A5D8D37D2A53B0F9002F0E3E /* TAKTrackerApp.swift */,
+				A50C5F5E2A6032D2001E52E6 /* AlertView.swift */,
+				A50C5F602A6032E8001E52E6 /* ChatView.swift */,
+			);
+			path = Screens;
+			sourceTree = "<group>";
+		};
+		A5E2F8FE2A791F5600EDD0B4 /* Data Models */ = {
+			isa = PBXGroup;
+			children = (
+				A50C5F5A2A5F92FF001E52E6 /* SettingsStore.swift */,
+			);
+			path = "Data Models";
+			sourceTree = "<group>";
+		};
+		A5E2F8FF2A791F6B00EDD0B4 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				A5E7B0172A76AA8B00D9203F /* TAKLogger.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		A5E2F9002A791FD900EDD0B4 /* TAK */ = {
+			isa = PBXGroup;
+			children = (
+				A5BF02032A5EBCC10043065B /* COTMessage.swift */,
+				A5A49D8F2A5459B5009764C1 /* TAKManager.swift */,
+			);
+			path = TAK;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

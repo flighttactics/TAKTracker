@@ -17,9 +17,11 @@ class TCPMessage: NSObject, ObservableObject {
         guard let connected = connected else {
             return
         }
+        let reconnectStatus = SettingsStore.global.shouldTryReconnect
+        let connectionStatus = SettingsStore.global.connectionStatus
         if(!connected &&
-           SettingsStore.global.shouldTryReconnect &&
-           SettingsStore.global.connectionStatus == "Failed") {
+           reconnectStatus &&
+           connectionStatus == "Failed") {
             TAKLogger.debug("Connection should be retried, so retrying")
             reconnect()
             return

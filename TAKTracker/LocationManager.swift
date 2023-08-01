@@ -55,6 +55,7 @@ class LocationManager: NSObject,CLLocationManagerDelegate, ObservableObject {
         }
         
         guard let heading = manager.heading else { TAKLogger.debug("No heading!"); return }
+        TAKLogger.debug("Heading Orientation: \(String(describing: manager.headingOrientation))")
         lastHeading = heading
     }
     
