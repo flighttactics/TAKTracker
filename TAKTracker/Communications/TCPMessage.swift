@@ -55,6 +55,15 @@ class TCPMessage: NSObject, ObservableObject {
     
     func connect() {
         TAKLogger.debug("TCP Message Connect called")
+        
+        let serverUrl = SettingsStore.global.takServerUrl
+        let serverPort = SettingsStore.global.takServerPort
+        
+        if (serverUrl.isEmpty || serverPort.isEmpty) {
+            TAKLogger.debug("[TCPMessage]: Host/Port not set. Cancelling connection.")
+            return
+        }
+        
         let host = NWEndpoint.Host(SettingsStore.global.takServerUrl)
         let port = NWEndpoint.Port(SettingsStore.global.takServerPort)!
         
