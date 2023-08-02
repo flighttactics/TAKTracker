@@ -1,29 +1,37 @@
 #  TAK Tracker
 
-TAK Tracker is a update-only version TAK for Apple Devices. It is designed to be quick to deploy and easy to use for users who just need to know where they are. The app is configured to send both broadcast and to a TAK Server directly, and is being to developed to support all of the features from the Android TAK Tracker.
+TAK Tracker is a update-only version of [TAK](https://www.tak.gov) for Apple Devices. It is designed to be quick to deploy and easy to use for teams to give to users who just need location tracked. The app is configured to send both broadcast and to a TAK Server directly, and is being to developed to support all of the features from the Android TAK Tracker.
+
+Below is the roadmap being tracked. It is _highly_ likely that this project will end up spawing a separate iOS TAK app since TAK Tracker is supposed to be very lightweight. So if something isn't working or you don't see something on the list below, please use GitHub Issues to let us know about it. 
+
+If you are interested in integrating this into your own product or want a custom iOS/Android/etc TAK app, plugins or features, let us know by contacting foyc at flighttactics dot com or visiting [Flight Tactics](https://www.flighttactics.com)
 
 ## Current TAK Tracker Parity Feature Status:
 
 - [x] Broadcast location over UDP
-- [ ] Broadcast location over TCP to TAK Server
-- [ ] Send location automatically
+- [x] Broadcast location over TCP to TAK Server
+- [x] Send location automatically
 - [ ] Emergency Beacon
 - [ ] TAK Chat
-- [ ] TCP Connections
-- [ ] Show Current Coordinates
-- [ ] Show Heading / Bearing
-- [ ] Show Speed
-- [ ] Show Server Status
+- [x] TCP Connections
+- [x] Show Current Coordinates
+- [x] Show Heading / Bearing
+- [x] Show Speed
+- [x] Show Server Status
 - [ ] Show GPS Status
 - [ ] Show Compass Accuracy
+- [ ] Certificate Enrollment for connecting to server
 
 ## Current Extended Features Status:
+
+These will likely end up being pulled out into a separate app rather than integrated into TAK Tracker, but tracking here for now
 
 - [x] Show Current Location on Map
 - [ ] Show other TAK Users on the Map
 - [ ] Allow sending of a point other than your current spot
 - [X] Show Current Map Center Coordinates
 - [ ] Show GPS Accuracy
+- [ ] Ensure both iTAK and ATAK packages can be imported
 
 ## License & Copyright
 
