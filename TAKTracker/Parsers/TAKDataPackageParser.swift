@@ -9,6 +9,10 @@ import UIKit
 import ZIPFoundation
 
 class TAKDataPackageParser: NSObject {
+    
+    let MANIFEST_FILE = "manifest.xml"
+    var dataPackageContents: [String] = []
+    
     var archiveLocation: URL?
     
     init (fileLocation:URL) {
@@ -35,6 +39,12 @@ class TAKDataPackageParser: NSObject {
             TAKLogger.error("Unable to access archive at location \(String(describing: archiveLocation))")
             return
         }
+        
+        TAKLogger.debug("Files in archive")
+        dataPackageContents = archive.map { entry in
+            return entry.path
+        }
+        TAKLogger.debug(String(describing: dataPackageContents))
         
         let prefsFile = retrievePrefsFile(archive: archive)
         let prefs = parsePrefsFile(archive: archive, prefsFile: prefsFile)
@@ -90,16 +100,22 @@ class TAKDataPackageParser: NSObject {
     func retrievePrefsFile(archive:Archive) -> String {
         var prefsFile = ""
         
-        guard let takManifest = archive["manifest.xml"]
-        else { return prefsFile }
+        if let prefFileLocation = dataPackageContents.first(where: {
+            $0.hasSuffix(".pref")
+        }) {
+            prefsFile = prefFileLocation
+        } else {
+            guard let takManifest = archive["manifest.xml"]
+            else { return prefsFile }
 
-        _ = try? archive.extract(takManifest) { data in
-            let xmlParser = XMLParser(data: data)
-            let manifestParser = TAKManifestParser()
-            xmlParser.delegate = manifestParser
-            xmlParser.parse()
-            TAKLogger.debug("Prefs file: \(manifestParser.prefsFile())")
-            prefsFile = manifestParser.prefsFile()
+            _ = try? archive.extract(takManifest) { data in
+                let xmlParser = XMLParser(data: data)
+                let manifestParser = TAKManifestParser()
+                xmlParser.delegate = manifestParser
+                xmlParser.parse()
+                TAKLogger.debug("Prefs file: \(manifestParser.prefsFile())")
+                prefsFile = manifestParser.prefsFile()
+            }
         }
         return prefsFile
     }
