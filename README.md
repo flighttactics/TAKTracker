@@ -6,32 +6,35 @@ Below is the roadmap being tracked. It is _highly_ likely that this project will
 
 If you are interested in integrating this into your own product or want a custom iOS/Android/etc TAK app, plugins or features, let us know by contacting foyc at flighttactics dot com or visiting [Flight Tactics](https://www.flighttactics.com)
 
-## Current TAK Tracker Parity Feature Status:
+## Current TAK Tracker Parity Feature Status in rough priority / sequence:
 
+- [ ] Certificate Enrollment for connecting to server
+- [ ] Have compass / heading recognize landscape mode
+- [ ] Automatically connect when adding a new data package / connection (must restart the app now to pick them up)
+- [ ] Better messages and logging about the state of parsing the packages and data connections
+- [ ] Emergency Beacon
+- [ ] TAK Chat
+- [ ] Show GPS Status
+- [ ] Show Compass Accuracy
 - [x] Broadcast location over UDP
 - [x] Broadcast location over TCP to TAK Server
 - [x] Send location automatically
-- [ ] Emergency Beacon
-- [ ] TAK Chat
 - [x] TCP Connections
 - [x] Show Current Coordinates
 - [x] Show Heading / Bearing
 - [x] Show Speed
 - [x] Show Server Status
-- [ ] Show GPS Status
-- [ ] Show Compass Accuracy
-- [ ] Certificate Enrollment for connecting to server
 
 ## Current Extended Features Status:
 
 These will likely end up being pulled out into a separate app rather than integrated into TAK Tracker, but tracking here for now
 
-- [x] Show Current Location on Map
 - [ ] Show other TAK Users on the Map
 - [ ] Allow sending of a point other than your current spot
-- [X] Show Current Map Center Coordinates
 - [ ] Show GPS Accuracy
 - [ ] Ensure both iTAK and ATAK packages can be imported
+- [X] Show Current Map Center Coordinates
+- [x] Show Current Location on Map
 
 ## License & Copyright
 
