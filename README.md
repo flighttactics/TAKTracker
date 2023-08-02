@@ -9,6 +9,7 @@ If you are interested in integrating this into your own product or want a custom
 ## Current TAK Tracker Parity Feature Status in rough priority / sequence:
 
 - [ ] Certificate Enrollment for connecting to server
+- [ ] QR Code Enrollment for connecting to server
 - [ ] Have compass / heading recognize landscape mode
 - [ ] Automatically connect when adding a new data package / connection (must restart the app now to pick them up)
 - [ ] Better messages and logging about the state of parsing the packages and data connections
