@@ -12,8 +12,10 @@ If you are interested in integrating this into your own product or want a custom
 - [ ] Have compass / heading recognize landscape mode
 - [ ] Automatically connect when adding a new data package / connection (must restart the app now to pick them up)
 - [ ] Better messages and logging about the state of parsing the packages and data connections
+- [ ] Continuing transmitting location while app is in the background
 - [ ] Emergency Beacon
 - [ ] TAK Chat
+- [ ] Allow map to be scrolled without resetting
 - [ ] Show GPS Status
 - [ ] Show Compass Accuracy
 - [x] Broadcast location over UDP
