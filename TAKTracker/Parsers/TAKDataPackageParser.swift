@@ -58,18 +58,22 @@ class TAKDataPackageParser: NSObject {
         guard let certFile = archive[fileName]
         else { TAKLogger.debug("userCertificate \(fileName) not found in archive"); return }
 
+        var certData = Data()
         _ = try? archive.extract(certFile) { data in
-            SettingsStore.global.userCertificate = data
+            certData.append(data)
         }
+        SettingsStore.global.userCertificate = certData
     }
     
     func storeServerCertificate(archive: Archive, fileName: String) {
         guard let certFile = archive[fileName]
         else { TAKLogger.debug("serverCertificate \(fileName) not found in archive"); return }
 
+        var certData = Data()
         _ = try? archive.extract(certFile) { data in
-            SettingsStore.global.serverCertificate = data
+            certData.append(data)
         }
+        SettingsStore.global.serverCertificate = certData
     }
     
     func storePreferences(preferences: TAKPreferences) {
@@ -88,12 +92,14 @@ class TAKDataPackageParser: NSObject {
         guard let prefFile = archive[prefsFile]
         else { TAKLogger.debug("prefFile not in archive"); return prefsParser.preferences }
 
+        var prefData = Data()
         _ = try? archive.extract(prefFile) { data in
-            let xmlParser = XMLParser(data: data)
-            TAKLogger.debug(String(describing: xmlParser))
-            xmlParser.delegate = prefsParser
-            xmlParser.parse()
+            prefData.append(data)
         }
+        let xmlParser = XMLParser(data: prefData)
+        TAKLogger.debug(String(describing: xmlParser))
+        xmlParser.delegate = prefsParser
+        xmlParser.parse()
         return prefsParser.preferences
     }
     
@@ -108,14 +114,16 @@ class TAKDataPackageParser: NSObject {
             guard let takManifest = archive["manifest.xml"]
             else { return prefsFile }
 
+            var manifestData = Data()
             _ = try? archive.extract(takManifest) { data in
-                let xmlParser = XMLParser(data: data)
-                let manifestParser = TAKManifestParser()
-                xmlParser.delegate = manifestParser
-                xmlParser.parse()
-                TAKLogger.debug("Prefs file: \(manifestParser.prefsFile())")
-                prefsFile = manifestParser.prefsFile()
+                manifestData.append(data)
             }
+            let xmlParser = XMLParser(data: manifestData)
+            let manifestParser = TAKManifestParser()
+            xmlParser.delegate = manifestParser
+            xmlParser.parse()
+            TAKLogger.debug("Prefs file: \(manifestParser.prefsFile())")
+            prefsFile = manifestParser.prefsFile()
         }
         return prefsFile
     }

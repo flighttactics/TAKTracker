@@ -14,32 +14,23 @@ class TCPMessage: NSObject, ObservableObject {
     var connection: NWConnection?
     
     func send(_ payload: Data) {
-        guard let connected = connected else {
-            return
+        var isConnected = false
+        if let connected = connected {
+            isConnected = connected
         }
-        let reconnectStatus = SettingsStore.global.shouldTryReconnect
-        let connectionStatus = SettingsStore.global.connectionStatus
-        if(!connected &&
-           reconnectStatus &&
-           connectionStatus == "Failed") {
-            TAKLogger.debug("Connection should be retried, so retrying")
+        let shouldForceReconnect = SettingsStore.global.takServerChanged
+        if(isConnected && !shouldForceReconnect) {
+            TAKLogger.debug("[TCPMessage]: Sending TCP Data")
+            connection!.send(content: payload, completion: .contentProcessed({ sendError in
+                if let error = sendError {
+                    TAKLogger.debug("[TCPMessage]: Unable to process and send the data: \(error)")
+                } else {
+                    TAKLogger.debug("[TCPMessage]: Data has been sent")
+                }
+            }))
+        } else {
             reconnect()
-            return
-//        } else if (SettingsStore.global.takServerChanged) {
-//            TAKLogger.debug("TAKServer was marked as changing, so reconnecting")
-//            reconnect()
-//            return
-        } else if (!connected) {
-            return
         }
-        TAKLogger.debug("[TCPMessage]: Sending TCP Data")
-        connection!.send(content: payload, completion: .contentProcessed({ sendError in
-            if let error = sendError {
-                TAKLogger.debug("[TCPMessage]: Unable to process and send the data: \(error)")
-            } else {
-                TAKLogger.debug("[TCPMessage]: Data has been sent")
-            }
-        }))
     }
     
     func reconnect() {
@@ -48,9 +39,25 @@ class TCPMessage: NSObject, ObservableObject {
             connect()
             return
         }
-        connection.cancel()
-        TAKLogger.debug("TCP Message Reconnect calling connect")
-        connect()
+        let reconnectStatus = SettingsStore.global.shouldTryReconnect
+        let connectionStatus = SettingsStore.global.connectionStatus
+        if(reconnectStatus &&
+           connectionStatus == "Failed") {
+            TAKLogger.debug("Connection should be retried, so retrying")
+            TAKLogger.debug("TCP Message Reconnect restarting connection")
+            connection.restart()
+            return
+        } else if (SettingsStore.global.takServerChanged) {
+            TAKLogger.debug("TAKServer was marked as changing, so reconnecting")
+            TAKLogger.debug("TCP Message Reconnect restarting connection")
+            SettingsStore.global.takServerChanged = false
+            connection.forceCancel()
+            connect()
+            return
+        } else {
+            TAKLogger.debug("TCP Connection is not connected and not retry eligible. Ignoring.")
+            return
+        }
     }
     
     func connect() {
@@ -66,6 +73,8 @@ class TCPMessage: NSObject, ObservableObject {
         
         let host = NWEndpoint.Host(SettingsStore.global.takServerUrl)
         let port = NWEndpoint.Port(SettingsStore.global.takServerPort)!
+        
+        TAKLogger.debug("Attempting to connect to \(String(describing: host)):\(String(describing: port))")
         
         let password = SettingsStore.global.userCertificatePassword
         let userP12Data = SettingsStore.global.userCertificate
