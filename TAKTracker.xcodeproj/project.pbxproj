@@ -536,7 +536,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = TAKTracker/TAKTracker.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 14;
+				CURRENT_PROJECT_VERSION = 15;
 				DEVELOPMENT_ASSET_PATHS = "TAKTracker/Preview\\ Content";
 				DEVELOPMENT_TEAM = 5LZ5HR44P3;
 				ENABLE_PREVIEWS = YES;
@@ -545,7 +545,8 @@
 				INFOPLIST_KEY_CFBundleDisplayName = "TAK Tracker";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.navigation";
 				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "Allow TAK Tracker to access the local network to broadcast CoT?";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Allow TAK Tracker to use your location?";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Allow TAK Tracker to update the map in the background?";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Allow TAK Tracker to use your location to update the map?";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -572,7 +573,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = TAKTracker/TAKTracker.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 14;
+				CURRENT_PROJECT_VERSION = 15;
 				DEVELOPMENT_ASSET_PATHS = "TAKTracker/Preview\\ Content";
 				DEVELOPMENT_TEAM = 5LZ5HR44P3;
 				ENABLE_PREVIEWS = YES;
@@ -581,7 +582,8 @@
 				INFOPLIST_KEY_CFBundleDisplayName = "TAK Tracker";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.navigation";
 				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "Allow TAK Tracker to access the local network to broadcast CoT?";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Allow TAK Tracker to use your location?";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Allow TAK Tracker to update the map in the background?";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Allow TAK Tracker to use your location to update the map?";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -607,7 +609,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 14;
+				CURRENT_PROJECT_VERSION = 15;
 				DEVELOPMENT_TEAM = 5LZ5HR44P3;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
@@ -627,7 +629,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 14;
+				CURRENT_PROJECT_VERSION = 15;
 				DEVELOPMENT_TEAM = 5LZ5HR44P3;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
@@ -646,7 +648,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 14;
+				CURRENT_PROJECT_VERSION = 15;
 				DEVELOPMENT_TEAM = 5LZ5HR44P3;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
@@ -664,7 +666,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 14;
+				CURRENT_PROJECT_VERSION = 15;
 				DEVELOPMENT_TEAM = 5LZ5HR44P3;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;

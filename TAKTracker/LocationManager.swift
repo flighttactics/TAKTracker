@@ -20,7 +20,9 @@ class LocationManager: NSObject,CLLocationManagerDelegate, ObservableObject {
         super.init()
         manager.delegate = self
         manager.desiredAccuracy = kCLLocationAccuracyBest
-        manager.requestWhenInUseAuthorization()
+        manager.allowsBackgroundLocationUpdates = true
+        manager.showsBackgroundLocationIndicator = true
+        manager.requestAlwaysAuthorization()
         manager.startUpdatingLocation()
         manager.startUpdatingHeading()
     }
@@ -46,6 +48,7 @@ class LocationManager: NSObject,CLLocationManagerDelegate, ObservableObject {
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.last else { TAKLogger.debug("No Locations!"); return }
+        TAKLogger.debug("[LocationManager]: Location Updated")
         lastLocation = location
         locations.last.map {
             region = MKCoordinateRegion(
