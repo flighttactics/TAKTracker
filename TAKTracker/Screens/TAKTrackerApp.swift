@@ -10,6 +10,14 @@ import SwiftUI
 @main
 struct TAKTrackerApp: App {
     @Environment(\.scenePhase) var scenePhase
+    
+    init() {
+        TAKLogger.debug("Hello, TAK Tracker!")
+        SettingsStore.global.isConnectingToServer = false
+        SettingsStore.global.isConnectedToServer = false
+        SettingsStore.global.shouldTryReconnect = true
+        SettingsStore.global.connectionStatus = "Disconnected"
+    }
 
     var body: some Scene {
         WindowGroup {

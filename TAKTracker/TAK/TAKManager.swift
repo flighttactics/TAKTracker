@@ -20,7 +20,7 @@ class TAKManager: NSObject, URLSessionDelegate, ObservableObject {
     override init() {
         super.init()
         udpMessage.connect()
-        TAKLogger.debug("TAKManager establishing TCP Message Connect")
+        TAKLogger.debug("[TAKManager]: establishing TCP Message Connect")
         tcpMessage.connect()
     }
     
@@ -37,10 +37,10 @@ class TAKManager: NSObject, URLSessionDelegate, ObservableObject {
     func broadcastLocation(location: CLLocation) {
         let message = cotMessage.generateCOTXml(location: location)
 
-        TAKLogger.debug("Getting ready to broadcast location CoT")
+        TAKLogger.debug("[TAKManager]: Getting ready to broadcast location CoT")
         TAKLogger.debug(message)
         sendToUDP(message: message)
         sendToTCP(message: message)
-        TAKLogger.debug("Done broadcasting")
+        TAKLogger.debug("[TAKManager]: Done broadcasting")
     }
 }

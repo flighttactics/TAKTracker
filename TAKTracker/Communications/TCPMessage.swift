@@ -9,33 +9,32 @@ import Foundation
 import Network
 
 class TCPMessage: NSObject, ObservableObject {
-    @Published var connected: Bool?
-
     var connection: NWConnection?
     
+    override init() {
+        TAKLogger.debug("[TCPMessage]: Init")
+    }
+    
     func send(_ payload: Data) {
-        var isConnected = false
-        if let connected = connected {
-            isConnected = connected
-        }
         let shouldForceReconnect = SettingsStore.global.takServerChanged
-        if(isConnected && !shouldForceReconnect) {
+        if(SettingsStore.global.isConnectedToServer && !shouldForceReconnect) {
             TAKLogger.debug("[TCPMessage]: Sending TCP Data")
             connection!.send(content: payload, completion: .contentProcessed({ sendError in
                 if let error = sendError {
                     TAKLogger.debug("[TCPMessage]: Unable to process and send the data: \(error)")
                 } else {
-                    TAKLogger.debug("[TCPMessage]: Data has been sent")
+                    TAKLogger.debug("[TCPMessage]: Data has been sent \(String(describing: sendError))")
                 }
             }))
         } else {
+            TAKLogger.debug("[TCPMessage]: Reconnecting because connected was \(String(describing: SettingsStore.global.isConnectedToServer)) and shouldForceReconnect was \(String(describing: shouldForceReconnect))")
             reconnect()
         }
     }
     
     func reconnect() {
         guard let connection = connection else {
-            TAKLogger.debug("Connection was already not viable on reconnect")
+            TAKLogger.debug("[TCPMessage]: Connection was already not viable on reconnect")
             connect()
             return
         }
@@ -43,25 +42,36 @@ class TCPMessage: NSObject, ObservableObject {
         let connectionStatus = SettingsStore.global.connectionStatus
         if(reconnectStatus &&
            connectionStatus == "Failed") {
-            TAKLogger.debug("Connection should be retried, so retrying")
-            TAKLogger.debug("TCP Message Reconnect restarting connection")
+            TAKLogger.debug("[TCPMessage]: Connection should be retried, so retrying")
+            TAKLogger.debug("[TCPMessage]:  Reconnect restarting connection")
             connection.restart()
             return
         } else if (SettingsStore.global.takServerChanged) {
-            TAKLogger.debug("TAKServer was marked as changing, so reconnecting")
-            TAKLogger.debug("TCP Message Reconnect restarting connection")
+            TAKLogger.debug("[TCPMessage]: TAKServer was marked as changing, so reconnecting")
+            TAKLogger.debug("[TCPMessage]:  Reconnect restarting connection")
             SettingsStore.global.takServerChanged = false
             connection.forceCancel()
             connect()
             return
         } else {
-            TAKLogger.debug("TCP Connection is not connected and not retry eligible. Ignoring.")
+            TAKLogger.debug("[TCPMessage]: TCP Connection is not connected and not retry eligible. Ignoring.")
             return
         }
     }
     
     func connect() {
-        TAKLogger.debug("TCP Message Connect called")
+        TAKLogger.debug("[TCPMessage]: TCP Message Connect called")
+        let connectionStatus = SettingsStore.global.connectionStatus
+        let isConnecting = SettingsStore.global.isConnectingToServer
+        if(isConnecting) {
+            TAKLogger.debug("[TCPMessage]: Already trying to connect, so ignoring")
+            return
+        } else if(connectionStatus == "Connected" && !SettingsStore.global.takServerChanged) {
+            TAKLogger.debug("[TCPMessage]: Already connected, so ignoring (\(connectionStatus))")
+            return
+        }
+        
+        SettingsStore.global.isConnectingToServer = true
         
         let serverUrl = SettingsStore.global.takServerUrl
         let serverPort = SettingsStore.global.takServerPort
@@ -74,7 +84,7 @@ class TCPMessage: NSObject, ObservableObject {
         let host = NWEndpoint.Host(SettingsStore.global.takServerUrl)
         let port = NWEndpoint.Port(SettingsStore.global.takServerPort)!
         
-        TAKLogger.debug("Attempting to connect to \(String(describing: host)):\(String(describing: port))")
+        TAKLogger.debug("[TCPMessage]: Attempting to connect to \(String(describing: host)):\(String(describing: port))")
         
         let password = SettingsStore.global.userCertificatePassword
         let userP12Data = SettingsStore.global.userCertificate
@@ -82,7 +92,7 @@ class TCPMessage: NSObject, ObservableObject {
             TAKLogger.debug("[TCPMessage]: Unable to load TLS certificate. Cancelling connection.")
             return
         }
-        TAKLogger.debug("userP12Data: \(String(describing: userP12Data))")
+        TAKLogger.debug("[TCPMessage]: userP12Data: \(String(describing: userP12Data))")
         
         let userP12Contents = PKCS12(data: userP12Data, password: password)
         
@@ -90,8 +100,8 @@ class TCPMessage: NSObject, ObservableObject {
             TAKLogger.debug("[TCPMessage]: Unable to load TLS identity. Cancelling connection.")
             return
         }
-        TAKLogger.debug("Client Identity")
-        TAKLogger.debug(String(describing: clientIdentity))
+        TAKLogger.debug("[TCPMessage]: Client Identity")
+        TAKLogger.debug("[TCPMessage]: " + String(describing: clientIdentity))
         
         
         let options = NWProtocolTLS.Options()
@@ -103,11 +113,11 @@ class TCPMessage: NSObject, ObservableObject {
            sec_identity_create(clientIdentity)!
         )
         
-        TAKLogger.debug("sic-ci")
-        TAKLogger.debug(String(describing: sec_identity_create(clientIdentity)!))
+        TAKLogger.debug("[TCPMessage]: sic-ci")
+        TAKLogger.debug("[TCPMessage]: " + String(describing: sec_identity_create(clientIdentity)!))
         
         sec_protocol_options_set_verify_block(securityOptions, { (_, trust, completionHandler) in
-            TAKLogger.debug("Entering Verify Block")
+            TAKLogger.debug("[TCPMessage]: Entering Verify Block")
             let isTrusted = true
             completionHandler(isTrusted)
         }, .main)
@@ -117,7 +127,6 @@ class TCPMessage: NSObject, ObservableObject {
         TAKLogger.debug(String(describing: connection))
         
         connection!.stateUpdateHandler = { (newState) in
-            self.connected = false
             DispatchQueue.main.async {
                 SettingsStore.global.isConnectedToServer = false
                 SettingsStore.global.shouldTryReconnect = false
@@ -132,9 +141,9 @@ class TCPMessage: NSObject, ObservableObject {
                 }
             case .ready:
                 TAKLogger.debug("[TCPMessage]: Entered state: ready")
-                self.connected = true
                 DispatchQueue.main.async {
                     SettingsStore.global.isConnectedToServer = true
+                    SettingsStore.global.isConnectingToServer = false
                     SettingsStore.global.connectionStatus = "Connected"
                 }
             case .setup:
@@ -145,6 +154,7 @@ class TCPMessage: NSObject, ObservableObject {
             case .cancelled:
                 TAKLogger.debug("[TCPMessage]: Entered state: cancelled")
                 DispatchQueue.main.async {
+                    SettingsStore.global.isConnectingToServer = false
                     SettingsStore.global.connectionStatus = "Cancelled"
                 }
             case .waiting:
@@ -156,6 +166,7 @@ class TCPMessage: NSObject, ObservableObject {
                 TAKLogger.debug("[TCPMessage]: Entered state: failed")
                 DispatchQueue.main.async {
                     SettingsStore.global.isConnectedToServer = false
+                    SettingsStore.global.isConnectingToServer = false
                     SettingsStore.global.connectionStatus = "Failed"
                 }
             default:
@@ -203,13 +214,13 @@ class TCPMessage: NSObject, ObservableObject {
         connection = NWConnection(host: host, port: port, using: .tls)
         
         connection!.stateUpdateHandler = { (newState) in
-            self.connected = false
+            SettingsStore.global.isConnectedToServer = false
             switch (newState) {
             case .preparing:
                 TAKLogger.debug("[TCPMessage]: Entered state: preparing")
             case .ready:
                 TAKLogger.debug("[TCPMessage]: Entered state: ready")
-                self.connected = true
+                SettingsStore.global.isConnectedToServer = true
             case .setup:
                 TAKLogger.debug("[TCPMessage]: Entered state: setup")
             case .cancelled:

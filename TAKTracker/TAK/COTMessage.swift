@@ -146,6 +146,12 @@ struct COTUid : COTNode {
     }
 }
 
+/*
+ Based on Greg's comments here: https://github.com/snstac/pytak/issues/20#issuecomment-1478007463
+ there is an <auth> node that initially gets sent. It looks like this:
+ <auth><cot username="test_username" password="test_password" uid="ANDROID-359307100100375"/></auth>
+ */
+
 class COTMessage: NSObject {
     public func generateCOTXml(location: CLLocation) -> String {
         let cotTimeout = SettingsStore.global.staleTimeMinutes * 60.0

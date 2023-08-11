@@ -11,7 +11,7 @@ import MapKit
 struct MainScreen: View {
     @StateObject var manager = LocationManager()
     @StateObject var settingsStore = SettingsStore.global
-    var takManager = TAKManager()
+    @StateObject var takManager = TAKManager()
     
     @State var tracking:MapUserTrackingMode = .none
     

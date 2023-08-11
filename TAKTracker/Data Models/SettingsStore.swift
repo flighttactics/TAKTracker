@@ -139,6 +139,12 @@ class SettingsStore: ObservableObject {
         }
     }
     
+    @Published var isConnectingToServer: Bool {
+        didSet {
+            UserDefaults.standard.set(isConnectingToServer, forKey: "isConnectingToServer")
+        }
+    }
+    
     @Published var connectionStatus: String {
         didSet {
             UserDefaults.standard.set(connectionStatus, forKey: "connectionStatus")
@@ -188,6 +194,8 @@ class SettingsStore: ObservableObject {
         self.shouldTryReconnect = (UserDefaults.standard.object(forKey: "shouldTryReconnect") == nil ? true : UserDefaults.standard.object(forKey: "shouldTryReconnect") as! Bool)
         
         self.isConnectedToServer = (UserDefaults.standard.object(forKey: "isConnectedToServer") == nil ? false : UserDefaults.standard.object(forKey: "isConnectedToServer") as! Bool)
+        
+        self.isConnectingToServer = (UserDefaults.standard.object(forKey: "isConnectingToServer") == nil ? false : UserDefaults.standard.object(forKey: "isConnectingToServer") as! Bool)
         
         self.connectionStatus = (UserDefaults.standard.object(forKey: "connectionStatus") == nil ? "Disconnected" : UserDefaults.standard.object(forKey: "connectionStatus") as! String)
         
