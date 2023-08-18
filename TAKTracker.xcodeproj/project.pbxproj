@@ -29,6 +29,7 @@
 		A5E7B0102A714ECC00D9203F /* TAKManifestParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E7B00F2A714ECC00D9203F /* TAKManifestParser.swift */; };
 		A5E7B0122A7184FB00D9203F /* TAKPreferencesParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E7B0112A7184FB00D9203F /* TAKPreferencesParser.swift */; };
 		A5E7B0182A76AA8B00D9203F /* TAKLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E7B0172A76AA8B00D9203F /* TAKLogger.swift */; };
+		A5FB4E622A8FDF430034966D /* X509 in Frameworks */ = {isa = PBXBuildFile; productRef = A5FB4E612A8FDF430034966D /* X509 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -84,6 +85,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A5FB4E622A8FDF430034966D /* X509 in Frameworks */,
 				A5E7B00E2A70B95E00D9203F /* ZIPFoundation in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -245,6 +247,7 @@
 			name = TAKTracker;
 			packageProductDependencies = (
 				A5E7B00D2A70B95E00D9203F /* ZIPFoundation */,
+				A5FB4E612A8FDF430034966D /* X509 */,
 			);
 			productName = "TAK Spike";
 			productReference = A5D8D37A2A53B0F9002F0E3E /* TAKTracker.app */;
@@ -320,6 +323,7 @@
 			mainGroup = A5D8D3712A53B0F9002F0E3E;
 			packageReferences = (
 				A5E7B00C2A70B95E00D9203F /* XCRemoteSwiftPackageReference "ZIPFoundation" */,
+				A5FB4E602A8FDF430034966D /* XCRemoteSwiftPackageReference "swift-certificates" */,
 			);
 			productRefGroup = A5D8D37B2A53B0F9002F0E3E /* Products */;
 			projectDirPath = "";
@@ -729,6 +733,14 @@
 				minimumVersion = 0.9.16;
 			};
 		};
+		A5FB4E602A8FDF430034966D /* XCRemoteSwiftPackageReference "swift-certificates" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-certificates.git";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 0.6.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -736,6 +748,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = A5E7B00C2A70B95E00D9203F /* XCRemoteSwiftPackageReference "ZIPFoundation" */;
 			productName = ZIPFoundation;
+		};
+		A5FB4E612A8FDF430034966D /* X509 */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A5FB4E602A8FDF430034966D /* XCRemoteSwiftPackageReference "swift-certificates" */;
+			productName = X509;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
