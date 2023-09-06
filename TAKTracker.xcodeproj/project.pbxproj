@@ -30,6 +30,9 @@
 		A5E7B0122A7184FB00D9203F /* TAKPreferencesParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E7B0112A7184FB00D9203F /* TAKPreferencesParser.swift */; };
 		A5E7B0182A76AA8B00D9203F /* TAKLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E7B0172A76AA8B00D9203F /* TAKLogger.swift */; };
 		A5FB4E622A8FDF430034966D /* X509 in Frameworks */ = {isa = PBXBuildFile; productRef = A5FB4E612A8FDF430034966D /* X509 */; };
+		A5FB4E642A8FE0020034966D /* CSRRequestor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5FB4E632A8FE0020034966D /* CSRRequestor.swift */; };
+		A5FB4E662A98D0FF0034966D /* TAKConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5FB4E652A98D0FF0034966D /* TAKConstants.swift */; };
+		A5FB4E6B2AA751890034966D /* CertificateSigningRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5FB4E6A2AA751890034966D /* CertificateSigningRequestTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -78,6 +81,9 @@
 		A5E7B00F2A714ECC00D9203F /* TAKManifestParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TAKManifestParser.swift; sourceTree = "<group>"; };
 		A5E7B0112A7184FB00D9203F /* TAKPreferencesParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TAKPreferencesParser.swift; sourceTree = "<group>"; };
 		A5E7B0172A76AA8B00D9203F /* TAKLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TAKLogger.swift; sourceTree = "<group>"; };
+		A5FB4E632A8FE0020034966D /* CSRRequestor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CSRRequestor.swift; sourceTree = "<group>"; };
+		A5FB4E652A98D0FF0034966D /* TAKConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TAKConstants.swift; sourceTree = "<group>"; };
+		A5FB4E6A2AA751890034966D /* CertificateSigningRequestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CertificateSigningRequestTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -159,6 +165,7 @@
 			isa = PBXGroup;
 			children = (
 				A5D8D38E2A53B0FB002F0E3E /* TAKTrackerTests.swift */,
+				A5FB4E6A2AA751890034966D /* CertificateSigningRequestTests.swift */,
 			);
 			path = TAKTrackerTests;
 			sourceTree = "<group>";
@@ -188,6 +195,7 @@
 				A519D7362A5DB42600E78D3D /* PKCS12.swift */,
 				A5BF02012A5EBCA40043065B /* TCPMessage.swift */,
 				A5BF01FF2A5EB63F0043065B /* UDPMessage.swift */,
+				A5FB4E632A8FE0020034966D /* CSRRequestor.swift */,
 			);
 			path = Communications;
 			sourceTree = "<group>";
@@ -208,6 +216,7 @@
 			isa = PBXGroup;
 			children = (
 				A50C5F5A2A5F92FF001E52E6 /* SettingsStore.swift */,
+				A5FB4E652A98D0FF0034966D /* TAKConstants.swift */,
 			);
 			path = "Data Models";
 			sourceTree = "<group>";
@@ -324,6 +333,7 @@
 			packageReferences = (
 				A5E7B00C2A70B95E00D9203F /* XCRemoteSwiftPackageReference "ZIPFoundation" */,
 				A5FB4E602A8FDF430034966D /* XCRemoteSwiftPackageReference "swift-certificates" */,
+				A5FB4E672A9D2BE70034966D /* XCRemoteSwiftPackageReference "CertificateSigningRequest" */,
 			);
 			productRefGroup = A5D8D37B2A53B0F9002F0E3E /* Products */;
 			projectDirPath = "";
@@ -371,8 +381,10 @@
 				A5BF02042A5EBCC10043065B /* COTMessage.swift in Sources */,
 				A5D8D3802A53B0F9002F0E3E /* MainScreen.swift in Sources */,
 				A5BF02002A5EB7440043065B /* UDPMessage.swift in Sources */,
+				A5FB4E662A98D0FF0034966D /* TAKConstants.swift in Sources */,
 				A5E7B0122A7184FB00D9203F /* TAKPreferencesParser.swift in Sources */,
 				A519D7372A5DB42600E78D3D /* PKCS12.swift in Sources */,
+				A5FB4E642A8FE0020034966D /* CSRRequestor.swift in Sources */,
 				A50C5F612A6032E8001E52E6 /* ChatView.swift in Sources */,
 				A5D8D37E2A53B0F9002F0E3E /* TAKTrackerApp.swift in Sources */,
 				A5E7B00B2A70B5FA00D9203F /* TAKDataPackageParser.swift in Sources */,
@@ -391,6 +403,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A5D8D38F2A53B0FB002F0E3E /* TAKTrackerTests.swift in Sources */,
+				A5FB4E6B2AA751890034966D /* CertificateSigningRequestTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -540,7 +553,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = TAKTracker/TAKTracker.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 16;
+				CURRENT_PROJECT_VERSION = 18;
 				DEVELOPMENT_ASSET_PATHS = "TAKTracker/Preview\\ Content";
 				DEVELOPMENT_TEAM = 5LZ5HR44P3;
 				ENABLE_PREVIEWS = YES;
@@ -577,7 +590,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = TAKTracker/TAKTracker.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 16;
+				CURRENT_PROJECT_VERSION = 18;
 				DEVELOPMENT_ASSET_PATHS = "TAKTracker/Preview\\ Content";
 				DEVELOPMENT_TEAM = 5LZ5HR44P3;
 				ENABLE_PREVIEWS = YES;
@@ -613,7 +626,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 16;
+				CURRENT_PROJECT_VERSION = 18;
 				DEVELOPMENT_TEAM = 5LZ5HR44P3;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
@@ -633,7 +646,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 16;
+				CURRENT_PROJECT_VERSION = 18;
 				DEVELOPMENT_TEAM = 5LZ5HR44P3;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
@@ -652,7 +665,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 16;
+				CURRENT_PROJECT_VERSION = 18;
 				DEVELOPMENT_TEAM = 5LZ5HR44P3;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
@@ -670,7 +683,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 16;
+				CURRENT_PROJECT_VERSION = 18;
 				DEVELOPMENT_TEAM = 5LZ5HR44P3;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
@@ -739,6 +752,14 @@
 			requirement = {
 				kind = upToNextMinorVersion;
 				minimumVersion = 0.6.0;
+			};
+		};
+		A5FB4E672A9D2BE70034966D /* XCRemoteSwiftPackageReference "CertificateSigningRequest" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/cbaker6/CertificateSigningRequest.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

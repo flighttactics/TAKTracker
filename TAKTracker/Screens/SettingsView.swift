@@ -10,6 +10,7 @@ import SwiftUI
 
 struct SettingsView: View {
     @StateObject var settingsStore: SettingsStore = SettingsStore.global
+    @StateObject var csrRequest: CSRRequestor = CSRRequestor()
     
     @State private var numberFormatter: NumberFormatter = {
         var nf = NumberFormatter()
@@ -18,6 +19,7 @@ struct SettingsView: View {
     }()
     
     @State var isShowingFilePicker = false
+    @State var isShowingEnrollment = false
 
     var body: some View {
         List {
@@ -74,6 +76,60 @@ struct SettingsView: View {
                         Spacer()
                     }
                     TextField("Server Port", text: $settingsStore.takServerPort)
+                }
+                .padding(.top, 20)
+            }
+            
+            Group {
+                VStack {
+                    HStack {
+                        Text("Server Username")
+                            .font(.system(size: 18, weight: .medium))
+                            .foregroundColor(.secondary)
+                        Spacer()
+                    }
+                    TextField("Server Username", text: $settingsStore.takServerUsername)
+                }
+                .padding(.top, 20)
+            }
+            
+            Group {
+                VStack {
+                    HStack {
+                        Text("Server Password")
+                            .font(.system(size: 18, weight: .medium))
+                            .foregroundColor(.secondary)
+                        Spacer()
+                    }
+                    SecureField("Server Password", text: $settingsStore.takServerPassword)
+                }
+                .padding(.top, 20)
+            }
+            
+            Group {
+                VStack {
+                    HStack {
+                        Text("Enroll for Certificate")
+                            .font(.system(size: 18, weight: .medium))
+                            .foregroundColor(.secondary)
+                        Spacer()
+                    }
+                    Button {
+                        isShowingEnrollment.toggle()
+                    } label: {
+                        Text("Enroll Now")
+                    }
+                    .popover(isPresented: $isShowingEnrollment) {
+                        Text("Let's Enroll")
+                            .font(.headline)
+                            .padding()
+                        Button {
+                            csrRequest.beginEnrollment()
+                        } label: {
+                            Text("Begin")
+                        }
+                        Text(String(describing: $csrRequest.enrollmentStatus))
+                    }
                 }
                 .padding(.top, 20)
             }
