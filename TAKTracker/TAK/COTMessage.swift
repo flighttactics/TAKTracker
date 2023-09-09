@@ -167,7 +167,11 @@ class COTMessage: NSObject {
         cotDetail.childNodes.append(COTRemarks())
         cotDetail.childNodes.append(COTGroup(name: "Cyan", role: "Team Member"))
         cotDetail.childNodes.append(COTUid(callsign: SettingsStore.global.callSign))
-        cotDetail.childNodes.append(COTTakV(device: "iPhone 14", platform: "iTAK-Tracker-CIV", os: "iOS", version: "1.03"))
+        cotDetail.childNodes.append(COTTakV(device: TAKConstants.getPhoneModel(),
+                                            platform: TAKConstants.TAK_PLATFORM,
+                                            os: TAKConstants.getPhoneOS(),
+                                            version: TAKConstants.getAppVersion()))
+        cotDetail.childNodes.append(COTStatus(battery: TAKConstants.getPhoneBatteryStatus().description))
         
         cotEvent.childNodes.append(cotPoint)
         cotEvent.childNodes.append(cotDetail)

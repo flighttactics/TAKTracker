@@ -11,7 +11,6 @@ import Foundation
 import SwiftASN1
 import X509
 import XCTest
-import TAKTracker
 
 final class CertificateSigningRequestTests: XCTestCase {
     
@@ -45,19 +44,45 @@ lZZhcZub16BnXMT2G7m81f6XujMskrnPg3gLnLDDNlOz6gdUf70B
     override func tearDownWithError() throws {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
+    
+    func testEnsureCertStorageMatches() throws {
+        let bundle = Bundle(for: Self.self)
+        let testZip = bundle.url(forResource: TestConstants.ITAK_DATA_PACKAGE_NAME, withExtension: "zip")
+        let dpp = TAKDataPackageParser.init(fileLocation: testZip!)
+        dpp.parse()
+        let str = String(decoding: SettingsStore.global.userCertificate, as: UTF8.self)
+        let parsedCert = PKCS12(data: SettingsStore.global.userCertificate, password: "atakatak")
+        XCTAssertEqual(parsedCert.label, certString)
+    }
 
     func testParseCertificate() throws {
-        var received: [UInt8] = Array(Data(certString.utf8).base64EncodedData())
-        
-        //let parsedCert = PKCS12(data: Data(certString.utf8).base64EncodedData(), password: "atakatak")
         let parsedCert = try Certificate(pemEncoded: certString)
         NSLog(String(describing: parsedCert))
         
+        let pem = try parsedCert.serializeAsPEM()
+        let pemData = Data(pem.derBytes)
+        var serializer = DER.Serializer()
+        try serializer.serialize(parsedCert)
+        let derData = Data(serializer.serializedBytes)
+        
+        guard let certificateRef = SecCertificateCreateWithData(kCFAllocatorDefault, derData as CFData) else {
+                TAKLogger.error("Could not create certificate, data was not valid DER encoded X509 cert")
+                XCTAssert(false, "Keychain failed")
+                return
+                //throw KeychainError.invalidX509Data
+            }
+        
+        TAKLogger.debug("CertificateRef: \(String(describing: certificateRef))")
+        
+        var identity: SecIdentity
+        let certs: NSArray = [certificateRef]
+        //let status = SecIdentityCreateWithCertificate(nil, certificateRef, &identity)
+        //guard status == errSecSuccess else { TAKLogger.error("Could not create SecIdentity") }
+        sec_identity_create_with_certificates(identity, certs)
+        
+//        let pkcs = PKCS12(data: certificateRef, password: "")
+//        NSLog(String(describing: pkcs))
+        
         XCTAssert(parsedCert.issuer.description != "", "parsedCert Issuer Empty")
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // Any test you write for XCTest can be annotated as throws and async.
-        // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
-        // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
     }
 }

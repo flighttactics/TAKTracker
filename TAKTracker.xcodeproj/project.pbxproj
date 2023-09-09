@@ -33,6 +33,20 @@
 		A5FB4E642A8FE0020034966D /* CSRRequestor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5FB4E632A8FE0020034966D /* CSRRequestor.swift */; };
 		A5FB4E662A98D0FF0034966D /* TAKConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5FB4E652A98D0FF0034966D /* TAKConstants.swift */; };
 		A5FB4E6B2AA751890034966D /* CertificateSigningRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5FB4E6A2AA751890034966D /* CertificateSigningRequestTests.swift */; };
+		A5FB4E6E2AAA48680034966D /* itak-do-foyc.zip in Resources */ = {isa = PBXBuildFile; fileRef = A5FB4E6D2AAA48680034966D /* itak-do-foyc.zip */; };
+		A5FB4E732AAA48770034966D /* foyc.p12 in Resources */ = {isa = PBXBuildFile; fileRef = A5FB4E6F2AAA48770034966D /* foyc.p12 */; };
+		A5FB4E742AAA48770034966D /* tak-server.pref in Resources */ = {isa = PBXBuildFile; fileRef = A5FB4E702AAA48770034966D /* tak-server.pref */; };
+		A5FB4E752AAA48770034966D /* truststore-intermediate.p12 in Resources */ = {isa = PBXBuildFile; fileRef = A5FB4E712AAA48770034966D /* truststore-intermediate.p12 */; };
+		A5FB4E762AAA48770034966D /* manifest.xml in Resources */ = {isa = PBXBuildFile; fileRef = A5FB4E722AAA48770034966D /* manifest.xml */; };
+		A5FB4E782AAA49D30034966D /* TestConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5FB4E772AAA49D30034966D /* TestConstants.swift */; };
+		A5FB4E792AAA4B410034966D /* TAKDataPackageParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E7B00A2A70B5F900D9203F /* TAKDataPackageParser.swift */; };
+		A5FB4E7A2AAA4B450034966D /* TAKPreferencesParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E7B0112A7184FB00D9203F /* TAKPreferencesParser.swift */; };
+		A5FB4E7B2AAA4B480034966D /* TAKManifestParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E7B00F2A714ECC00D9203F /* TAKManifestParser.swift */; };
+		A5FB4E7C2AAA4B4F0034966D /* SettingsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A50C5F5A2A5F92FF001E52E6 /* SettingsStore.swift */; };
+		A5FB4E7D2AAA4B570034966D /* CSRRequestor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5FB4E632A8FE0020034966D /* CSRRequestor.swift */; };
+		A5FB4E7E2AAA4B5C0034966D /* PKCS12.swift in Sources */ = {isa = PBXBuildFile; fileRef = A519D7362A5DB42600E78D3D /* PKCS12.swift */; };
+		A5FB4E7F2AAA4BCB0034966D /* TAKConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5FB4E652A98D0FF0034966D /* TAKConstants.swift */; };
+		A5FB4E802AAA4BD70034966D /* TAKLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E7B0172A76AA8B00D9203F /* TAKLogger.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -84,6 +98,12 @@
 		A5FB4E632A8FE0020034966D /* CSRRequestor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CSRRequestor.swift; sourceTree = "<group>"; };
 		A5FB4E652A98D0FF0034966D /* TAKConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TAKConstants.swift; sourceTree = "<group>"; };
 		A5FB4E6A2AA751890034966D /* CertificateSigningRequestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CertificateSigningRequestTests.swift; sourceTree = "<group>"; };
+		A5FB4E6D2AAA48680034966D /* itak-do-foyc.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; name = "itak-do-foyc.zip"; path = "../../../tak.flighttactics.com/certs/iTAK/itak-do-foyc.zip"; sourceTree = "<group>"; };
+		A5FB4E6F2AAA48770034966D /* foyc.p12 */ = {isa = PBXFileReference; lastKnownFileType = file; name = foyc.p12; path = ../../../tak.flighttactics.com/certs/iTAK/foyc.p12; sourceTree = "<group>"; };
+		A5FB4E702AAA48770034966D /* tak-server.pref */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = "tak-server.pref"; path = "../../../tak.flighttactics.com/certs/iTAK/tak-server.pref"; sourceTree = "<group>"; };
+		A5FB4E712AAA48770034966D /* truststore-intermediate.p12 */ = {isa = PBXFileReference; lastKnownFileType = file; name = "truststore-intermediate.p12"; path = "../../../tak.flighttactics.com/certs/iTAK/truststore-intermediate.p12"; sourceTree = "<group>"; };
+		A5FB4E722AAA48770034966D /* manifest.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = manifest.xml; path = ../../../tak.flighttactics.com/certs/iTAK/manifest.xml; sourceTree = "<group>"; };
+		A5FB4E772AAA49D30034966D /* TestConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestConstants.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -164,8 +184,10 @@
 		A5D8D38D2A53B0FB002F0E3E /* TAKTrackerTests */ = {
 			isa = PBXGroup;
 			children = (
+				A5FB4E6C2AAA483B0034966D /* Test Files */,
 				A5D8D38E2A53B0FB002F0E3E /* TAKTrackerTests.swift */,
 				A5FB4E6A2AA751890034966D /* CertificateSigningRequestTests.swift */,
+				A5FB4E772AAA49D30034966D /* TestConstants.swift */,
 			);
 			path = TAKTrackerTests;
 			sourceTree = "<group>";
@@ -236,6 +258,18 @@
 				A5A49D8F2A5459B5009764C1 /* TAKManager.swift */,
 			);
 			path = TAK;
+			sourceTree = "<group>";
+		};
+		A5FB4E6C2AAA483B0034966D /* Test Files */ = {
+			isa = PBXGroup;
+			children = (
+				A5FB4E6F2AAA48770034966D /* foyc.p12 */,
+				A5FB4E722AAA48770034966D /* manifest.xml */,
+				A5FB4E702AAA48770034966D /* tak-server.pref */,
+				A5FB4E712AAA48770034966D /* truststore-intermediate.p12 */,
+				A5FB4E6D2AAA48680034966D /* itak-do-foyc.zip */,
+			);
+			path = "Test Files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -360,6 +394,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A5FB4E742AAA48770034966D /* tak-server.pref in Resources */,
+				A5FB4E762AAA48770034966D /* manifest.xml in Resources */,
+				A5FB4E732AAA48770034966D /* foyc.p12 in Resources */,
+				A5FB4E6E2AAA48680034966D /* itak-do-foyc.zip in Resources */,
+				A5FB4E752AAA48770034966D /* truststore-intermediate.p12 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -402,8 +441,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A5FB4E802AAA4BD70034966D /* TAKLogger.swift in Sources */,
+				A5FB4E7B2AAA4B480034966D /* TAKManifestParser.swift in Sources */,
+				A5FB4E792AAA4B410034966D /* TAKDataPackageParser.swift in Sources */,
+				A5FB4E7A2AAA4B450034966D /* TAKPreferencesParser.swift in Sources */,
+				A5FB4E7C2AAA4B4F0034966D /* SettingsStore.swift in Sources */,
 				A5D8D38F2A53B0FB002F0E3E /* TAKTrackerTests.swift in Sources */,
+				A5FB4E782AAA49D30034966D /* TestConstants.swift in Sources */,
 				A5FB4E6B2AA751890034966D /* CertificateSigningRequestTests.swift in Sources */,
+				A5FB4E7E2AAA4B5C0034966D /* PKCS12.swift in Sources */,
+				A5FB4E7F2AAA4BCB0034966D /* TAKConstants.swift in Sources */,
+				A5FB4E7D2AAA4B570034966D /* CSRRequestor.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -553,7 +601,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = TAKTracker/TAKTracker.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 18;
+				CURRENT_PROJECT_VERSION = 21;
 				DEVELOPMENT_ASSET_PATHS = "TAKTracker/Preview\\ Content";
 				DEVELOPMENT_TEAM = 5LZ5HR44P3;
 				ENABLE_PREVIEWS = YES;
@@ -590,7 +638,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = TAKTracker/TAKTracker.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 18;
+				CURRENT_PROJECT_VERSION = 21;
 				DEVELOPMENT_ASSET_PATHS = "TAKTracker/Preview\\ Content";
 				DEVELOPMENT_TEAM = 5LZ5HR44P3;
 				ENABLE_PREVIEWS = YES;
@@ -626,7 +674,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 18;
+				CURRENT_PROJECT_VERSION = 21;
 				DEVELOPMENT_TEAM = 5LZ5HR44P3;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
@@ -646,7 +694,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 18;
+				CURRENT_PROJECT_VERSION = 21;
 				DEVELOPMENT_TEAM = 5LZ5HR44P3;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
@@ -665,7 +713,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 18;
+				CURRENT_PROJECT_VERSION = 21;
 				DEVELOPMENT_TEAM = 5LZ5HR44P3;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
@@ -683,7 +731,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 18;
+				CURRENT_PROJECT_VERSION = 21;
 				DEVELOPMENT_TEAM = 5LZ5HR44P3;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;

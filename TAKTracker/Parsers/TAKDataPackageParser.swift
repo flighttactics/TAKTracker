@@ -63,6 +63,8 @@ class TAKDataPackageParser: NSObject {
             certData.append(data)
         }
         SettingsStore.global.userCertificate = certData
+        TAKLogger.debug("Storing User Certificate")
+        TAKLogger.debug(String(describing: certData))
     }
     
     func storeServerCertificate(archive: Archive, fileName: String) {

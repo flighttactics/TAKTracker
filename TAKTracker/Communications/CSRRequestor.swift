@@ -11,12 +11,22 @@ import Foundation
 import SwiftASN1
 import X509
 
-enum CSREnrollmentStatus {
+enum CSREnrollmentStatus : CustomStringConvertible {
     case NotStarted
     case Connecting
     case Enrolling
     case Failed
     case Succeeded
+    
+    var description: String {
+        switch self {
+        case .NotStarted: return "Not Started"
+        case .Connecting: return "Connecting"
+        case .Enrolling: return "Enrolling"
+        case .Failed: return "Failed"
+        case .Succeeded: return "Succeeded"
+        }
+    }
 }
 
 struct Order: Codable {
@@ -30,14 +40,16 @@ class CSRRequestor: NSObject, ObservableObject, URLSessionDelegate {
     var derEncodedCertificate: [UInt8] = []
     var derEncodedPrivateKey: Data = Data()
     
-    var host = "https://tak.flighttactics.com"
-    var csrPort = "8446"
-    var tlsConfigPath = "/Marti/api/tls/config"
-    var csrRequestPath = "/Marti/api/tls/signClient/v2?clientUid=A12345&version=v1.0.13-iTAKTracker"
+    var host = "https://\(SettingsStore.global.takServerUrl)"
+    var csrPort = TAKConstants.DEFAULT_CSR_PORT
+    var tlsConfigPath = TAKConstants.CERT_CONFIG_PATH
+    var csrRequestPath = TAKConstants.certificateSigningPath(
+        clientUid: TAKConstants.getClientID(),
+        appVersion: TAKConstants.getAppVersion())
 
     //This is used for adding basic auth to the request
-    var username = "foyc"
-    var password = "iTakKill3rComing!"
+    var username = SettingsStore.global.takServerUsername
+    var password = SettingsStore.global.takServerPassword
     
     func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
             if (challenge.protectionSpace.authenticationMethod == NSURLAuthenticationMethodClientCertificate) {
@@ -82,7 +94,13 @@ class CSRRequestor: NSObject, ObservableObject, URLSessionDelegate {
                                                delegate: self,
                                                delegateQueue: OperationQueue.main)
         
-        generateSelfSignedCertificate(commonName: "foyc", hostName: "tak.flighttactics.com")
+        // TODO: Pull O/OU from the TLS Config API
+        generateSigningRequest(
+            commonName: username,
+            hostName: SettingsStore.global.takServerUrl,
+            organizationName: "FLIGHTTACTICS",
+            organizationUnitName: "TAK")
+
         let rawCertData = Data(derEncodedCertificate)
         let certData = rawCertData.base64EncodedString()
         TAKLogger.debug("certData as Data")
@@ -90,6 +108,7 @@ class CSRRequestor: NSObject, ObservableObject, URLSessionDelegate {
         
         request.httpBody = rawCertData.base64EncodedData()
         
+        // TODO: Actually let the user know this failed if it, uh, fails
         let task = session.dataTask(with: request) { data, response, error in
             if let error = error {
                 TAKLogger.error("[CSRRequestor] Error: \(error)")
@@ -122,6 +141,11 @@ class CSRRequestor: NSObject, ObservableObject, URLSessionDelegate {
                             let parsedCert = try Certificate(pemEncoded: certString)
                             TAKLogger.debug("Parsed Certificate:")
                             TAKLogger.debug(String(describing: parsedCert))
+                            TAKLogger.debug("Storing Certificate")
+                            let responseCertData = certString.data(using: String.Encoding.utf8)!
+                            SettingsStore.global.userCertificate = responseCertData
+                            SettingsStore.global.userCertificatePassword = ""
+                            SettingsStore.global.takServerChanged = true
                         }
                     }
                 } catch let error as NSError {
@@ -135,7 +159,7 @@ class CSRRequestor: NSObject, ObservableObject, URLSessionDelegate {
                 
                 TAKLogger.debug("Attempting Cert parse")
                 do {
-                    var received: [UInt8] = Array(data!)
+                    let received: [UInt8] = Array(data!)
                     let responseCert = try Certificate(derEncoded: received)
                     TAKLogger.debug(String(describing: responseCert))
                 } catch let error as NSError {
@@ -148,15 +172,23 @@ class CSRRequestor: NSObject, ObservableObject, URLSessionDelegate {
 
     }
     
-    func generateSelfSignedCertificate(commonName: String, hostName: String) {
+    func generateSigningRequest(commonName: String,
+                                hostName: String,
+                                organizationName: String,
+                                organizationUnitName: String) {
         do {
             let swiftCryptoKey = try _RSA.Signing.PrivateKey(keySize: .bits2048)
             let key = Certificate.PrivateKey(swiftCryptoKey)
+            
+            //let privateKey = P256.Signing.PrivateKey()
+            //let publicKeyData = privateKey.publicKey.compactRepresentation!
+            
+            //let signature = try privateKey.signature(for: transactionData)
 
             let subjectName = try DistinguishedName {
                 CommonName(commonName)
-                OrganizationName("FLIGHTTACTICS")
-                OrganizationalUnitName("TAK")
+                OrganizationName(organizationName)
+                OrganizationalUnitName(organizationUnitName)
             }
             
             TAKLogger.debug("[CSRRequestor] Creating Certificate")

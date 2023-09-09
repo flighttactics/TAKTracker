@@ -128,7 +128,7 @@ struct SettingsView: View {
                         } label: {
                             Text("Begin")
                         }
-                        Text(String(describing: $csrRequest.enrollmentStatus))
+                        Text(csrRequest.enrollmentStatus.description)
                     }
                 }
                 .padding(.top, 20)
