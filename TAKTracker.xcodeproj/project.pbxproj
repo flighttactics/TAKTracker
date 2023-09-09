@@ -13,7 +13,6 @@
 		A50C5F612A6032E8001E52E6 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A50C5F602A6032E8001E52E6 /* ChatView.swift */; };
 		A519D7372A5DB42600E78D3D /* PKCS12.swift in Sources */ = {isa = PBXBuildFile; fileRef = A519D7362A5DB42600E78D3D /* PKCS12.swift */; };
 		A5A49D902A5459B5009764C1 /* TAKManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5A49D8F2A5459B5009764C1 /* TAKManager.swift */; };
-		A5A49D952A5572C1009764C1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A5A49D942A5572C1009764C1 /* Assets.xcassets */; };
 		A5BF02002A5EB7440043065B /* UDPMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5BF01FF2A5EB63F0043065B /* UDPMessage.swift */; };
 		A5BF02022A5EBCA40043065B /* TCPMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5BF02012A5EBCA40043065B /* TCPMessage.swift */; };
 		A5BF02042A5EBCC10043065B /* COTMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5BF02032A5EBCC10043065B /* COTMessage.swift */; };
@@ -33,11 +32,6 @@
 		A5FB4E642A8FE0020034966D /* CSRRequestor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5FB4E632A8FE0020034966D /* CSRRequestor.swift */; };
 		A5FB4E662A98D0FF0034966D /* TAKConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5FB4E652A98D0FF0034966D /* TAKConstants.swift */; };
 		A5FB4E6B2AA751890034966D /* CertificateSigningRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5FB4E6A2AA751890034966D /* CertificateSigningRequestTests.swift */; };
-		A5FB4E6E2AAA48680034966D /* itak-do-foyc.zip in Resources */ = {isa = PBXBuildFile; fileRef = A5FB4E6D2AAA48680034966D /* itak-do-foyc.zip */; };
-		A5FB4E732AAA48770034966D /* foyc.p12 in Resources */ = {isa = PBXBuildFile; fileRef = A5FB4E6F2AAA48770034966D /* foyc.p12 */; };
-		A5FB4E742AAA48770034966D /* tak-server.pref in Resources */ = {isa = PBXBuildFile; fileRef = A5FB4E702AAA48770034966D /* tak-server.pref */; };
-		A5FB4E752AAA48770034966D /* truststore-intermediate.p12 in Resources */ = {isa = PBXBuildFile; fileRef = A5FB4E712AAA48770034966D /* truststore-intermediate.p12 */; };
-		A5FB4E762AAA48770034966D /* manifest.xml in Resources */ = {isa = PBXBuildFile; fileRef = A5FB4E722AAA48770034966D /* manifest.xml */; };
 		A5FB4E782AAA49D30034966D /* TestConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5FB4E772AAA49D30034966D /* TestConstants.swift */; };
 		A5FB4E792AAA4B410034966D /* TAKDataPackageParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E7B00A2A70B5F900D9203F /* TAKDataPackageParser.swift */; };
 		A5FB4E7A2AAA4B450034966D /* TAKPreferencesParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E7B0112A7184FB00D9203F /* TAKPreferencesParser.swift */; };
@@ -47,6 +41,12 @@
 		A5FB4E7E2AAA4B5C0034966D /* PKCS12.swift in Sources */ = {isa = PBXBuildFile; fileRef = A519D7362A5DB42600E78D3D /* PKCS12.swift */; };
 		A5FB4E7F2AAA4BCB0034966D /* TAKConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5FB4E652A98D0FF0034966D /* TAKConstants.swift */; };
 		A5FB4E802AAA4BD70034966D /* TAKLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E7B0172A76AA8B00D9203F /* TAKLogger.swift */; };
+		A5FB4E882AACF2830034966D /* tak-server.pref in Resources */ = {isa = PBXBuildFile; fileRef = A5FB4E832AACF2820034966D /* tak-server.pref */; };
+		A5FB4E892AACF2830034966D /* truststore-intermediate.p12 in Resources */ = {isa = PBXBuildFile; fileRef = A5FB4E842AACF2820034966D /* truststore-intermediate.p12 */; };
+		A5FB4E8A2AACF2830034966D /* manifest.xml in Resources */ = {isa = PBXBuildFile; fileRef = A5FB4E852AACF2820034966D /* manifest.xml */; };
+		A5FB4E8B2AACF2830034966D /* itak-do-foyc.zip in Resources */ = {isa = PBXBuildFile; fileRef = A5FB4E862AACF2820034966D /* itak-do-foyc.zip */; };
+		A5FB4E8C2AACF2830034966D /* foyc.p12 in Resources */ = {isa = PBXBuildFile; fileRef = A5FB4E872AACF2830034966D /* foyc.p12 */; };
+		A5FB4E8E2AACF2A20034966D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A5FB4E8D2AACF2A10034966D /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,7 +77,6 @@
 		A599D66C2A5E45CD00B507D9 /* TAKTracker.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TAKTracker.entitlements; sourceTree = "<group>"; };
 		A5A49D8F2A5459B5009764C1 /* TAKManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TAKManager.swift; sourceTree = "<group>"; };
 		A5A49D912A547378009764C1 /* TAKTracker-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TAKTracker-Info.plist"; sourceTree = SOURCE_ROOT; };
-		A5A49D942A5572C1009764C1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = "../../../../Downloads/AppIcons(1)/Assets.xcassets"; sourceTree = "<group>"; };
 		A5BF01FF2A5EB63F0043065B /* UDPMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UDPMessage.swift; sourceTree = "<group>"; };
 		A5BF02012A5EBCA40043065B /* TCPMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TCPMessage.swift; sourceTree = "<group>"; };
 		A5BF02032A5EBCC10043065B /* COTMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = COTMessage.swift; sourceTree = "<group>"; };
@@ -98,12 +97,13 @@
 		A5FB4E632A8FE0020034966D /* CSRRequestor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CSRRequestor.swift; sourceTree = "<group>"; };
 		A5FB4E652A98D0FF0034966D /* TAKConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TAKConstants.swift; sourceTree = "<group>"; };
 		A5FB4E6A2AA751890034966D /* CertificateSigningRequestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CertificateSigningRequestTests.swift; sourceTree = "<group>"; };
-		A5FB4E6D2AAA48680034966D /* itak-do-foyc.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; name = "itak-do-foyc.zip"; path = "../../../tak.flighttactics.com/certs/iTAK/itak-do-foyc.zip"; sourceTree = "<group>"; };
-		A5FB4E6F2AAA48770034966D /* foyc.p12 */ = {isa = PBXFileReference; lastKnownFileType = file; name = foyc.p12; path = ../../../tak.flighttactics.com/certs/iTAK/foyc.p12; sourceTree = "<group>"; };
-		A5FB4E702AAA48770034966D /* tak-server.pref */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = "tak-server.pref"; path = "../../../tak.flighttactics.com/certs/iTAK/tak-server.pref"; sourceTree = "<group>"; };
-		A5FB4E712AAA48770034966D /* truststore-intermediate.p12 */ = {isa = PBXFileReference; lastKnownFileType = file; name = "truststore-intermediate.p12"; path = "../../../tak.flighttactics.com/certs/iTAK/truststore-intermediate.p12"; sourceTree = "<group>"; };
-		A5FB4E722AAA48770034966D /* manifest.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = manifest.xml; path = ../../../tak.flighttactics.com/certs/iTAK/manifest.xml; sourceTree = "<group>"; };
 		A5FB4E772AAA49D30034966D /* TestConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestConstants.swift; sourceTree = "<group>"; };
+		A5FB4E832AACF2820034966D /* tak-server.pref */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "tak-server.pref"; sourceTree = "<group>"; };
+		A5FB4E842AACF2820034966D /* truststore-intermediate.p12 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "truststore-intermediate.p12"; sourceTree = "<group>"; };
+		A5FB4E852AACF2820034966D /* manifest.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = manifest.xml; sourceTree = "<group>"; };
+		A5FB4E862AACF2820034966D /* itak-do-foyc.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = "itak-do-foyc.zip"; sourceTree = "<group>"; };
+		A5FB4E872AACF2830034966D /* foyc.p12 */ = {isa = PBXFileReference; lastKnownFileType = file; path = foyc.p12; sourceTree = "<group>"; };
+		A5FB4E8D2AACF2A10034966D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -158,7 +158,7 @@
 		A5D8D37C2A53B0F9002F0E3E /* TAKTracker */ = {
 			isa = PBXGroup;
 			children = (
-				A5A49D942A5572C1009764C1 /* Assets.xcassets */,
+				A5FB4E8D2AACF2A10034966D /* Assets.xcassets */,
 				A5E2F8FC2A791F0600EDD0B4 /* Communications */,
 				A5E2F8FE2A791F5600EDD0B4 /* Data Models */,
 				A5D8D3A72A53B465002F0E3E /* LocationManager.swift */,
@@ -263,11 +263,11 @@
 		A5FB4E6C2AAA483B0034966D /* Test Files */ = {
 			isa = PBXGroup;
 			children = (
-				A5FB4E6F2AAA48770034966D /* foyc.p12 */,
-				A5FB4E722AAA48770034966D /* manifest.xml */,
-				A5FB4E702AAA48770034966D /* tak-server.pref */,
-				A5FB4E712AAA48770034966D /* truststore-intermediate.p12 */,
-				A5FB4E6D2AAA48680034966D /* itak-do-foyc.zip */,
+				A5FB4E872AACF2830034966D /* foyc.p12 */,
+				A5FB4E862AACF2820034966D /* itak-do-foyc.zip */,
+				A5FB4E852AACF2820034966D /* manifest.xml */,
+				A5FB4E832AACF2820034966D /* tak-server.pref */,
+				A5FB4E842AACF2820034966D /* truststore-intermediate.p12 */,
 			);
 			path = "Test Files";
 			sourceTree = "<group>";
@@ -385,8 +385,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A5FB4E8E2AACF2A20034966D /* Assets.xcassets in Resources */,
 				A5D8D3852A53B0FA002F0E3E /* Preview Assets.xcassets in Resources */,
-				A5A49D952A5572C1009764C1 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -394,11 +394,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A5FB4E742AAA48770034966D /* tak-server.pref in Resources */,
-				A5FB4E762AAA48770034966D /* manifest.xml in Resources */,
-				A5FB4E732AAA48770034966D /* foyc.p12 in Resources */,
-				A5FB4E6E2AAA48680034966D /* itak-do-foyc.zip in Resources */,
-				A5FB4E752AAA48770034966D /* truststore-intermediate.p12 in Resources */,
+				A5FB4E8B2AACF2830034966D /* itak-do-foyc.zip in Resources */,
+				A5FB4E8C2AACF2830034966D /* foyc.p12 in Resources */,
+				A5FB4E8A2AACF2830034966D /* manifest.xml in Resources */,
+				A5FB4E882AACF2830034966D /* tak-server.pref in Resources */,
+				A5FB4E892AACF2830034966D /* truststore-intermediate.p12 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

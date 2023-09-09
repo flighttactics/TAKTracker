@@ -1,0 +1,12 @@
+<MissionPackageManifest version="2">
+<Configuration>
+  <Parameter name="uid" value="8d16b2fc-1e53-11ee-be56-0242ac120002"/>
+  <Parameter name="name" value="Flight Tactics"/>
+  <Parameter name="onReceiveDelete" value="true"/>
+</Configuration>
+<Contents>
+  <Content ignore="false" zipEntry="certs\tak-server.pref"/>
+  <Content ignore="false" zipEntry="certs\foyc.p12"/>
+  <Content ignore="false" zipEntry="certs\truststore-intermediate.p12"/>
+</Contents>
+</MissionPackageManifest>
