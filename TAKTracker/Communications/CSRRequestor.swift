@@ -142,8 +142,25 @@ class CSRRequestor: NSObject, ObservableObject, URLSessionDelegate {
                             TAKLogger.debug("Parsed Certificate:")
                             TAKLogger.debug(String(describing: parsedCert))
                             TAKLogger.debug("Storing Certificate")
-                            let responseCertData = certString.data(using: String.Encoding.utf8)!
-                            SettingsStore.global.userCertificate = responseCertData
+                            
+                            TAKLogger.debug("Serializing to DER")
+                            var serializer = DER.Serializer()
+                            try serializer.serialize(parsedCert)
+                            let derData = Data(serializer.serializedBytes)
+                            TAKLogger.debug("Attemping to add Identity")
+                            try CertificateManager.addIdentity(clientCertificate: derData, label: SettingsStore.global.takServerUrl)
+                            
+                            TAKLogger.debug("Identity Added")
+                            
+                            guard let identityCert = CertificateManager.getCertificate(label: SettingsStore.global.takServerUrl) else {
+                                TAKLogger.error("Could not get Identity Cert")
+                                return
+                            }
+                            
+                            let certData = SecCertificateCopyData(identityCert) as Data
+                            
+                            //let responseCertData = certString.data(using: String.Encoding.utf8)!
+                            SettingsStore.global.userCertificate = certData
                             SettingsStore.global.userCertificatePassword = ""
                             SettingsStore.global.takServerChanged = true
                         }
@@ -177,13 +194,33 @@ class CSRRequestor: NSObject, ObservableObject, URLSessionDelegate {
                                 organizationName: String,
                                 organizationUnitName: String) {
         do {
-            let swiftCryptoKey = try _RSA.Signing.PrivateKey(keySize: .bits2048)
-            let key = Certificate.PrivateKey(swiftCryptoKey)
+            let privateKeyTag = "tak.flighttactics.com-\(hostName)-pk"
+            let publicKeyAccount = "tak.flighttactics.com=\(hostName)-\(commonName)"
+            let publicKeyService = "tak.flighttactics.com-\(hostName)-public"
             
-            //let privateKey = P256.Signing.PrivateKey()
-            //let publicKeyData = privateKey.publicKey.compactRepresentation!
+            let certData = try CertificateManager.generateKeyPairWithPublicKeyAsGenericPassword(privateKeyTag: privateKeyTag, publicKeyAccount: publicKeyAccount, publicKeyService: publicKeyService)
+            let swiftCryptoKey = try _RSA.Signing.PrivateKey(derRepresentation: certData)
             
-            //let signature = try privateKey.signature(for: transactionData)
+            // TODO: GET THIS OUT OF HERE!
+            TAKLogger.debug("***SENSITIVE INFO FOLLOWS***")
+            TAKLogger.debug(swiftCryptoKey.pemRepresentation)
+
+            generateSigningRequest(commonName: commonName, hostName: hostName, organizationName: organizationName, organizationUnitName: organizationUnitName, privateKey: swiftCryptoKey)
+
+        } catch let error as NSError {
+            TAKLogger.error("[CSRRequestor] Could not create the CSR")
+            TAKLogger.error(error.debugDescription)
+        }
+    }
+    
+    func generateSigningRequest(commonName: String,
+                                hostName: String,
+                                organizationName: String,
+                                organizationUnitName: String,
+                                privateKey: _RSA.Signing.PrivateKey) {
+        do {
+
+            let key = Certificate.PrivateKey(privateKey)
 
             let subjectName = try DistinguishedName {
                 CommonName(commonName)
@@ -205,7 +242,7 @@ class CSRRequestor: NSObject, ObservableObject, URLSessionDelegate {
             try serializer.serialize(csr)
 
             derEncodedCertificate = serializer.serializedBytes
-            derEncodedPrivateKey = swiftCryptoKey.derRepresentation
+            derEncodedPrivateKey = privateKey.derRepresentation
         } catch let error as NSError {
             TAKLogger.error("[CSRRequestor] Could not create the CSR")
             TAKLogger.error(error.debugDescription)
