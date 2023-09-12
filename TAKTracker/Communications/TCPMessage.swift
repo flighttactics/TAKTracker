@@ -35,6 +35,7 @@ class TCPMessage: NSObject, ObservableObject {
     func reconnect() {
         guard let connection = connection else {
             TAKLogger.debug("[TCPMessage]: Connection was already not viable on reconnect")
+            SettingsStore.global.isConnectingToServer = false
             connect()
             return
         }
@@ -46,6 +47,11 @@ class TCPMessage: NSObject, ObservableObject {
             TAKLogger.debug("[TCPMessage]:  Reconnect restarting connection")
             connection.restart()
             return
+        } else if(connectionStatus == "Cancelled") {
+            TAKLogger.debug("[TCPMessage]: Connection was cancelled and should be retried, so retrying")
+            TAKLogger.debug("[TCPMessage]:  Reconnect restarting connection")
+            connect()
+            return
         } else if (SettingsStore.global.takServerChanged) {
             TAKLogger.debug("[TCPMessage]: TAKServer was marked as changing, so reconnecting")
             TAKLogger.debug("[TCPMessage]:  Reconnect restarting connection")
@@ -54,7 +60,7 @@ class TCPMessage: NSObject, ObservableObject {
             connect()
             return
         } else {
-            TAKLogger.debug("[TCPMessage]: TCP Connection is not connected and not retry eligible. Ignoring.")
+            TAKLogger.debug("[TCPMessage]: TCP Connection is not connected (\(connectionStatus)) and not retry eligible. Ignoring.")
             return
         }
     }
@@ -86,20 +92,11 @@ class TCPMessage: NSObject, ObservableObject {
         
         TAKLogger.debug("[TCPMessage]: Attempting to connect to \(String(describing: host)):\(String(describing: port))")
         
-        let password = SettingsStore.global.userCertificatePassword
-        let userP12Data = SettingsStore.global.userCertificate
-        if(userP12Data.count == 0) {
-            TAKLogger.debug("[TCPMessage]: Unable to load TLS certificate. Cancelling connection.")
+        guard let clientIdentity = SettingsStore.global.retrieveIdentity(label: SettingsStore.global.takServerUrl) else {
+            TAKLogger.error("[TCPMessage]: Identity was not stored in the keychain")
             return
         }
-        TAKLogger.debug("[TCPMessage]: userP12Data: \(String(describing: userP12Data))")
         
-        let userP12Contents = PKCS12(data: userP12Data, password: password)
-        
-        guard let clientIdentity = userP12Contents.identity else {
-            TAKLogger.debug("[TCPMessage]: Unable to load TLS identity. Cancelling connection.")
-            return
-        }
         TAKLogger.debug("[TCPMessage]: Client Identity")
         TAKLogger.debug("[TCPMessage]: " + String(describing: clientIdentity))
         
@@ -144,6 +141,7 @@ class TCPMessage: NSObject, ObservableObject {
                 DispatchQueue.main.async {
                     SettingsStore.global.isConnectedToServer = true
                     SettingsStore.global.isConnectingToServer = false
+                    SettingsStore.global.takServerChanged = false
                     SettingsStore.global.connectionStatus = "Connected"
                 }
             case .setup:

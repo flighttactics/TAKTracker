@@ -11,14 +11,43 @@ import UIKit
 class SettingsStore: ObservableObject {
     static let global = SettingsStore()
     
-    /*
-     Settings Remaining:
-        - TAK Server Username
-        - TAK Server Password
-        - TAK Server Certificate (+ Password)
-        - TAK Server Client Certificate (+ Password)
-        - Metric vs Imperial
-     */
+    func storeIdentity(identity: SecIdentity, label: String) {
+        
+        //Clean up any existing identities
+        clearAllIdentities()
+        
+        //Add the new identity in
+        let addQuery: [String: Any] = [kSecValueRef as String: identity,
+                                       kSecAttrLabel as String: label]
+
+        TAKLogger.debug("[SettingsStore]: Adding Identity to Keychain")
+        let status = SecItemAdd(addQuery as CFDictionary, nil)
+        guard status == errSecSuccess else {
+            TAKLogger.error("[SettingsStore]: Error adding identity to keychain \(String(describing: status))")
+            return
+        }
+    }
+    
+    func retrieveIdentity(label: String) -> SecIdentity? {
+        let getquery: [String: Any] = [kSecClass as String:  kSecClassIdentity,
+                                       kSecAttrLabel as String: label,
+                                       kSecReturnRef as String: kCFBooleanTrue!]
+        
+        var item: CFTypeRef?
+        let status = SecItemCopyMatching(getquery as CFDictionary, &item)
+        guard status == errSecSuccess else {
+            TAKLogger.error("[SettingsStore]: Identity was not stored in the keychain \(String(describing: status))")
+            return nil
+        }
+        let clientIdentity = item as! SecIdentity
+        return clientIdentity
+    }
+    
+    func clearAllIdentities() {
+        TAKLogger.debug("[SettingsStore]: Clearing out all existing identities")
+        let cleanUpQuery: [String: Any] = [kSecClass as String:  kSecClassIdentity]
+        SecItemDelete(cleanUpQuery as CFDictionary)
+    }
     
     @Published var callSign: String {
         didSet {
@@ -40,24 +69,19 @@ class SettingsStore: ObservableObject {
     
     @Published var takServerUrl: String {
         didSet {
-            TAKLogger.debug("Setting takServerURL")
             UserDefaults.standard.set(takServerUrl, forKey: "takServerUrl")
-            UserDefaults.standard.set(true, forKey: "shouldTryReconnect")
         }
     }
     
     @Published var takServerPort: String {
         didSet {
-            TAKLogger.debug("Setting takServerPort")
             UserDefaults.standard.set(takServerPort, forKey: "takServerPort")
-            UserDefaults.standard.set(true, forKey: "shouldTryReconnect")
         }
     }
     
     @Published var takServerProtocol: String {
         didSet {
             UserDefaults.standard.set(takServerProtocol, forKey: "takServerProtocol")
-            UserDefaults.standard.set(true, forKey: "shouldTryReconnect")
         }
     }
     
@@ -116,14 +140,12 @@ class SettingsStore: ObservableObject {
     @Published var takServerUsername: String {
         didSet {
             UserDefaults.standard.set(takServerUsername, forKey: "takServerUsername")
-            UserDefaults.standard.set(true, forKey: "shouldTryReconnect")
         }
     }
     
     @Published var takServerPassword: String {
         didSet {
             UserDefaults.standard.set(takServerPassword, forKey: "takServerPassword")
-            UserDefaults.standard.set(true, forKey: "shouldTryReconnect")
         }
     }
     

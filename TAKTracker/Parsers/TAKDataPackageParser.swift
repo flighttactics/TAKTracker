@@ -24,8 +24,7 @@ class TAKDataPackageParser: NSObject {
     func parse() {
         processArchive()
     }
-    
-    private
+
     func processArchive() {
         TAKLogger.debug("Entering processArchive")
         guard let sourceURL = archiveLocation
@@ -48,13 +47,14 @@ class TAKDataPackageParser: NSObject {
         
         let prefsFile = retrievePrefsFile(archive: archive)
         let prefs = parsePrefsFile(archive: archive, prefsFile: prefsFile)
-        storeUserCertificate(archive: archive, fileName: prefs.userCertificateFileName())
-        storeServerCertificate(archive: archive, fileName: prefs.serverCertificateFileName())
+        storeUserCertificate(archive: archive, prefs: prefs)
+        storeServerCertificate(archive: archive, prefs: prefs)
         storePreferences(preferences: prefs)
         TAKLogger.debug("processArchive Complete")
     }
     
-    func storeUserCertificate(archive: Archive, fileName: String) {
+    func storeUserCertificate(archive: Archive, prefs: TAKPreferences) {
+        let fileName = prefs.userCertificateFileName()
         guard let certFile = archive[fileName]
         else { TAKLogger.debug("userCertificate \(fileName) not found in archive"); return }
 
@@ -63,9 +63,24 @@ class TAKDataPackageParser: NSObject {
             certData.append(data)
         }
         SettingsStore.global.userCertificate = certData
+        TAKLogger.debug("Storing User Certificate")
+        TAKLogger.debug(String(describing: certData))
+        
+        //Parse the cert file
+        let parsedCert = PKCS12(data: SettingsStore.global.userCertificate, password: prefs.userCertificatePassword)
+        
+        guard let identity = parsedCert.identity else {
+            TAKLogger.error("Identity was not present in the parsed cert")
+            return
+        }
+        
+        SettingsStore.global.storeIdentity(identity: identity, label: prefs.serverConnectionAddress())
+        
+        TAKLogger.debug("User Certificate Stored")
     }
     
-    func storeServerCertificate(archive: Archive, fileName: String) {
+    func storeServerCertificate(archive: Archive, prefs: TAKPreferences) {
+        let fileName = prefs.serverCertificateFileName()
         guard let certFile = archive[fileName]
         else { TAKLogger.debug("serverCertificate \(fileName) not found in archive"); return }
 

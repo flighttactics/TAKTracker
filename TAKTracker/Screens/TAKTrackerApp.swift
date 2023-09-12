@@ -26,6 +26,7 @@ struct TAKTrackerApp: App {
                     UIApplication.shared.isIdleTimerDisabled = SettingsStore.global.disableScreenSleep
                     SettingsStore.global.isConnectedToServer = false
                     SettingsStore.global.shouldTryReconnect = true
+                    UIDevice.current.isBatteryMonitoringEnabled = true
                 }
                 .onChange(of: scenePhase) { newPhase in
                                 if newPhase == .inactive {
