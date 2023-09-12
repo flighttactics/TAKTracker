@@ -89,43 +89,16 @@ O0Rzvxgh5YcI9Q82OoYNqjiMRKBOQyiRjulKS88CTV7hBHWzgvQcvw==
                                        kSecValueRef as String: privateKey]
         SecItemDelete(pkQuery as CFDictionary)
     }
-    
-    func testEnsureCertStorageMatches() throws {
-        let bundle = Bundle(for: Self.self)
-        let testZip = bundle.url(forResource: TestConstants.ITAK_DATA_PACKAGE_NAME, withExtension: "zip")
-        let dpp = TAKDataPackageParser.init(fileLocation: testZip!)
-        dpp.parse()
-        //let str = String(decoding: SettingsStore.global.userCertificate, as: UTF8.self)
-        let parsedCert = PKCS12(data: SettingsStore.global.userCertificate, password: defaultPassword)
-        XCTAssertEqual(parsedCert.label, certString)
-    }
 
-    func testParseCertificate() throws {
+    func testStoringIdentityStoresInKeychain() throws {
         let parsedCert = try Certificate(pemEncoded: certString)
-        NSLog(String(describing: parsedCert))
-        
-        //let pem = try parsedCert.serializeAsPEM()
-        //let pemData = Data(pem.derBytes)
+
         var serializer = DER.Serializer()
         try serializer.serialize(parsedCert)
         let derData = Data(serializer.serializedBytes)
         
         try CertificateManager.addIdentity(clientCertificate: derData, label: hostName)
-        XCTAssertNotNil(CertificateManager.getIdentity(label: hostName), "Identity not found for hostName Label")
-        
-        //XCTAssert(parsedCert.issuer.description != "", "parsedCert Issuer Empty")
-    }
-    
-    func testCertificateRequest() throws {
-        let requestor = CSRRequestor()
-        
-        let certData = try CertificateManager.generateKeyPairWithPublicKeyAsGenericPassword(privateKeyTag: privateKeyTag, publicKeyAccount: publicKeyAccount, publicKeyService: publicKeyService)
-        TAKLogger.debug(String(describing: certData))
-        
-//        let pk = try _RSA.Signing.PrivateKey(derRepresentation: certData)
-//        TAKLogger.debug(pk.pemRepresentation)
-//        TAKLogger.debug(String(describing: pk))
-        
-        requestor.generateSigningRequest(commonName: "foyc", hostName: "tak.flighttactics.com", organizationName: "FLIGHTTACTICS", organizationUnitName: "tak")
+        XCTAssertNotNil(CertificateManager.getIdentity(label: hostName), "Identity not found for hostName \(hostName)")
+        XCTAssertNotNil(SettingsStore.global.retrieveIdentity(label: hostName), "Identity not found in SettingsStore for \(hostName)")
     }
 }

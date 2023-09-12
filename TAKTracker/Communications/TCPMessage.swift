@@ -86,20 +86,11 @@ class TCPMessage: NSObject, ObservableObject {
         
         TAKLogger.debug("[TCPMessage]: Attempting to connect to \(String(describing: host)):\(String(describing: port))")
         
-        let password = SettingsStore.global.userCertificatePassword
-        let userP12Data = SettingsStore.global.userCertificate
-        if(userP12Data.count == 0) {
-            TAKLogger.debug("[TCPMessage]: Unable to load TLS certificate. Cancelling connection.")
+        guard let clientIdentity = SettingsStore.global.retrieveIdentity(label: SettingsStore.global.takServerUrl) else {
+            TAKLogger.error("[TCPMessage]: Identity was not stored in the keychain")
             return
         }
-        TAKLogger.debug("[TCPMessage]: userP12Data: \(String(describing: userP12Data))")
         
-        let userP12Contents = PKCS12(data: userP12Data, password: password)
-        
-        guard let clientIdentity = userP12Contents.identity else {
-            TAKLogger.debug("[TCPMessage]: Unable to load TLS identity. Cancelling connection.")
-            return
-        }
         TAKLogger.debug("[TCPMessage]: Client Identity")
         TAKLogger.debug("[TCPMessage]: " + String(describing: clientIdentity))
         

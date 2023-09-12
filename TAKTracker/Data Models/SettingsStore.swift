@@ -11,14 +11,38 @@ import UIKit
 class SettingsStore: ObservableObject {
     static let global = SettingsStore()
     
-    /*
-     Settings Remaining:
-        - TAK Server Username
-        - TAK Server Password
-        - TAK Server Certificate (+ Password)
-        - TAK Server Client Certificate (+ Password)
-        - Metric vs Imperial
-     */
+    func storeIdentity(identity: SecIdentity, label: String) {
+        //Clear out any existing identities for this host
+        let cleanUpQuery: [String: Any] = [kSecClass as String:  kSecClassIdentity,
+                                       kSecAttrLabel as String: label]
+        SecItemDelete(cleanUpQuery as CFDictionary)
+        
+        //Add the identity in
+        let addQuery: [String: Any] = [kSecValueRef as String: identity,
+                                       kSecAttrLabel as String: label]
+
+        TAKLogger.debug("[SettingsStore]: Adding Identity to Keychain")
+        let status = SecItemAdd(addQuery as CFDictionary, nil)
+        guard status == errSecSuccess else {
+            TAKLogger.error("[SettingsStore]: Error adding identity to keychain \(String(describing: status))")
+            return
+        }
+    }
+    
+    func retrieveIdentity(label: String) -> SecIdentity? {
+        let getquery: [String: Any] = [kSecClass as String:  kSecClassIdentity,
+                                       kSecAttrLabel as String: label,
+                                       kSecReturnRef as String: kCFBooleanTrue!]
+        
+        var item: CFTypeRef?
+        let status = SecItemCopyMatching(getquery as CFDictionary, &item)
+        guard status == errSecSuccess else {
+            TAKLogger.error("[SettingsStore]: Identity was not stored in the keychain \(String(describing: status))")
+            return nil
+        }
+        let clientIdentity = item as! SecIdentity
+        return clientIdentity
+    }
     
     @Published var callSign: String {
         didSet {
