@@ -12,6 +12,7 @@ final class DataPackageParserTests: XCTestCase {
     
     let defaultPassword = "atakatak"
     let userCertFileName = "foyc.p12"
+    let host = "tak.flighttactics.com"
     
     var parser:TAKDataPackageParser? = nil
     var archiveURL:URL? = nil
@@ -22,7 +23,7 @@ final class DataPackageParserTests: XCTestCase {
         parser = TAKDataPackageParser.init(fileLocation: archiveURL!)
         
         let cleanUpQuery: [String: Any] = [kSecClass as String:  kSecClassIdentity,
-                                       kSecAttrLabel as String: "tak.flighttactics.com"]
+                                       kSecAttrLabel as String: host]
         SecItemDelete(cleanUpQuery as CFDictionary)
     }
 
@@ -38,9 +39,9 @@ final class DataPackageParserTests: XCTestCase {
     
     func testCertParserStoresIdentityInKeychain() throws {
         var prefs = TAKPreferences()
-        prefs.userCertificateFile = "foyc.p12"
-        prefs.userCertificatePassword = "atakatak"
-        prefs.serverConnectionString = "tak.flighttactics.com:8080"
+        prefs.userCertificateFile = userCertFileName
+        prefs.userCertificatePassword = defaultPassword
+        prefs.serverConnectionString = "\(host):8080"
         
         guard let archive = Archive(url: archiveURL!, accessMode: .read) else {
             throw XCTestError(.failureWhileWaiting, userInfo: ["ArchiveError": "Could not open archive"])
@@ -48,7 +49,7 @@ final class DataPackageParserTests: XCTestCase {
         parser!.storeUserCertificate(archive: archive, prefs: prefs)
         
         let getquery: [String: Any] = [kSecClass as String:  kSecClassIdentity,
-                                       kSecAttrLabel as String: "tak.flighttactics.com",
+                                       kSecAttrLabel as String: host,
                                        kSecReturnRef as String: kCFBooleanTrue!]
         
         var item: CFTypeRef?

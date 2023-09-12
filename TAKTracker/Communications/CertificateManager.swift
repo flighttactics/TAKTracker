@@ -76,7 +76,7 @@ class CertificateManager {
     
     
     static func addIdentity(clientCertificate: Data, label: String) throws {
-        TAKLogger.info("Adding client certificate to keychain with label \(label)")
+        TAKLogger.info("[CertificateManager]: Adding client certificate to keychain with label \(label)")
 
         guard let certificateRef = SecCertificateCreateWithData(kCFAllocatorDefault, clientCertificate as CFData) else {
             TAKLogger.error("Could not create certificate, data was not valid DER encoded X509 cert")

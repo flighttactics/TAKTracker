@@ -40,16 +40,11 @@ class CSRRequestor: NSObject, ObservableObject, URLSessionDelegate {
     var derEncodedCertificate: [UInt8] = []
     var derEncodedPrivateKey: Data = Data()
     
-    var host = "https://\(SettingsStore.global.takServerUrl)"
     var csrPort = TAKConstants.DEFAULT_CSR_PORT
     var tlsConfigPath = TAKConstants.CERT_CONFIG_PATH
     var csrRequestPath = TAKConstants.certificateSigningPath(
         clientUid: TAKConstants.getClientID(),
         appVersion: TAKConstants.getAppVersion())
-
-    //This is used for adding basic auth to the request
-    var username = SettingsStore.global.takServerUsername
-    var password = SettingsStore.global.takServerPassword
     
     func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
             if (challenge.protectionSpace.authenticationMethod == NSURLAuthenticationMethodClientCertificate) {
@@ -74,6 +69,9 @@ class CSRRequestor: NSObject, ObservableObject, URLSessionDelegate {
         enrollmentStatus = CSREnrollmentStatus.Connecting
         let path = csrRequestPath
         let method = "POST"
+        
+        var username = SettingsStore.global.takServerUsername
+        var password = SettingsStore.global.takServerPassword
 
         let loginString = String(format: "%@:%@", username, password)
         TAKLogger.debug("Auth String: \(loginString)")
@@ -81,6 +79,7 @@ class CSRRequestor: NSObject, ObservableObject, URLSessionDelegate {
         let base64LoginString = loginData.base64EncodedString()
 
         // create the request
+        let host = "https://\(SettingsStore.global.takServerUrl)"
         let url = URL(string: "\(host):\(csrPort)\(path)")!
         var request = URLRequest(url: url)
         request.httpMethod = method
@@ -108,12 +107,15 @@ class CSRRequestor: NSObject, ObservableObject, URLSessionDelegate {
         
         request.httpBody = rawCertData.base64EncodedData()
         
+        enrollmentStatus = CSREnrollmentStatus.Enrolling
+        
         // TODO: Actually let the user know this failed if it, uh, fails
         let task = session.dataTask(with: request) { data, response, error in
             if let error = error {
                 TAKLogger.error("[CSRRequestor] Error: \(error)")
                 TAKLogger.error("[CSRRequestor] Response: \(String(describing: response))")
                 TAKLogger.error("[CSRRequestor] Data: \(String(describing: data))")
+                self.enrollmentStatus = CSREnrollmentStatus.Failed
                 return
             }
             guard let response = response as? HTTPURLResponse,
@@ -121,6 +123,7 @@ class CSRRequestor: NSObject, ObservableObject, URLSessionDelegate {
                 TAKLogger.error("[CSRRequestor] Error: \(String(describing: error))")
                 TAKLogger.error("[CSRRequestor] Response: \(String(describing: response))")
                 TAKLogger.error("[CSRRequestor] Data: \(String(describing: data))")
+                self.enrollmentStatus = CSREnrollmentStatus.Failed
                 return
             }
             if let mimeType = response.mimeType,
@@ -154,6 +157,7 @@ class CSRRequestor: NSObject, ObservableObject, URLSessionDelegate {
                             
                             guard let identityCert = CertificateManager.getCertificate(label: SettingsStore.global.takServerUrl) else {
                                 TAKLogger.error("Could not get Identity Cert")
+                                self.enrollmentStatus = CSREnrollmentStatus.Failed
                                 return
                             }
                             
@@ -163,26 +167,17 @@ class CSRRequestor: NSObject, ObservableObject, URLSessionDelegate {
                             SettingsStore.global.userCertificate = certData
                             SettingsStore.global.userCertificatePassword = ""
                             SettingsStore.global.takServerChanged = true
+                            self.enrollmentStatus = CSREnrollmentStatus.Succeeded
                         }
                     }
                 } catch let error as NSError {
                     TAKLogger.error("[CSRRequestor] Could not parse the cert")
                     TAKLogger.error(error.debugDescription)
+                    self.enrollmentStatus = CSREnrollmentStatus.Failed
                 }
             } else {
-                TAKLogger.debug("[CSRRequestor] Got a response! \(String(describing: response.statusCode))")
-                TAKLogger.debug(String(describing: response.mimeType))
-                TAKLogger.debug(String(describing: data))
-                
-                TAKLogger.debug("Attempting Cert parse")
-                do {
-                    let received: [UInt8] = Array(data!)
-                    let responseCert = try Certificate(derEncoded: received)
-                    TAKLogger.debug(String(describing: responseCert))
-                } catch let error as NSError {
-                    TAKLogger.error("[CSRRequestor] Could not parse the cert")
-                    TAKLogger.error(error.debugDescription)
-                }
+                TAKLogger.error("Unknown response from server when attempting Certificate Enrollment")
+                self.enrollmentStatus = CSREnrollmentStatus.Failed
             }
         }
         task.resume()
@@ -200,10 +195,6 @@ class CSRRequestor: NSObject, ObservableObject, URLSessionDelegate {
             
             let certData = try CertificateManager.generateKeyPairWithPublicKeyAsGenericPassword(privateKeyTag: privateKeyTag, publicKeyAccount: publicKeyAccount, publicKeyService: publicKeyService)
             let swiftCryptoKey = try _RSA.Signing.PrivateKey(derRepresentation: certData)
-            
-            // TODO: GET THIS OUT OF HERE!
-            TAKLogger.debug("***SENSITIVE INFO FOLLOWS***")
-            TAKLogger.debug(swiftCryptoKey.pemRepresentation)
 
             generateSigningRequest(commonName: commonName, hostName: hostName, organizationName: organizationName, organizationUnitName: organizationUnitName, privateKey: swiftCryptoKey)
 

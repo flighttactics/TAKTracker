@@ -35,6 +35,7 @@ class TCPMessage: NSObject, ObservableObject {
     func reconnect() {
         guard let connection = connection else {
             TAKLogger.debug("[TCPMessage]: Connection was already not viable on reconnect")
+            SettingsStore.global.isConnectingToServer = false
             connect()
             return
         }
@@ -46,6 +47,11 @@ class TCPMessage: NSObject, ObservableObject {
             TAKLogger.debug("[TCPMessage]:  Reconnect restarting connection")
             connection.restart()
             return
+        } else if(connectionStatus == "Cancelled") {
+            TAKLogger.debug("[TCPMessage]: Connection was cancelled and should be retried, so retrying")
+            TAKLogger.debug("[TCPMessage]:  Reconnect restarting connection")
+            connect()
+            return
         } else if (SettingsStore.global.takServerChanged) {
             TAKLogger.debug("[TCPMessage]: TAKServer was marked as changing, so reconnecting")
             TAKLogger.debug("[TCPMessage]:  Reconnect restarting connection")
@@ -54,7 +60,7 @@ class TCPMessage: NSObject, ObservableObject {
             connect()
             return
         } else {
-            TAKLogger.debug("[TCPMessage]: TCP Connection is not connected and not retry eligible. Ignoring.")
+            TAKLogger.debug("[TCPMessage]: TCP Connection is not connected (\(connectionStatus)) and not retry eligible. Ignoring.")
             return
         }
     }
@@ -135,6 +141,7 @@ class TCPMessage: NSObject, ObservableObject {
                 DispatchQueue.main.async {
                     SettingsStore.global.isConnectedToServer = true
                     SettingsStore.global.isConnectingToServer = false
+                    SettingsStore.global.takServerChanged = false
                     SettingsStore.global.connectionStatus = "Connected"
                 }
             case .setup:

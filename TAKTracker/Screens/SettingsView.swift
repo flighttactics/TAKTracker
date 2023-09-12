@@ -20,6 +20,7 @@ struct SettingsView: View {
     
     @State var isShowingFilePicker = false
     @State var isShowingEnrollment = false
+    @State private var showIdentityClearAlert = false
 
     var body: some View {
         List {
@@ -63,6 +64,11 @@ struct SettingsView: View {
                         Spacer()
                     }
                     TextField("Server Address", text: $settingsStore.takServerUrl)
+                        .autocorrectionDisabled(true)
+                        .textInputAutocapitalization(.never)
+                        .onSubmit {
+                            SettingsStore.global.takServerChanged = true
+                        }
                 }
                 .padding(.top, 20)
             }
@@ -76,6 +82,9 @@ struct SettingsView: View {
                         Spacer()
                     }
                     TextField("Server Port", text: $settingsStore.takServerPort)
+                        .onSubmit {
+                            SettingsStore.global.takServerChanged = true
+                        }
                 }
                 .padding(.top, 20)
             }
@@ -89,6 +98,11 @@ struct SettingsView: View {
                         Spacer()
                     }
                     TextField("Server Username", text: $settingsStore.takServerUsername)
+                        .autocorrectionDisabled(true)
+                        .textInputAutocapitalization(.never)
+                        .onSubmit {
+                            SettingsStore.global.takServerChanged = true
+                        }
                 }
                 .padding(.top, 20)
             }
@@ -102,6 +116,9 @@ struct SettingsView: View {
                         Spacer()
                     }
                     SecureField("Server Password", text: $settingsStore.takServerPassword)
+                        .onSubmit {
+                            SettingsStore.global.takServerChanged = true
+                        }
                 }
                 .padding(.top, 20)
             }
@@ -129,6 +146,7 @@ struct SettingsView: View {
                             Text("Begin")
                         }
                         Text(csrRequest.enrollmentStatus.description)
+                        Text("For Server \(SettingsStore.global.takServerUrl)")
                     }
                 }
                 .padding(.top, 20)

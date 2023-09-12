@@ -12,12 +12,11 @@ class SettingsStore: ObservableObject {
     static let global = SettingsStore()
     
     func storeIdentity(identity: SecIdentity, label: String) {
-        //Clear out any existing identities for this host
-        let cleanUpQuery: [String: Any] = [kSecClass as String:  kSecClassIdentity,
-                                       kSecAttrLabel as String: label]
-        SecItemDelete(cleanUpQuery as CFDictionary)
         
-        //Add the identity in
+        //Clean up any existing identities
+        clearAllIdentities()
+        
+        //Add the new identity in
         let addQuery: [String: Any] = [kSecValueRef as String: identity,
                                        kSecAttrLabel as String: label]
 
@@ -44,6 +43,12 @@ class SettingsStore: ObservableObject {
         return clientIdentity
     }
     
+    func clearAllIdentities() {
+        TAKLogger.debug("[SettingsStore]: Clearing out all existing identities")
+        let cleanUpQuery: [String: Any] = [kSecClass as String:  kSecClassIdentity]
+        SecItemDelete(cleanUpQuery as CFDictionary)
+    }
+    
     @Published var callSign: String {
         didSet {
             UserDefaults.standard.set(callSign, forKey: "callSign")
@@ -64,24 +69,19 @@ class SettingsStore: ObservableObject {
     
     @Published var takServerUrl: String {
         didSet {
-            TAKLogger.debug("Setting takServerURL")
             UserDefaults.standard.set(takServerUrl, forKey: "takServerUrl")
-            UserDefaults.standard.set(true, forKey: "shouldTryReconnect")
         }
     }
     
     @Published var takServerPort: String {
         didSet {
-            TAKLogger.debug("Setting takServerPort")
             UserDefaults.standard.set(takServerPort, forKey: "takServerPort")
-            UserDefaults.standard.set(true, forKey: "shouldTryReconnect")
         }
     }
     
     @Published var takServerProtocol: String {
         didSet {
             UserDefaults.standard.set(takServerProtocol, forKey: "takServerProtocol")
-            UserDefaults.standard.set(true, forKey: "shouldTryReconnect")
         }
     }
     
@@ -140,14 +140,12 @@ class SettingsStore: ObservableObject {
     @Published var takServerUsername: String {
         didSet {
             UserDefaults.standard.set(takServerUsername, forKey: "takServerUsername")
-            UserDefaults.standard.set(true, forKey: "shouldTryReconnect")
         }
     }
     
     @Published var takServerPassword: String {
         didSet {
             UserDefaults.standard.set(takServerPassword, forKey: "takServerPassword")
-            UserDefaults.standard.set(true, forKey: "shouldTryReconnect")
         }
     }
     
