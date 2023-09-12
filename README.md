@@ -8,7 +8,7 @@ If you are interested in integrating this into your own product or want a custom
 
 ## Current TAK Tracker Parity Feature Status in rough priority / sequence:
 
-- [ ] Certificate Enrollment for connecting to server
+- [X] Certificate Enrollment for connecting to server
 - [ ] QR Code Enrollment for connecting to server
 - [ ] Have compass / heading recognize landscape mode
 - [X] Automatically connect when adding a new data package / connection (must restart the app now to pick them up)
@@ -37,7 +37,7 @@ These will likely end up being pulled out into a separate app rather than integr
 - [ ] Show other TAK Users on the Map
 - [ ] Allow sending of a point other than your current spot
 - [ ] Show GPS Accuracy
-- [ ] Ensure both iTAK and ATAK packages can be imported
+- [X] Ensure both iTAK and ATAK packages can be imported
 - [X] Show Current Map Center Coordinates
 - [x] Show Current Location on Map
 
