@@ -70,8 +70,8 @@ class CSRRequestor: NSObject, ObservableObject, URLSessionDelegate {
         let path = csrRequestPath
         let method = "POST"
         
-        var username = SettingsStore.global.takServerUsername
-        var password = SettingsStore.global.takServerPassword
+        let username = SettingsStore.global.takServerUsername
+        let password = SettingsStore.global.takServerPassword
 
         let loginString = String(format: "%@:%@", username, password)
         TAKLogger.debug("Auth String: \(loginString)")

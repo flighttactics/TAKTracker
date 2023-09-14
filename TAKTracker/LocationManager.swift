@@ -62,31 +62,4 @@ class LocationManager: NSObject,CLLocationManagerDelegate, ObservableObject {
         TAKLogger.debug("Heading Orientation: \(String(describing: manager.headingOrientation))")
         lastHeading = heading
     }
-    
-//    func latlon2DMS(latitude: Double) -> String {
-//        var latitudeSeconds = latitude * 3600
-//        let latitudeDegrees = latitudeSeconds / 3600
-//        latitudeSeconds = latitudeSeconds.truncatingRemainder(dividingBy: 3600)
-//        let latitudeMinutes = latitudeSeconds / 60
-//        latitudeSeconds = latitudeSeconds.truncatingRemainder(dividingBy: 60)
-//        let latitudeCardinalDirection = latitudeDegrees >= 0 ? "N" : "S"
-//        let latitudeDescription = String(format: "%.2f° %.2f' %.2f\" %@",
-//                                         abs(latitudeDegrees), abs(latitudeMinutes),
-//                                         abs(latitudeSeconds), latitudeCardinalDirection)
-//        return latitudeDescription
-//    }
-//
-//    func latlon2DMS(longitude: Double) -> String {
-//        var longitudeSeconds = longitude * 3600
-//        let longitudeDegrees = longitudeSeconds / 3600
-//        longitudeSeconds = longitudeSeconds.truncatingRemainder(dividingBy: 3600)
-//        let longitudeMinutes = longitudeSeconds / 60
-//        longitudeSeconds = longitudeSeconds.truncatingRemainder(dividingBy: 60)
-//        let longitudeCardinalDirection = longitudeDegrees >= 0 ? "E" : "W"
-//        let longitudeDescription = String(format: "%.2f° %.2f' %.2f\" %@",
-//                                          abs(longitudeDegrees), abs(longitudeMinutes),
-//                                          abs(longitudeSeconds), longitudeCardinalDirection)
-//        return longitudeDescription
-//    }
-
 }
