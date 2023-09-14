@@ -127,6 +127,58 @@ struct CoordinateDisplayLine {
     }
 }
 
+struct MapView: UIViewRepresentable {
+    @Binding var region: MKCoordinateRegion
+
+    let mapView = MKMapView()
+
+    func makeUIView(context: Context) -> MKMapView {
+        mapView.delegate = context.coordinator
+        mapView.setRegion(region, animated: true)
+        mapView.setCenter(region.center, animated: true)
+        mapView.showsUserLocation = true
+        mapView.showsCompass = true
+        mapView.userTrackingMode = .followWithHeading
+        return mapView
+    }
+
+    func updateUIView(_ view: MKMapView, context: Context) {
+        //print(#function)
+    }
+    
+    func resetMap() {
+        mapView.showsCompass = true
+        mapView.userTrackingMode = .followWithHeading
+    }
+
+    func makeCoordinator() -> Coordinator {
+        return Coordinator(self)
+    }
+
+    class Coordinator: NSObject, MKMapViewDelegate, UIGestureRecognizerDelegate {
+        var parent: MapView
+
+        var gRecognizer = UITapGestureRecognizer()
+
+        init(_ parent: MapView) {
+            self.parent = parent
+            super.init()
+            self.gRecognizer = UITapGestureRecognizer(target: self, action: #selector(tapHandler))
+            self.gRecognizer.delegate = self
+            self.parent.mapView.addGestureRecognizer(gRecognizer)
+        }
+
+        @objc func tapHandler(_ gesture: UITapGestureRecognizer) {
+            // position on the screen, CGPoint
+            let location = gRecognizer.location(in: self.parent.mapView)
+            // position on the map, CLLocationCoordinate2D
+            let coordinate = self.parent.mapView.convert(location, toCoordinateFrom: self.parent.mapView)
+            TAKLogger.debug("Map Tapped! \(String(describing: coordinate))")
+            parent.resetMap()
+        }
+    }
+}
+
 struct MainScreen: View {
     @StateObject var manager = LocationManager()
     @StateObject var settingsStore = SettingsStore.global
@@ -157,18 +209,18 @@ struct MainScreen: View {
                             .bold()
                             .foregroundColor(.white)
                         Spacer()
-//                        NavigationLink(destination: AlertView()) {
-//                            Image(systemName: "exclamationmark.triangle")
-//                                .imageScale(.large)
-//                                .foregroundColor(.white)
-//                        }
-//                        Spacer()
-//                        NavigationLink(destination: ChatView(chatMessage: ChatMessage())) {
-//                            Image(systemName: "bubble.left")
-//                                .imageScale(.large)
-//                                .foregroundColor(.white)
-//                        }
-//                        Spacer()
+                        NavigationLink(destination: AlertView()) {
+                            Image(systemName: "exclamationmark.triangle")
+                                .imageScale(.large)
+                                .foregroundColor(.white)
+                        }
+                        Spacer()
+                        NavigationLink(destination: ChatView(chatMessage: ChatMessage())) {
+                            Image(systemName: "bubble.left")
+                                .imageScale(.large)
+                                .foregroundColor(.white)
+                        }
+                        Spacer()
                         NavigationLink(destination: SettingsView()) {
                             Image(systemName: "gear")
                                 .imageScale(.large)
@@ -249,13 +301,9 @@ struct MainScreen: View {
                     .padding(10)
 
                     if(settingsStore.enableAdvancedMode) {
-                        Map(
-                           coordinateRegion: $manager.region,
-                           interactionModes: MapInteractionModes.all,
-                           showsUserLocation: true,
-                           userTrackingMode: $tracking
-                        )
+                        MapView(region: $manager.region)
                         .border(.black)
+                        
                     }
                     Spacer()
                     HStack {

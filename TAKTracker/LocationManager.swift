@@ -14,6 +14,8 @@ class LocationManager: NSObject,CLLocationManagerDelegate, ObservableObject {
     @Published var locationStatus: CLAuthorizationStatus?
     @Published var lastLocation: CLLocation?
     @Published var lastHeading: CLHeading?
+    
+    var shouldUpdateCoordinateRegion = true
 
     private let manager = CLLocationManager()
     override init() {
@@ -49,17 +51,18 @@ class LocationManager: NSObject,CLLocationManagerDelegate, ObservableObject {
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.last else { TAKLogger.debug("No Locations!"); return }
-        TAKLogger.debug("[LocationManager]: Location Updated")
         lastLocation = location
-        locations.last.map {
-            region = MKCoordinateRegion(
-                center: CLLocationCoordinate2D(latitude: $0.coordinate.latitude, longitude: $0.coordinate.longitude),
-                span: MKCoordinateSpan(latitudeDelta: 0.5, longitudeDelta: 0.5)
-            )
+        
+        if(shouldUpdateCoordinateRegion) {
+            locations.last.map {
+                region = MKCoordinateRegion(
+                    center: CLLocationCoordinate2D(latitude: $0.coordinate.latitude, longitude: $0.coordinate.longitude),
+                    span: MKCoordinateSpan(latitudeDelta: 0.5, longitudeDelta: 0.5)
+                )
+            }
         }
         
         guard let heading = manager.heading else { TAKLogger.debug("No heading!"); return }
-        TAKLogger.debug("Heading Orientation: \(String(describing: manager.headingOrientation))")
         lastHeading = heading
     }
 }
