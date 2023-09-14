@@ -8,19 +8,24 @@ If you are interested in integrating this into your own product or want a custom
 
 ## Current TAK Tracker Parity Feature Status in rough priority / sequence:
 
-- [X] Certificate Enrollment for connecting to server
-- [ ] QR Code Enrollment for connecting to server
-- [ ] Have compass / heading recognize landscape mode
-- [X] Automatically connect when adding a new data package / connection (must restart the app now to pick them up)
-- [ ] Better messages and logging about the state of parsing the packages and data connections
-- [X] Continuing transmitting location while app is in the background
+- [ ] Toggle Coordinates between DMS and MGRS
+- [ ] Group/Channel Support
+- [ ] Protobuf Support
+- [ ] Allow setting the Team/Role
 - [ ] Emergency Beacon
 - [ ] TAK Chat
+- [ ] QR Code Enrollment for connecting to server
+- [ ] Have compass / heading recognize landscape mode
+- [ ] Better messages and logging about the state of parsing the packages and data connections
 - [ ] Allow map to be scrolled without resetting
 - [ ] Show GPS Status
 - [ ] Show Compass Accuracy
 - [ ] App notifications when connection lost
 - [ ] Allow user to toggle background update indicator
+- [X] Certificate Enrollment for connecting to server
+- [X] Toggle Compass and Speed Units by tapping the numbers
+- [X] Continuing transmitting location while app is in the background
+- [X] Automatically connect when adding a new data package / connection
 - [x] Broadcast location over UDP
 - [x] Broadcast location over TCP to TAK Server
 - [x] Send location automatically
