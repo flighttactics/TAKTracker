@@ -14,6 +14,7 @@ import X509
 enum CSREnrollmentStatus : CustomStringConvertible {
     case NotStarted
     case Connecting
+    case Configuring
     case Enrolling
     case Failed
     case Succeeded
@@ -22,6 +23,7 @@ enum CSREnrollmentStatus : CustomStringConvertible {
         switch self {
         case .NotStarted: return "Not Started"
         case .Connecting: return "Connecting"
+        case .Configuring: return "Configuring"
         case .Enrolling: return "Enrolling"
         case .Failed: return "Failed"
         case .Succeeded: return "Succeeded"
@@ -65,11 +67,7 @@ class CSRRequestor: NSObject, ObservableObject, URLSessionDelegate {
             }
     }
     
-    func beginEnrollment() {
-        enrollmentStatus = CSREnrollmentStatus.Connecting
-        let path = csrRequestPath
-        let method = "POST"
-        
+    func generateAuthHeaderString() -> String {
         let username = SettingsStore.global.takServerUsername
         let password = SettingsStore.global.takServerPassword
 
@@ -77,40 +75,30 @@ class CSRRequestor: NSObject, ObservableObject, URLSessionDelegate {
         TAKLogger.debug("Auth String: \(loginString)")
         let loginData = loginString.data(using: String.Encoding.utf8)!
         let base64LoginString = loginData.base64EncodedString()
-
-        // create the request
+        return "Basic \(base64LoginString)"
+    }
+    
+    func beginEnrollment() {
+        enrollmentStatus = CSREnrollmentStatus.Connecting
+        let caConfigMethod = "GET"
+        let csrMethod = "POST"
         let host = "https://\(SettingsStore.global.takServerUrl)"
-        let url = URL(string: "\(host):\(csrPort)\(path)")!
-        var request = URLRequest(url: url)
-        request.httpMethod = method
-        request.setValue("text/plain; charset=utf-8", forHTTPHeaderField: "Content-Type")  // the request is JSON
-
-        request.setValue("Basic \(base64LoginString)", forHTTPHeaderField: "Authorization")
+        var caConfigEntries : [String:String] = [:]
+        var orgNameEntry = ""
+        var orgUnitNameEntry = ""
         
-        TAKLogger.debug("[CSRRequestor] Attemping to CSR to: \(String(describing: url))")
+        // Retrieve the TLS Config Variables
+        let caConfigURL = URL(string: "\(host):\(csrPort)\(tlsConfigPath)")!
+        var caConfigRequest = URLRequest(url: caConfigURL)
+        caConfigRequest.httpMethod = caConfigMethod
+        caConfigRequest.setValue("text/plain; charset=utf-8", forHTTPHeaderField: "Content-Type")
+        caConfigRequest.setValue(generateAuthHeaderString(), forHTTPHeaderField: "Authorization")
+        TAKLogger.debug("[CSRRequestor] Attemping to get CA Config from: \(String(describing: caConfigURL))")
         
-        let session = URLSession(configuration: URLSessionConfiguration.ephemeral,
+        let caConfigSession = URLSession(configuration: URLSessionConfiguration.ephemeral,
                                                delegate: self,
                                                delegateQueue: OperationQueue.main)
-        
-        // TODO: Pull O/OU from the TLS Config API
-        generateSigningRequest(
-            commonName: username,
-            hostName: SettingsStore.global.takServerUrl,
-            organizationName: "FLIGHTTACTICS",
-            organizationUnitName: "TAK")
-
-        let rawCertData = Data(derEncodedCertificate)
-        let certData = rawCertData.base64EncodedString()
-        TAKLogger.debug("certData as Data")
-        TAKLogger.debug(String(describing: certData));
-        
-        request.httpBody = rawCertData.base64EncodedData()
-        
-        enrollmentStatus = CSREnrollmentStatus.Enrolling
-        
-        // TODO: Actually let the user know this failed if it, uh, fails
-        let task = session.dataTask(with: request) { data, response, error in
+        let caConfigTask = caConfigSession.dataTask(with: caConfigRequest) { data, response, error in
             if let error = error {
                 TAKLogger.error("[CSRRequestor] Error: \(error)")
                 TAKLogger.error("[CSRRequestor] Response: \(String(describing: response))")
@@ -127,61 +115,135 @@ class CSRRequestor: NSObject, ObservableObject, URLSessionDelegate {
                 return
             }
             if let mimeType = response.mimeType,
-                (mimeType == "application/json" || mimeType == "text/plain"),
+                mimeType == "text/plain",
                 let data = data,
                 let dataString = String(data: data, encoding: .utf8) {
+                
+                self.enrollmentStatus = CSREnrollmentStatus.Configuring
+                
                 TAKLogger.debug("[CSRRequestor] got data: \(dataString)")
-                let json = try? JSONSerialization.jsonObject(with: data, options: [])
-                TAKLogger.debug(String(describing: json))
-                do {
-                    if let dictionary = json as? [String: String] {
-                        if var certString = dictionary["signedCert"] {
-                            certString = """
+                let xmlParser = XMLParser(data: data)
+                let responseParser = TAKCAConfigResponseParser()
+                xmlParser.delegate = responseParser
+                xmlParser.parse()
+                caConfigEntries = responseParser.nameEntries
+                TAKLogger.debug("[CSRRequestor] got name entries \(String(describing: caConfigEntries))")
+                
+                if caConfigEntries["O"] != nil {
+                    orgNameEntry = caConfigEntries["O"]!
+                }
+                
+                if caConfigEntries["OU"] != nil {
+                    orgUnitNameEntry = caConfigEntries["OU"]!
+                }
+                
+                // create the request
+                let csrURL = URL(string: "\(host):\(self.csrPort)\(self.csrRequestPath)")!
+                var csrRequest = URLRequest(url: csrURL)
+                csrRequest.httpMethod = csrMethod
+                csrRequest.setValue("text/plain; charset=utf-8", forHTTPHeaderField: "Content-Type")  // the request is JSON
+
+                csrRequest.setValue(self.generateAuthHeaderString(), forHTTPHeaderField: "Authorization")
+                
+                TAKLogger.debug("[CSRRequestor] Attemping to CSR to: \(String(describing: csrURL))")
+                
+                let session = URLSession(configuration: URLSessionConfiguration.ephemeral,
+                                                       delegate: self,
+                                                       delegateQueue: OperationQueue.main)
+                
+                self.generateSigningRequest(
+                    commonName: SettingsStore.global.takServerUsername,
+                    hostName: SettingsStore.global.takServerUrl,
+                    organizationName: orgNameEntry,
+                    organizationUnitName: orgUnitNameEntry)
+
+                let rawCertData = Data(self.derEncodedCertificate)
+                let certData = rawCertData.base64EncodedString()
+                TAKLogger.debug("certData as Data")
+                TAKLogger.debug(String(describing: certData));
+                
+                csrRequest.httpBody = rawCertData.base64EncodedData()
+                
+                self.enrollmentStatus = CSREnrollmentStatus.Enrolling
+                
+                // TODO: Actually let the user know this failed if it, uh, fails
+                let task = session.dataTask(with: csrRequest) { data, response, error in
+                    if let error = error {
+                        TAKLogger.error("[CSRRequestor] Error: \(error)")
+                        TAKLogger.error("[CSRRequestor] Response: \(String(describing: response))")
+                        TAKLogger.error("[CSRRequestor] Data: \(String(describing: data))")
+                        self.enrollmentStatus = CSREnrollmentStatus.Failed
+                        return
+                    }
+                    guard let response = response as? HTTPURLResponse,
+                        (200...299).contains(response.statusCode) else {
+                        TAKLogger.error("[CSRRequestor] Error: \(String(describing: error))")
+                        TAKLogger.error("[CSRRequestor] Response: \(String(describing: response))")
+                        TAKLogger.error("[CSRRequestor] Data: \(String(describing: data))")
+                        self.enrollmentStatus = CSREnrollmentStatus.Failed
+                        return
+                    }
+                    if let mimeType = response.mimeType,
+                        (mimeType == "application/json" || mimeType == "text/plain"),
+                        let data = data,
+                        let dataString = String(data: data, encoding: .utf8) {
+                        TAKLogger.debug("[CSRRequestor] got data: \(dataString)")
+                        let json = try? JSONSerialization.jsonObject(with: data, options: [])
+                        TAKLogger.debug(String(describing: json))
+                        do {
+                            if let dictionary = json as? [String: String] {
+                                if var certString = dictionary["signedCert"] {
+                                    certString = """
 -----BEGIN CERTIFICATE-----
 \(certString)
 -----END CERTIFICATE-----
 """
-                            let parsedCert = try Certificate(pemEncoded: certString)
-                            TAKLogger.debug("Parsed Certificate:")
-                            TAKLogger.debug(String(describing: parsedCert))
-                            TAKLogger.debug("Storing Certificate")
-                            
-                            TAKLogger.debug("Serializing to DER")
-                            var serializer = DER.Serializer()
-                            try serializer.serialize(parsedCert)
-                            let derData = Data(serializer.serializedBytes)
-                            TAKLogger.debug("Attemping to add Identity")
-                            try CertificateManager.addIdentity(clientCertificate: derData, label: SettingsStore.global.takServerUrl)
-                            
-                            TAKLogger.debug("Identity Added")
-                            
-                            guard let identityCert = CertificateManager.getCertificate(label: SettingsStore.global.takServerUrl) else {
-                                TAKLogger.error("Could not get Identity Cert")
-                                self.enrollmentStatus = CSREnrollmentStatus.Failed
-                                return
+                                    let parsedCert = try Certificate(pemEncoded: certString)
+                                    TAKLogger.debug("Parsed Certificate:")
+                                    TAKLogger.debug(String(describing: parsedCert))
+                                    TAKLogger.debug("Storing Certificate")
+                                    
+                                    TAKLogger.debug("Serializing to DER")
+                                    var serializer = DER.Serializer()
+                                    try serializer.serialize(parsedCert)
+                                    let derData = Data(serializer.serializedBytes)
+                                    TAKLogger.debug("Attemping to add Identity")
+                                    try CertificateManager.addIdentity(clientCertificate: derData, label: SettingsStore.global.takServerUrl)
+                                    
+                                    TAKLogger.debug("Identity Added")
+                                    
+                                    guard let identityCert = CertificateManager.getCertificate(label: SettingsStore.global.takServerUrl) else {
+                                        TAKLogger.error("Could not get Identity Cert")
+                                        self.enrollmentStatus = CSREnrollmentStatus.Failed
+                                        return
+                                    }
+                                    
+                                    let certData = SecCertificateCopyData(identityCert) as Data
+                                    
+                                    //let responseCertData = certString.data(using: String.Encoding.utf8)!
+                                    SettingsStore.global.userCertificate = certData
+                                    SettingsStore.global.userCertificatePassword = ""
+                                    SettingsStore.global.takServerChanged = true
+                                    self.enrollmentStatus = CSREnrollmentStatus.Succeeded
+                                }
                             }
-                            
-                            let certData = SecCertificateCopyData(identityCert) as Data
-                            
-                            //let responseCertData = certString.data(using: String.Encoding.utf8)!
-                            SettingsStore.global.userCertificate = certData
-                            SettingsStore.global.userCertificatePassword = ""
-                            SettingsStore.global.takServerChanged = true
-                            self.enrollmentStatus = CSREnrollmentStatus.Succeeded
+                        } catch let error as NSError {
+                            TAKLogger.error("[CSRRequestor] Could not parse the cert")
+                            TAKLogger.error(error.debugDescription)
+                            self.enrollmentStatus = CSREnrollmentStatus.Failed
                         }
+                    } else {
+                        TAKLogger.error("Unknown response from server when attempting Certificate Enrollment")
+                        self.enrollmentStatus = CSREnrollmentStatus.Failed
                     }
-                } catch let error as NSError {
-                    TAKLogger.error("[CSRRequestor] Could not parse the cert")
-                    TAKLogger.error(error.debugDescription)
-                    self.enrollmentStatus = CSREnrollmentStatus.Failed
                 }
+                task.resume()
             } else {
-                TAKLogger.error("Unknown response from server when attempting Certificate Enrollment")
+                TAKLogger.error("Unknown response from server when attempting CA Config")
                 self.enrollmentStatus = CSREnrollmentStatus.Failed
             }
         }
-        task.resume()
-
+        caConfigTask.resume()
     }
     
     func generateSigningRequest(commonName: String,

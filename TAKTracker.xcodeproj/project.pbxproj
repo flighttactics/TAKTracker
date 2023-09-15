@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A508213F2AB3D19B00E0CBD8 /* TAKCAConfigResponseParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A508213E2AB3D19B00E0CBD8 /* TAKCAConfigResponseParser.swift */; };
 		A50C5F5B2A5F92FF001E52E6 /* SettingsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A50C5F5A2A5F92FF001E52E6 /* SettingsStore.swift */; };
 		A50C5F5D2A601CF0001E52E6 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A50C5F5C2A601CF0001E52E6 /* SettingsView.swift */; };
 		A50C5F5F2A6032D2001E52E6 /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A50C5F5E2A6032D2001E52E6 /* AlertView.swift */; };
@@ -74,6 +75,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A508213E2AB3D19B00E0CBD8 /* TAKCAConfigResponseParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TAKCAConfigResponseParser.swift; sourceTree = "<group>"; };
 		A50C5F5A2A5F92FF001E52E6 /* SettingsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsStore.swift; sourceTree = "<group>"; };
 		A50C5F5C2A601CF0001E52E6 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		A50C5F5E2A6032D2001E52E6 /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
@@ -220,6 +222,7 @@
 				A5E7B00F2A714ECC00D9203F /* TAKManifestParser.swift */,
 				A5E7B0112A7184FB00D9203F /* TAKPreferencesParser.swift */,
 				A5E7B00A2A70B5F900D9203F /* TAKDataPackageParser.swift */,
+				A508213E2AB3D19B00E0CBD8 /* TAKCAConfigResponseParser.swift */,
 			);
 			path = Parsers;
 			sourceTree = "<group>";
@@ -444,6 +447,7 @@
 				A5E7B00B2A70B5FA00D9203F /* TAKDataPackageParser.swift in Sources */,
 				A5A49D902A5459B5009764C1 /* TAKManager.swift in Sources */,
 				A5E7B0182A76AA8B00D9203F /* TAKLogger.swift in Sources */,
+				A508213F2AB3D19B00E0CBD8 /* TAKCAConfigResponseParser.swift in Sources */,
 				A5D8D3A82A53B465002F0E3E /* LocationManager.swift in Sources */,
 				A55CE96B2AB1D8860081AF86 /* Converter.swift in Sources */,
 				A5BF02022A5EBCA40043065B /* TCPMessage.swift in Sources */,
