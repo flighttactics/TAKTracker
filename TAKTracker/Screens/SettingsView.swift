@@ -33,6 +33,7 @@ struct SettingsView: View {
                         Spacer()
                     }
                     TextField("Call Sign", text: $settingsStore.callSign)
+                        .keyboardType(.asciiCapable)
                 }
                 .padding(.top, 20)
             }
@@ -66,6 +67,7 @@ struct SettingsView: View {
                     TextField("Server Address", text: $settingsStore.takServerUrl)
                         .autocorrectionDisabled(true)
                         .textInputAutocapitalization(.never)
+                        .keyboardType(.URL)
                         .onSubmit {
                             SettingsStore.global.takServerChanged = true
                         }
@@ -82,6 +84,7 @@ struct SettingsView: View {
                         Spacer()
                     }
                     TextField("Server Port", text: $settingsStore.takServerPort)
+                        .keyboardType(.numberPad)
                         .onSubmit {
                             SettingsStore.global.takServerChanged = true
                         }
@@ -100,6 +103,7 @@ struct SettingsView: View {
                     TextField("Server Username", text: $settingsStore.takServerUsername)
                         .autocorrectionDisabled(true)
                         .textInputAutocapitalization(.never)
+                        .keyboardType(.asciiCapable)
                         .onSubmit {
                             SettingsStore.global.takServerChanged = true
                         }
@@ -131,19 +135,24 @@ struct SettingsView: View {
                             .foregroundColor(.secondary)
                         Spacer()
                     }
-                    Button {
+                    Button("Enroll Now", role: .none) {
                         isShowingEnrollment.toggle()
-                    } label: {
-                        Text("Enroll Now")
                     }
+                    .buttonStyle(.bordered)
                     .popover(isPresented: $isShowingEnrollment) {
                         Text("Let's Enroll")
                             .font(.headline)
                             .padding()
-                        Button {
-                            csrRequest.beginEnrollment()
-                        } label: {
-                            Text("Begin")
+                        if(csrRequest.enrollmentStatus == .Succeeded) {
+                            Button("Close", role: .none) {
+                                isShowingEnrollment.toggle()
+                            }
+                            .buttonStyle(.bordered)
+                        } else {
+                            Button("Begin", role: .none) {
+                                csrRequest.beginEnrollment()
+                            }
+                            .buttonStyle(.borderedProminent)
                         }
                         Text(csrRequest.enrollmentStatus.description)
                         Text("For Server \(SettingsStore.global.takServerUrl)")
@@ -160,11 +169,10 @@ struct SettingsView: View {
                             .foregroundColor(.secondary)
                         Spacer()
                     }
-                    Button {
+                    Button("Data Package", role: .none) {
                         isShowingFilePicker.toggle()
-                    } label: {
-                        Text("Data Package")
                     }
+                    .buttonStyle(.bordered)
                     .fileImporter(isPresented: $isShowingFilePicker, allowedContentTypes: [.zip], allowsMultipleSelection: false, onCompletion: { results in
                         
                         switch results {
@@ -218,6 +226,7 @@ struct SettingsView: View {
                             Spacer()
                         }
                         TextField("CoT Type", text: $settingsStore.cotType)
+                        
                     }
                     .padding(.top, 20)
                 }
