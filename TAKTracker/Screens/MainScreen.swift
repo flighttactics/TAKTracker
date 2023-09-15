@@ -139,6 +139,7 @@ struct MapView: UIViewRepresentable {
         mapView.showsUserLocation = true
         mapView.showsCompass = true
         mapView.userTrackingMode = .followWithHeading
+        mapView.pointOfInterestFilter = .excludingAll
         return mapView
     }
 
