@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftTAK
 import SwiftUI
 
 struct SettingsView: View {

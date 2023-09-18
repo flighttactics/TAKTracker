@@ -23,10 +23,6 @@ class UDPMessage: NSObject, ObservableObject {
                 TAKLogger.debug("[UDPMessage]: Unable to process and send the data: \(error)")
             } else {
                 TAKLogger.debug("[UDPMessage]: Data has been sent")
-                self.connection!.receiveMessage { (data, context, isComplete, error) in
-                    guard let myData = data else { return }
-                    TAKLogger.debug("[UDPMessage]: Received message: " + String(decoding: myData, as: UTF8.self))
-                }
             }
         }))
     }

@@ -5,142 +5,57 @@
 //  Created by Cory Foy on 7/25/23.
 //
 
-import UIKit
-import ZIPFoundation
+import Foundation
+import SwiftTAK
 
 class TAKDataPackageParser: NSObject {
+    var archiveLocation: URL
     
-    let MANIFEST_FILE = "manifest.xml"
-    var dataPackageContents: [String] = []
-    
-    var archiveLocation: URL?
-    
-    init (fileLocation:URL) {
-        TAKLogger.debug("Initializing TAKDPP")
+    init (fileLocation: URL) {
+        TAKLogger.debug("[TAKDataPackageParser]: Initializing")
         archiveLocation = fileLocation
         super.init()
     }
     
     func parse() {
-        processArchive()
-    }
-
-    func processArchive() {
-        TAKLogger.debug("Entering processArchive")
-        guard let sourceURL = archiveLocation
-        else {
-            TAKLogger.error("Unable to access sourceURL variable \(String(describing: archiveLocation))")
-            return
-        }
-
-        guard let archive = Archive(url: sourceURL, accessMode: .read)
-        else {
-            TAKLogger.error("Unable to access archive at location \(String(describing: archiveLocation))")
-            return
-        }
-        
-        TAKLogger.debug("Files in archive")
-        dataPackageContents = archive.map { entry in
-            return entry.path
-        }
-        TAKLogger.debug(String(describing: dataPackageContents))
-        
-        let prefsFile = retrievePrefsFile(archive: archive)
-        let prefs = parsePrefsFile(archive: archive, prefsFile: prefsFile)
-        storeUserCertificate(archive: archive, prefs: prefs)
-        storeServerCertificate(archive: archive, prefs: prefs)
-        storePreferences(preferences: prefs)
-        TAKLogger.debug("processArchive Complete")
+        let parser = DataPackageParser(fileLocation: archiveLocation)
+        parser.parse()
+        let contents = parser.packageContents
+        storeUserCertificate(packageContents: contents)
+        storeServerCertificate(packageContents: contents)
+        storePreferences(packageContents: contents)
+        TAKLogger.debug("[TAKDataPackageParser]: Completed Parsing")
     }
     
-    func storeUserCertificate(archive: Archive, prefs: TAKPreferences) {
-        let fileName = prefs.userCertificateFileName()
-        guard let certFile = archive[fileName]
-        else { TAKLogger.debug("userCertificate \(fileName) not found in archive"); return }
-
-        var certData = Data()
-        _ = try? archive.extract(certFile) { data in
-            certData.append(data)
-        }
-        SettingsStore.global.userCertificate = certData
-        TAKLogger.debug("Storing User Certificate")
-        TAKLogger.debug(String(describing: certData))
+    func storeUserCertificate(packageContents: DataPackageContents) {
+        SettingsStore.global.userCertificate = packageContents.userCertificate
+        TAKLogger.debug("[TAKDataPackageParser]: Storing User Certificate")
         
         //Parse the cert file
-        let parsedCert = PKCS12(data: SettingsStore.global.userCertificate, password: prefs.userCertificatePassword)
+        let parsedCert = PKCS12(data: SettingsStore.global.userCertificate, password: packageContents.userCertificatePassword)
         
         guard let identity = parsedCert.identity else {
-            TAKLogger.error("Identity was not present in the parsed cert")
+            TAKLogger.error("[TAKDataPackageParser]: Identity was not present in the parsed cert")
             return
         }
         
-        SettingsStore.global.storeIdentity(identity: identity, label: prefs.serverConnectionAddress())
+        SettingsStore.global.storeIdentity(identity: identity, label: packageContents.serverURL)
         
-        TAKLogger.debug("User Certificate Stored")
+        TAKLogger.debug("[TAKDataPackageParser]: User Certificate Stored")
     }
     
-    func storeServerCertificate(archive: Archive, prefs: TAKPreferences) {
-        let fileName = prefs.serverCertificateFileName()
-        guard let certFile = archive[fileName]
-        else { TAKLogger.debug("serverCertificate \(fileName) not found in archive"); return }
-
-        var certData = Data()
-        _ = try? archive.extract(certFile) { data in
-            certData.append(data)
-        }
-        SettingsStore.global.serverCertificate = certData
+    func storeServerCertificate(packageContents: DataPackageContents) {
+        SettingsStore.global.serverCertificate = packageContents.serverCertificate
     }
     
-    func storePreferences(preferences: TAKPreferences) {
-        SettingsStore.global.userCertificatePassword = preferences.userCertificatePassword
-        SettingsStore.global.serverCertificatePassword = preferences.serverCertificatePassword
+    func storePreferences(packageContents: DataPackageContents) {
+        SettingsStore.global.userCertificatePassword = packageContents.userCertificatePassword
+        SettingsStore.global.serverCertificatePassword = packageContents.serverCertificatePassword
         
-        SettingsStore.global.takServerUrl = preferences.serverConnectionAddress()
-        SettingsStore.global.takServerPort = preferences.serverConnectionPort()
-        SettingsStore.global.takServerProtocol = preferences.serverConnectionProtocol()
+        SettingsStore.global.takServerUrl = packageContents.serverURL
+        SettingsStore.global.takServerPort = packageContents.serverPort
+        SettingsStore.global.takServerProtocol = packageContents.serverProtocol
         SettingsStore.global.takServerChanged = true
-    }
-    
-    func parsePrefsFile(archive:Archive, prefsFile: String) -> TAKPreferences {
-        let prefsParser = TAKPreferencesParser()
-        
-        guard let prefFile = archive[prefsFile]
-        else { TAKLogger.debug("prefFile not in archive"); return prefsParser.preferences }
-
-        var prefData = Data()
-        _ = try? archive.extract(prefFile) { data in
-            prefData.append(data)
-        }
-        let xmlParser = XMLParser(data: prefData)
-        TAKLogger.debug(String(describing: xmlParser))
-        xmlParser.delegate = prefsParser
-        xmlParser.parse()
-        return prefsParser.preferences
-    }
-    
-    func retrievePrefsFile(archive:Archive) -> String {
-        var prefsFile = ""
-        
-        if let prefFileLocation = dataPackageContents.first(where: {
-            $0.hasSuffix(".pref")
-        }) {
-            prefsFile = prefFileLocation
-        } else {
-            guard let takManifest = archive["manifest.xml"]
-            else { return prefsFile }
-
-            var manifestData = Data()
-            _ = try? archive.extract(takManifest) { data in
-                manifestData.append(data)
-            }
-            let xmlParser = XMLParser(data: manifestData)
-            let manifestParser = TAKManifestParser()
-            xmlParser.delegate = manifestParser
-            xmlParser.parse()
-            TAKLogger.debug("Prefs file: \(manifestParser.prefsFile())")
-            prefsFile = manifestParser.prefsFile()
-        }
-        return prefsFile
     }
 
 }
