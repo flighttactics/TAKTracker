@@ -6,6 +6,7 @@
 //  Adapted from https://blog.maximeheckel.com/snippets/2020-11-27-storing-user-settings-swift/
 //
 
+import MapKit
 import UIKit
 
 class SettingsStore: ObservableObject {
@@ -179,6 +180,12 @@ class SettingsStore: ObservableObject {
         }
     }
     
+    @Published var mapTypeDisplay: UInt {
+        didSet {
+            UserDefaults.standard.set(mapTypeDisplay, forKey: "mapTypeDisplay")
+        }
+    }
+    
     private init() {
         let defaultSign = "TRACKER-\(Int.random(in: 1..<40))"
         self.callSign = (UserDefaults.standard.object(forKey: "callSign") == nil ? defaultSign : UserDefaults.standard.object(forKey: "callSign") as! String)
@@ -222,6 +229,8 @@ class SettingsStore: ObservableObject {
         self.connectionStatus = (UserDefaults.standard.object(forKey: "connectionStatus") == nil ? "Disconnected" : UserDefaults.standard.object(forKey: "connectionStatus") as! String)
         
         self.takServerChanged = (UserDefaults.standard.object(forKey: "takServerChanged") == nil ? false : UserDefaults.standard.object(forKey: "takServerChanged") as! Bool)
+        
+        self.mapTypeDisplay = (UserDefaults.standard.object(forKey: "mapTypeDisplay") == nil ? MKMapType.standard.rawValue : UserDefaults.standard.object(forKey: "mapTypeDisplay") as! UInt)
 
     }
 }

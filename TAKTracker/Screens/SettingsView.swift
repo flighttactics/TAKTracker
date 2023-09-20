@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import MapKit
 import SwiftTAK
 import SwiftUI
 
@@ -221,26 +222,19 @@ struct SettingsView: View {
                 Group {
                     VStack {
                         HStack {
-                            Text("CoT Type")
+                            Text("Map Type")
                                 .font(.system(size: 18, weight: .medium))
                                 .foregroundColor(.secondary)
                             Spacer()
                         }
-                        TextField("CoT Type", text: $settingsStore.cotType)
-                        
-                    }
-                    .padding(.top, 20)
-                }
 
-                Group {
-                    VStack {
-                        HStack {
-                            Text("CoT How")
-                                .font(.system(size: 18, weight: .medium))
-                                .foregroundColor(.secondary)
-                            Spacer()
-                        }
-                        TextField("CoT How", text: $settingsStore.cotHow)
+                        Picker(selection: $settingsStore.mapTypeDisplay, label: Text("Map Type"), content: {
+                            Text("Standard").tag(MKMapType.standard.rawValue)
+                            Text("Hybrid").tag(MKMapType.hybrid.rawValue)
+                            Text("Satellite").tag(MKMapType.satellite.rawValue)
+                            Text("Flyover").tag(MKMapType.hybridFlyover.rawValue)
+                        })
+                        .pickerStyle(SegmentedPickerStyle())
                     }
                     .padding(.top, 20)
                 }

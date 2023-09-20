@@ -129,6 +129,7 @@ struct CoordinateDisplayLine {
 
 struct MapView: UIViewRepresentable {
     @Binding var region: MKCoordinateRegion
+    @Binding var mapType: UInt
 
     let mapView = MKMapView()
 
@@ -140,11 +141,12 @@ struct MapView: UIViewRepresentable {
         mapView.showsCompass = true
         mapView.userTrackingMode = .followWithHeading
         mapView.pointOfInterestFilter = .excludingAll
+        mapView.mapType = MKMapType(rawValue: UInt(mapType))!
         return mapView
     }
 
     func updateUIView(_ view: MKMapView, context: Context) {
-        //print(#function)
+        view.mapType = MKMapType(rawValue: UInt(mapType))!
     }
     
     func resetMap() {
@@ -302,9 +304,11 @@ struct MainScreen: View {
                     .padding(10)
 
                     if(settingsStore.enableAdvancedMode) {
-                        MapView(region: $manager.region)
+                        MapView(
+                            region: $manager.region,
+                            mapType: $settingsStore.mapTypeDisplay
+                        )
                         .border(.black)
-                        
                     }
                     Spacer()
                     HStack {
