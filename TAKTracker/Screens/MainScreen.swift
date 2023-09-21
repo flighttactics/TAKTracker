@@ -241,7 +241,8 @@ struct MainScreen: View {
                             }
                             .imageScale(.large)
                             .foregroundColor(settingsStore.isAlertActivated ? .red : .white)
-                            .popover(isPresented: $isAlertPresented) { AlertView()
+                            .popover(isPresented: $isAlertPresented) { AlertView(takManager: takManager,
+                                          location: manager)
                             }
                         Spacer()
                         NavigationLink(destination: ChatView(chatMessage: ChatMessage())) {

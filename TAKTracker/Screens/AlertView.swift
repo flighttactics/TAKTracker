@@ -6,14 +6,19 @@
 //
 
 import Foundation
+import MapKit
+import SwiftTAK
 import SwiftUI
 
 struct AlertView: View {
     @Environment(\.dismiss) var dismiss
+    var takManager: TAKManager
+    var location: LocationManager
+
     @State var alertActivated: Bool = false
     @State var alertConfirmed: Bool = false
-    @State var alertType: String = "Cancel"
-    
+    @State var alertType: EmergencyType = EmergencyType.NineOneOne
+
     var body: some View {
         List {
             Text("Emergency Beacon")
@@ -37,6 +42,13 @@ struct AlertView: View {
                     })
                     .pickerStyle(.segmented)
                     .background(alertActivated ? Color.red : Color.white)
+                    .onAppear {
+                        if(SettingsStore.global.isAlertActivated) {
+                            // Default to cancelling the alert if one
+                            // is active when we open the screen
+                            alertType = EmergencyType.Cancel
+                        }
+                    }
                 }
             }
             .listRowSeparator(.hidden)
@@ -68,9 +80,9 @@ struct AlertView: View {
                         Spacer()
                     }
                     Picker(selection: $alertType, label: Text("Alert Type"), content: {
-                        Text("911 Alert").tag("911 Alert")
-                        Text("In Contact").tag("In Contact")
-                        Text("Cancel Alert").tag("Cancel Alert")
+                        ForEach(EmergencyType.allCases) { emergency_type in
+                            Text(emergency_type.rawValue)
+                        }
                     })
                     .pickerStyle(.menu)
                 }
@@ -85,13 +97,15 @@ struct AlertView: View {
                 .buttonStyle(.borderedProminent)
                 
                 Button("OK", role: .none) {
-                    if(alertType == "Cancel Alert") {
-                        SettingsStore.global.activeAlertType = alertType
+                    if(alertType == EmergencyType.Cancel) {
+                        SettingsStore.global.activeAlertType = alertType.rawValue
                         SettingsStore.global.isAlertActivated = false
+                        takManager.cancelEmergencyAlert(location: location.lastLocation)
                         TAKLogger.debug("Alert Cancelled")
                     } else {
-                        SettingsStore.global.activeAlertType = alertType
+                        SettingsStore.global.activeAlertType = alertType.rawValue
                         SettingsStore.global.isAlertActivated = true
+                        takManager.initiateEmergencyAlert(location: location.lastLocation)
                         TAKLogger.debug("Alert Activated!")
                     }
                     dismiss()
