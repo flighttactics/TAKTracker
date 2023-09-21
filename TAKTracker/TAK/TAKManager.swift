@@ -37,7 +37,7 @@ class TAKManager: NSObject, URLSessionDelegate, ObservableObject {
     }
     
     func broadcastLocation(location: CLLocation) {
-        let message = cotMessage.generateCOTXml(heightAboveElipsoid: location.altitude.description, latitude: location.coordinate.latitude.formatted(), longitude: location.coordinate.longitude.formatted(), callSign: SettingsStore.global.callSign, group: "Cyan", role: "Team Member", phoneBatteryStatus: AppConstants.getPhoneBatteryStatus().description)
+        let message = cotMessage.generateCOTXml(heightAboveElipsoid: location.altitude.description, latitude: location.coordinate.latitude.formatted(), longitude: location.coordinate.longitude.formatted(), callSign: SettingsStore.global.callSign, group: SettingsStore.global.team, role: SettingsStore.global.role, phoneBatteryStatus: AppConstants.getPhoneBatteryStatus().description)
 
         TAKLogger.debug("[TAKManager]: Getting ready to broadcast location CoT")
         TAKLogger.debug(message)

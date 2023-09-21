@@ -7,6 +7,7 @@
 //
 
 import MapKit
+import SwiftTAK
 import UIKit
 
 class SettingsStore: ObservableObject {
@@ -53,6 +54,18 @@ class SettingsStore: ObservableObject {
     @Published var callSign: String {
         didSet {
             UserDefaults.standard.set(callSign, forKey: "callSign")
+        }
+    }
+    
+    @Published var team: String {
+        didSet {
+            UserDefaults.standard.set(team, forKey: "team")
+        }
+    }
+    
+    @Published var role: String {
+        didSet {
+            UserDefaults.standard.set(role, forKey: "role")
         }
     }
     
@@ -189,6 +202,10 @@ class SettingsStore: ObservableObject {
     private init() {
         let defaultSign = "TRACKER-\(Int.random(in: 1..<40))"
         self.callSign = (UserDefaults.standard.object(forKey: "callSign") == nil ? defaultSign : UserDefaults.standard.object(forKey: "callSign") as! String)
+        
+        self.team = (UserDefaults.standard.object(forKey: "team") == nil ? TeamColor.Cyan.rawValue : UserDefaults.standard.object(forKey: "team") as! String)
+        
+        self.role = (UserDefaults.standard.object(forKey: "role") == nil ? TeamRole.TeamMember.rawValue : UserDefaults.standard.object(forKey: "role") as! String)
         
         self.cotType = (UserDefaults.standard.object(forKey: "cotType") == nil ? "a-f-G-U-C" : UserDefaults.standard.object(forKey: "cotType") as! String)
         
