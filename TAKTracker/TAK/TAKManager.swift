@@ -45,4 +45,31 @@ class TAKManager: NSObject, URLSessionDelegate, ObservableObject {
         sendToTCP(message: message)
         TAKLogger.debug("[TAKManager]: Done broadcasting")
     }
+    
+    func initiateEmergencyAlert(location: CLLocation?) {
+        let alertType = EmergencyType(rawValue: SettingsStore.global.activeAlertType)!
+        
+        let alert = cotMessage.generateEmergencyCOTXml(latitude: location?.coordinate.latitude.formatted() ?? "", longitude: location?.coordinate.longitude.formatted() ?? "", callSign: SettingsStore.global.callSign, emergencyType: alertType, isCancelled: false)
+
+        TAKLogger.debug("[TAKManager]: Getting ready to broadcast emergency alert CoT")
+        TAKLogger.debug(alert)
+        sendToUDP(message: alert)
+        sendToTCP(message: alert)
+        TAKLogger.debug("[TAKManager]: Done broadcasting emergency alert")
+    }
+    
+    func cancelEmergencyAlert(location: CLLocation?) {
+        SettingsStore.global.activeAlertType = ""
+        SettingsStore.global.isAlertActivated = false
+        
+        let alertType = EmergencyType.Cancel
+        
+        let alert = cotMessage.generateEmergencyCOTXml(latitude: location?.coordinate.latitude.formatted() ?? "", longitude: location?.coordinate.longitude.formatted() ?? "", callSign: SettingsStore.global.callSign, emergencyType: alertType, isCancelled: true)
+
+        TAKLogger.debug("[TAKManager]: Getting ready to broadcast emergency alert cancellation CoT")
+        TAKLogger.debug(alert)
+        sendToUDP(message: alert)
+        sendToTCP(message: alert)
+        TAKLogger.debug("[TAKManager]: Done broadcasting emergency alert cancellation")
+    }
 }

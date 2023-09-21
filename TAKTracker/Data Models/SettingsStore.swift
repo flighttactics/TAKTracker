@@ -199,6 +199,18 @@ class SettingsStore: ObservableObject {
         }
     }
     
+    @Published var isAlertActivated: Bool {
+        didSet {
+            UserDefaults.standard.set(isAlertActivated, forKey: "isAlertActivated")
+        }
+    }
+    
+    @Published var activeAlertType: String {
+        didSet {
+            UserDefaults.standard.set(activeAlertType, forKey: "activeAlertType")
+        }
+    }
+    
     private init() {
         let defaultSign = "TRACKER-\(Int.random(in: 1..<40))"
         self.callSign = (UserDefaults.standard.object(forKey: "callSign") == nil ? defaultSign : UserDefaults.standard.object(forKey: "callSign") as! String)
@@ -249,5 +261,8 @@ class SettingsStore: ObservableObject {
         
         self.mapTypeDisplay = (UserDefaults.standard.object(forKey: "mapTypeDisplay") == nil ? MKMapType.standard.rawValue : UserDefaults.standard.object(forKey: "mapTypeDisplay") as! UInt)
 
+        self.isAlertActivated = (UserDefaults.standard.object(forKey: "isAlertActivated") == nil ? false : UserDefaults.standard.object(forKey: "isAlertActivated") as! Bool)
+        
+        self.activeAlertType = (UserDefaults.standard.object(forKey: "activeAlertType") == nil ? "" : UserDefaults.standard.object(forKey: "activeAlertType") as! String)
     }
 }

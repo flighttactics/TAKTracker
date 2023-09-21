@@ -211,6 +211,7 @@ struct MainScreen: View {
     
     @State var displayUIState = DisplayUIState()
     @State var tracking:MapUserTrackingMode = .none
+    @State var isAlertPresented: Bool = false
     
     //background #5b5557
     let lightGray = Color(hue: 0.94, saturation: 0.03, brightness: 0.35)
@@ -234,11 +235,15 @@ struct MainScreen: View {
                             .bold()
                             .foregroundColor(.white)
                         Spacer()
-                        NavigationLink(destination: AlertView()) {
-                            Image(systemName: "exclamationmark.triangle")
-                                .imageScale(.large)
-                                .foregroundColor(.white)
-                        }
+                        Image(systemName: "exclamationmark.triangle")
+                            .onTapGesture {
+                                isAlertPresented.toggle()
+                            }
+                            .imageScale(.large)
+                            .foregroundColor(settingsStore.isAlertActivated ? .red : .white)
+                            .popover(isPresented: $isAlertPresented) { AlertView(takManager: takManager,
+                                          location: manager)
+                            }
                         Spacer()
                         NavigationLink(destination: ChatView(chatMessage: ChatMessage())) {
                             Image(systemName: "bubble.left")
