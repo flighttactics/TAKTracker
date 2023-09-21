@@ -18,6 +18,8 @@ struct AlertView: View {
     @State var alertActivated: Bool = false
     @State var alertConfirmed: Bool = false
     @State var alertType: EmergencyType = EmergencyType.NineOneOne
+    
+    let defaultBackgroundColor = Color(UIColor.systemBackground)
 
     var body: some View {
         List {
@@ -41,7 +43,7 @@ struct AlertView: View {
                         Text("On").tag(true)
                     })
                     .pickerStyle(.segmented)
-                    .background(alertActivated ? Color.red : Color.white)
+                    .background(alertActivated ? Color.red : defaultBackgroundColor)
                     .onAppear {
                         if(SettingsStore.global.isAlertActivated) {
                             // Default to cancelling the alert if one
@@ -66,7 +68,7 @@ struct AlertView: View {
                         Text("On").tag(true)
                     })
                     .pickerStyle(.segmented)
-                    .background(alertConfirmed ? Color.red : Color.white)
+                    .background(alertConfirmed ? Color.red : defaultBackgroundColor)
                 }
             }
             .listRowSeparator(.hidden)
