@@ -321,7 +321,6 @@ struct MapOptions: View {
                         .foregroundColor(.secondary)
                     Spacer()
                 }
-
                 Picker(selection: $settingsStore.mapTypeDisplay, label: Text("Map Type"), content: {
                     Text("Standard").tag(MKMapType.standard.rawValue)
                     Text("Hybrid").tag(MKMapType.hybrid.rawValue)
