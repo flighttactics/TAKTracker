@@ -18,6 +18,7 @@ class LocationManager: NSObject,CLLocationManagerDelegate, ObservableObject {
     var shouldUpdateCoordinateRegion = true
 
     private let manager = CLLocationManager()
+
     override init() {
         super.init()
         manager.delegate = self
@@ -64,5 +65,30 @@ class LocationManager: NSObject,CLLocationManagerDelegate, ObservableObject {
         
         guard let heading = manager.heading else { TAKLogger.debug("No heading!"); return }
         lastHeading = heading
+    }
+    
+    func deviceUpdatedOrientation(orientation: UIDeviceOrientation) {
+        let START_UP = 0
+        let PORTRAIT = 1
+        let LANDSCAPE = 3
+        
+        TAKLogger.debug("[LocationManager]: Device Rotated \(orientation.rawValue)")
+        
+        switch(orientation.rawValue) {
+        case START_UP, PORTRAIT:
+            manager.headingOrientation = .portrait
+        case LANDSCAPE:
+            // It is worth noting that we only allow
+            // Portrait and Landscape Right as the orientations
+            // However the *heading* orientation appears to
+            // need to be told the opposite of the device orientation
+            manager.headingOrientation = .landscapeLeft
+        default:
+            // Ignore since it's an unsupported orientation
+            TAKLogger.debug("[LocationManager]: Received an unsupported device rotation. Ignoring.")
+        }
+        
+        // Let the manager know something is up
+        manager.startUpdatingHeading()
     }
 }
