@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-struct TAKConstants {
+struct AppConstants {
     // App Information
     static let TAK_PLATFORM = "iTAK-Tracker-CIV"    
     
@@ -29,7 +29,7 @@ struct TAKConstants {
     
     // Helper Functions
     static func certificateSigningPath(clientUid: String, appVersion: String) -> String {
-        return TAKConstants.CSR_PATH
+        return AppConstants.CSR_PATH
             .replacingOccurrences(of: "$UID", with: clientUid)
             .replacingOccurrences(of: "$VERSION", with: appVersion)
     }

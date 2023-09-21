@@ -19,7 +19,7 @@ class TAKManager: NSObject, URLSessionDelegate, ObservableObject {
     @Published var isConnectedToServer = false
     
     override init() {
-        cotMessage = COTMessage(staleTimeMinutes: SettingsStore.global.staleTimeMinutes, deviceID: UIDevice.current.identifierForVendor!.uuidString, phoneModel: TAKConstants.getPhoneModel(), phoneOS: TAKConstants.getPhoneOS(), appPlatform: TAKConstants.TAK_PLATFORM, appVersion: TAKConstants.getAppVersion())
+        cotMessage = COTMessage(staleTimeMinutes: SettingsStore.global.staleTimeMinutes, deviceID: UIDevice.current.identifierForVendor!.uuidString, phoneModel: AppConstants.getPhoneModel(), phoneOS: AppConstants.getPhoneOS(), appPlatform: AppConstants.TAK_PLATFORM, appVersion: AppConstants.getAppVersion())
         super.init()
         udpMessage.connect()
         TAKLogger.debug("[TAKManager]: establishing TCP Message Connect")
@@ -37,7 +37,7 @@ class TAKManager: NSObject, URLSessionDelegate, ObservableObject {
     }
     
     func broadcastLocation(location: CLLocation) {
-        let message = cotMessage.generateCOTXml(heightAboveElipsoid: location.altitude.description, latitude: location.coordinate.latitude.formatted(), longitude: location.coordinate.longitude.formatted(), callSign: SettingsStore.global.callSign, group: "Cyan", role: "Team Member", phoneBatteryStatus: TAKConstants.getPhoneBatteryStatus().description)
+        let message = cotMessage.generateCOTXml(heightAboveElipsoid: location.altitude.description, latitude: location.coordinate.latitude.formatted(), longitude: location.coordinate.longitude.formatted(), callSign: SettingsStore.global.callSign, group: SettingsStore.global.team, role: SettingsStore.global.role, phoneBatteryStatus: AppConstants.getPhoneBatteryStatus().description)
 
         TAKLogger.debug("[TAKManager]: Getting ready to broadcast location CoT")
         TAKLogger.debug(message)
