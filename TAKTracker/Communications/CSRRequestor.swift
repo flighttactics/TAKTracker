@@ -9,6 +9,7 @@ import Crypto
 import _CryptoExtras
 import Foundation
 import SwiftASN1
+import SwiftTAK
 import X509
 
 enum CSREnrollmentStatus : CustomStringConvertible {
@@ -45,8 +46,8 @@ class CSRRequestor: NSObject, ObservableObject, URLSessionDelegate {
     var csrPort = TAKConstants.DEFAULT_CSR_PORT
     var tlsConfigPath = TAKConstants.CERT_CONFIG_PATH
     var csrRequestPath = TAKConstants.certificateSigningPath(
-        clientUid: TAKConstants.getClientID(),
-        appVersion: TAKConstants.getAppVersion())
+        clientUid: AppConstants.getClientID(),
+        appVersion: AppConstants.getAppVersion())
     
     func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
             if (challenge.protectionSpace.authenticationMethod == NSURLAuthenticationMethodClientCertificate) {
