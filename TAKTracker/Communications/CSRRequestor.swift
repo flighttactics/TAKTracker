@@ -212,18 +212,7 @@ class CSRRequestor: NSObject, ObservableObject, URLSessionDelegate {
                                     try CertificateManager.addIdentity(clientCertificate: derData, label: SettingsStore.global.takServerUrl)
                                     
                                     TAKLogger.debug("Identity Added")
-                                    
-                                    guard let identityCert = CertificateManager.getCertificate(label: SettingsStore.global.takServerUrl) else {
-                                        TAKLogger.error("Could not get Identity Cert")
-                                        self.enrollmentStatus = CSREnrollmentStatus.Failed
-                                        return
-                                    }
-                                    
-                                    let certData = SecCertificateCopyData(identityCert) as Data
-                                    
-                                    //let responseCertData = certString.data(using: String.Encoding.utf8)!
-                                    SettingsStore.global.userCertificate = certData
-                                    SettingsStore.global.userCertificatePassword = ""
+
                                     SettingsStore.global.takServerChanged = true
                                     self.enrollmentStatus = CSREnrollmentStatus.Succeeded
                                 }
