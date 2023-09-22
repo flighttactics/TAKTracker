@@ -12,6 +12,7 @@ import SwiftUI
 
 struct SettingsView: View {
     @StateObject var settingsStore: SettingsStore = SettingsStore.global
+    let defaultBackgroundColor = Color(UIColor.systemBackground)
 
     var body: some View {
         List {
@@ -27,6 +28,5 @@ struct SettingsView: View {
             }
             AboutInformation()
         }
-        .padding([.leading, .trailing], 12)
     }
 }

@@ -47,40 +47,5 @@ struct ServerInformation: View {
             }
             .padding(.top, 20)
         }
-        
-        Group {
-            VStack {
-                HStack {
-                    Text("Server Username")
-                        .font(.system(size: 18, weight: .medium))
-                        .foregroundColor(.secondary)
-                    Spacer()
-                }
-                TextField("Server Username", text: $settingsStore.takServerUsername)
-                    .autocorrectionDisabled(true)
-                    .textInputAutocapitalization(.never)
-                    .keyboardType(.asciiCapable)
-                    .onSubmit {
-                        SettingsStore.global.takServerChanged = true
-                    }
-            }
-            .padding(.top, 20)
-        }
-        
-        Group {
-            VStack {
-                HStack {
-                    Text("Server Password")
-                        .font(.system(size: 18, weight: .medium))
-                        .foregroundColor(.secondary)
-                    Spacer()
-                }
-                SecureField("Server Password", text: $settingsStore.takServerPassword)
-                    .onSubmit {
-                        SettingsStore.global.takServerChanged = true
-                    }
-            }
-            .padding(.top, 20)
-        }
     }
 }
