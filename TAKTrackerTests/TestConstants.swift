@@ -12,4 +12,7 @@ struct TestConstants {
     static let SERVER_CERTIFICATE_NAME = "truststore-intermediate"
     static let USER_CERTIFICATE_NAME = "foyc"
     static let PREF_FILE_NAME = "tak-server"
+    static let CERTIFICATE_FILE_EXTENSION = "p12"
+    static let DEFAULT_CERT_PASSWORD = "atakatak"
+    static let TEST_HOST = "tak.flighttactics.com"
 }

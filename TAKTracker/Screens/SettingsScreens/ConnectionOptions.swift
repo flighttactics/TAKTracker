@@ -9,11 +9,10 @@ import Foundation
 import SwiftTAK
 import SwiftUI
 
-struct ConnectionOptions: View {
+struct CertificateEnrollment: View {
     @StateObject var settingsStore: SettingsStore = SettingsStore.global
     @StateObject var csrRequest: CSRRequestor = CSRRequestor()
-    
-    @State var isShowingFilePicker = false
+
     @State var isShowingEnrollment = false
     
     var body: some View {
@@ -50,7 +49,15 @@ struct ConnectionOptions: View {
             }
             .padding(.top, 20)
         }
-        
+    }
+}
+
+struct DataPackageEnrollment: View {
+    @StateObject var settingsStore: SettingsStore = SettingsStore.global
+
+    @State var isShowingFilePicker = false
+    
+    var body: some View {
         Group {
             VStack {
                 HStack {
@@ -87,5 +94,12 @@ struct ConnectionOptions: View {
             }
             .padding(.top, 20)
         }
+    }
+}
+
+struct ConnectionOptions: View {
+    var body: some View {
+        CertificateEnrollment()
+        DataPackageEnrollment()
     }
 }

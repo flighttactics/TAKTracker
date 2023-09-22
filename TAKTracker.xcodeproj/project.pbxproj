@@ -23,6 +23,7 @@
 		A55ABF4F2ABDC0A800195AB7 /* TAKOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A55ABF4E2ABDC0A800195AB7 /* TAKOptions.swift */; };
 		A55ABF512ABDC0E900195AB7 /* MapOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A55ABF502ABDC0E900195AB7 /* MapOptions.swift */; };
 		A55ABF532ABDC11900195AB7 /* AboutInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = A55ABF522ABDC11900195AB7 /* AboutInformation.swift */; };
+		A55ABF542ABDD7C400195AB7 /* TAKCAConfigResponseParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A508213E2AB3D19B00E0CBD8 /* TAKCAConfigResponseParser.swift */; };
 		A55CE96B2AB1D8860081AF86 /* Converter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A55CE96A2AB1D8860081AF86 /* Converter.swift */; };
 		A55CE96D2AB1D8A20081AF86 /* ConverterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A55CE96C2AB1D8A20081AF86 /* ConverterTests.swift */; };
 		A55CE96E2AB1D8AA0081AF86 /* Converter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A55CE96A2AB1D8860081AF86 /* Converter.swift */; };
@@ -490,6 +491,7 @@
 				A54F708A2AB0C41100D8C541 /* TCPMessage.swift in Sources */,
 				A5FB4E792AAA4B410034966D /* TAKDataPackageParser.swift in Sources */,
 				A54F70892AB0C40B00D8C541 /* TCPMessageTests.swift in Sources */,
+				A55ABF542ABDD7C400195AB7 /* TAKCAConfigResponseParser.swift in Sources */,
 				A54F70872AB0AEA400D8C541 /* DataPackageParserTests.swift in Sources */,
 				A5FB4E7C2AAA4B4F0034966D /* SettingsStore.swift in Sources */,
 				A55CE96D2AB1D8A20081AF86 /* ConverterTests.swift in Sources */,

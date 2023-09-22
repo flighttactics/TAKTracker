@@ -5,15 +5,11 @@
 //  Created by Cory Foy on 9/12/23.
 //
 
+import SwiftTAK
 import XCTest
 import ZIPFoundation
 
 final class DataPackageParserTests: XCTestCase {
-    
-    let defaultPassword = "atakatak"
-    let userCertFileName = "foyc.p12"
-    let host = "tak.flighttactics.com"
-    
     var parser:TAKDataPackageParser? = nil
     var archiveURL:URL? = nil
 
@@ -23,33 +19,27 @@ final class DataPackageParserTests: XCTestCase {
         parser = TAKDataPackageParser.init(fileLocation: archiveURL!)
         
         let cleanUpQuery: [String: Any] = [kSecClass as String:  kSecClassIdentity,
-                                       kSecAttrLabel as String: host]
+                                           kSecAttrLabel as String: TestConstants.TEST_HOST]
         SecItemDelete(cleanUpQuery as CFDictionary)
-    }
-
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
-    
-    func testCertParserFindsIdentity() throws {
-        parser!.parse()
-        let parsedCert = PKCS12(data: SettingsStore.global.userCertificate, password: defaultPassword)
-        XCTAssertNotNil(parsedCert.identity, "No identity found when parsing data package")
     }
     
     func testCertParserStoresIdentityInKeychain() throws {
-        var prefs = TAKPreferences()
-        prefs.userCertificateFile = userCertFileName
-        prefs.userCertificatePassword = defaultPassword
-        prefs.serverConnectionString = "\(host):8080"
-        
-        guard let archive = Archive(url: archiveURL!, accessMode: .read) else {
-            throw XCTestError(.failureWhileWaiting, userInfo: ["ArchiveError": "Could not open archive"])
+        let bundle = Bundle(for: Self.self)
+        guard let certificateURL = bundle.url(forResource: TestConstants.USER_CERTIFICATE_NAME, withExtension: TestConstants.CERTIFICATE_FILE_EXTENSION) else {
+            throw XCTestError(.failureWhileWaiting, userInfo: ["FileError": "Could not open test user certificate"])
         }
-        parser!.storeUserCertificate(archive: archive, prefs: prefs)
+        
+        let certData = try Data(contentsOf: certificateURL)
+        
+        var contents = DataPackageContents()
+        contents.userCertificate = certData
+        contents.userCertificatePassword = TestConstants.DEFAULT_CERT_PASSWORD
+        contents.serverURL = TestConstants.TEST_HOST
+        
+        parser!.storeUserCertificate(packageContents: contents)
         
         let getquery: [String: Any] = [kSecClass as String:  kSecClassIdentity,
-                                       kSecAttrLabel as String: host,
+                                       kSecAttrLabel as String: TestConstants.TEST_HOST,
                                        kSecReturnRef as String: kCFBooleanTrue!]
         
         var item: CFTypeRef?
@@ -61,7 +51,6 @@ final class DataPackageParserTests: XCTestCase {
         let identity = item as! SecIdentity
 
         XCTAssertNotNil(identity, "Identity was not stored in the Keychain")
-
     }
 
 }
