@@ -27,7 +27,12 @@ enum ConnectionStatus : String, CustomStringConvertible {
 class TCPMessage: NSObject, ObservableObject {
     var connection: NWConnection?
     
+    var serverPort: String
+    var serverUrl: String
+    
     override init() {
+        serverUrl = SettingsStore.global.takServerUrl
+        serverPort = SettingsStore.global.takServerPort
         TAKLogger.debug("[TCPMessage]: Init")
     }
     
@@ -102,9 +107,6 @@ class TCPMessage: NSObject, ObservableObject {
             return
         }
         
-        let serverUrl = SettingsStore.global.takServerUrl
-        let serverPort = SettingsStore.global.takServerPort
-        
         if (serverUrl.isEmpty || serverPort.isEmpty) {
             TAKLogger.debug("[TCPMessage]: Host/Port not set. Cancelling connection.")
             connectionFailed()
@@ -115,8 +117,8 @@ class TCPMessage: NSObject, ObservableObject {
             SettingsStore.global.isConnectingToServer = true
         }
         
-        let host = NWEndpoint.Host(SettingsStore.global.takServerUrl)
-        let port = NWEndpoint.Port(SettingsStore.global.takServerPort)!
+        let host = NWEndpoint.Host(serverUrl)
+        let port = NWEndpoint.Port(serverPort)!
         
         TAKLogger.debug("[TCPMessage]: Attempting to connect to \(String(describing: host)):\(String(describing: port))")
         

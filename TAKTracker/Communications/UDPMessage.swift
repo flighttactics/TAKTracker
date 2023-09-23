@@ -8,11 +8,30 @@
 import Foundation
 import Network
 
+class CoTUDPMessage : UDPMessage {
+    init(connection: NWConnection? = nil) {
+        super.init(host: "239.2.3.1",
+              port: 6969)
+    }
+}
+
+class ChatUDPMessage : UDPMessage {
+    init(connection: NWConnection? = nil) {
+        super.init(host: "224.10.10.1",
+              port: 17012)
+    }
+}
+
 class UDPMessage: NSObject, ObservableObject {
-    var connection: NWConnection?
+    var connection: NWConnection? = nil
     
-    var host: NWEndpoint.Host = "239.2.3.1"
-    var port: NWEndpoint.Port = 6969
+    var host: NWEndpoint.Host
+    var port: NWEndpoint.Port
+    
+    init(host: NWEndpoint.Host, port: NWEndpoint.Port) {
+        self.host = host
+        self.port = port
+    }
     
     @Published var connected: Bool?
     
