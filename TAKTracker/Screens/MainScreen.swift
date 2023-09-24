@@ -245,12 +245,12 @@ struct MainScreen: View {
                                           location: manager)
                             }
                         Spacer()
-                        NavigationLink(destination: ChatView(chatMessage: ChatMessage())) {
-                            Image(systemName: "bubble.left")
-                                .imageScale(.large)
-                                .foregroundColor(.white)
-                        }
-                        Spacer()
+//                        NavigationLink(destination: ChatView(takManager: takManager)) {
+//                            Image(systemName: "bubble.left")
+//                                .imageScale(.large)
+//                                .foregroundColor(.white)
+//                        }
+//                        Spacer()
                         NavigationLink(destination: SettingsView()) {
                             Image(systemName: "gear")
                                 .imageScale(.large)

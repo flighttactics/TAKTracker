@@ -4,7 +4,7 @@
 <dict>
 	<key>NSBonjourServices</key>
 	<array>
-		<string>_taktracker_udp</string>
+		<string>_taktracker._udp</string>
 	</array>
 	<key>UIBackgroundModes</key>
 	<array>

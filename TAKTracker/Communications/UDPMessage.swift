@@ -49,6 +49,7 @@ class UDPMessage: NSObject, ObservableObject {
     func connect() {
         TAKLogger.debug("[UDPMessage]: Connecting to UDP")
         connection = NWConnection(host: host, port: port, using: .udp)
+        connection?.parameters.allowLocalEndpointReuse = true
         
         connection!.stateUpdateHandler = { (newState) in
             self.connected = false

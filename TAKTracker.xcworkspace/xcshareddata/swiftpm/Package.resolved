@@ -37,12 +37,21 @@
       }
     },
     {
+      "identity" : "swift-protobuf",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-protobuf.git",
+      "state" : {
+        "revision" : "cf62cdaea48b77f1a631e5cb3aeda6047c2cba1d",
+        "version" : "1.23.0"
+      }
+    },
+    {
       "identity" : "swifttak",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/flighttactics/SwiftTAK",
       "state" : {
         "branch" : "main",
-        "revision" : "56263ad27a52101a5c49f6590da21687fcc35621"
+        "revision" : "240aedf879aa82e3309a672b6b758071d6eb9ff5"
       }
     },
     {

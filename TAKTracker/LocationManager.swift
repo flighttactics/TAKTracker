@@ -63,7 +63,8 @@ class LocationManager: NSObject,CLLocationManagerDelegate, ObservableObject {
             }
         }
         
-        guard let heading = manager.heading else { TAKLogger.debug("No heading!"); return }
+        //guard let heading = manager.heading else { TAKLogger.debug("No heading!"); return }
+        guard let heading = manager.heading else { return }
         lastHeading = heading
     }
     
