@@ -11,5 +11,12 @@
 		<string>fetch</string>
 		<string>location</string>
 	</array>
+	<key>UILaunchScreen</key>
+	<dict>
+		<key>UIColorName</key>
+		<string>launchScreenBackground</string>
+		<key>UIImageName</key>
+		<string>taklogo</string>
+	</dict>
 </dict>
 </plist>
