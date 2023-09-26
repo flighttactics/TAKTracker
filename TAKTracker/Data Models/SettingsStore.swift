@@ -14,12 +14,18 @@ class SettingsStore: ObservableObject {
     static let global = SettingsStore()
     
     static func generateDefaultCallSign() -> String {
-        let deviceID = AppConstants.getClientID().hashValue.description
-        var appendValue = String(deviceID.prefix(5))
-        if(appendValue.isEmpty) {
-            appendValue = Int.random(in: 1..<40).description
+        
+        let appendValue: String = Int.random(in: 1..<40).description
+        
+        guard let firstIdBlock = AppConstants.getClientID().split(separator: "-").first else {
+            return "TRACKER-\(appendValue)"
         }
-        return "TRACKER-\(appendValue)"
+        
+        if(firstIdBlock.isEmpty) {
+            return "TRACKER-\(appendValue)"
+        }
+        
+        return "TRACKER-\(String(firstIdBlock))"
     }
     
     

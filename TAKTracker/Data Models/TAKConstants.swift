@@ -57,6 +57,7 @@ struct AppConstants {
         if let identifier = UIDevice.current.identifierForVendor {
             return identifier.uuidString
         }
+        TAKLogger.debug("Failed to get identifierForVendor. Returning random clientID")
         return UUID().uuidString
     }
     
