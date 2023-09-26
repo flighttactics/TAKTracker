@@ -1,0 +1,136 @@
+//
+//  OnboardingView.swift
+//  TAKTracker
+//
+//  Created by Cory Foy on 9/26/23.
+//
+
+import Foundation
+import SwiftUI
+
+enum OnboardingStep {
+    case AskPermissions
+    case SetUserInformation
+    case ConnectToServer
+    case Finished
+}
+
+struct OnboardingView: View {
+    @Environment(\.dismiss) var dismiss
+    @StateObject var locationManager: LocationManager
+    var takManager: TAKManager
+    
+    @State var currentStep: OnboardingStep = OnboardingStep.AskPermissions
+    @State var hasAskedPermissions = false
+    @State var hasTriedToConnect = false
+    
+    var body: some View {
+        List {
+            switch(currentStep) {
+            case .AskPermissions:
+                HStack {
+                    Spacer()
+                    Text("Welcome to TAK Tracker!")
+                        .bold()
+                        .listRowSeparator(.hidden)
+                    Spacer()
+                }
+                if(!hasAskedPermissions) {
+                    Text("Let's start by granting permissions to track and broadcast your location")
+                        .listRowSeparator(.hidden)
+                    HStack {
+                        Spacer()
+                        Button("Set Location Permissions") {
+                            locationManager.requestAlwaysAuthorization()
+                            hasAskedPermissions = true
+                        }
+                        .buttonStyle(.borderedProminent)
+                        Spacer()
+                    }
+                } else {
+                    if(locationManager.statusString == "notDetermined") {
+                        Text("Requesting permissions")
+                            .listRowSeparator(.hidden)
+                    } else if(locationManager.statusString != "authorizedWhenInUse" && locationManager.statusString != "authorizedAlways") {
+                        Text("No Location Permissions were granted. You will need to change this in your device settings to enable location tracking.")
+                            .listRowSeparator(.hidden)
+                    } else {
+                        Text("Location Permissions granted. Now let's set up your user information")
+                            .listRowSeparator(.hidden)
+                    }
+                    
+                    HStack {
+                        Spacer()
+                        Button("Next") {
+                            currentStep = OnboardingStep.SetUserInformation
+                        }
+                        .buttonStyle(.borderedProminent)
+                    }
+                }
+            case .SetUserInformation:
+                HStack {
+                    Spacer()
+                    Text("User Information")
+                        .bold()
+                        .listRowSeparator(.hidden)
+                    Spacer()
+                }
+                UserInformation()
+                    .listRowSeparator(.hidden)
+                HStack {
+                    Spacer()
+                    Button("Next") {
+                        currentStep = OnboardingStep.ConnectToServer
+                    }
+                    .buttonStyle(.borderedProminent)
+                }
+            case .ConnectToServer:
+                HStack {
+                    Spacer()
+                    Text("Connect to a TAK Server?")
+                        .bold()
+                        .listRowSeparator(.hidden)
+                    Spacer()
+                }
+                ConnectionOptions()
+                    .listRowSeparator(.hidden)
+                if(!SettingsStore.global.takServerUrl.isEmpty) {
+                    Text("Configured TAK Server \(SettingsStore.global.takServerUrl)")
+                }
+                HStack {
+                    Button("Previous") {
+                        currentStep = OnboardingStep.SetUserInformation
+                    }
+                    .buttonStyle(.bordered)
+                    Spacer()
+                    Button("Next") {
+                        currentStep = OnboardingStep.Finished
+                    }
+                    .buttonStyle(.borderedProminent)
+                }
+            case .Finished:
+                Text("And we're all done! You can update these settings at any time by clicking on the gear/wheel icon from the main screen. You'll also find the support contact information there if you have any problems. Happy TAK'ing!")
+                    .listRowSeparator(.hidden)
+                HStack {
+                    Spacer()
+                    Button("Previous") {
+                        currentStep = OnboardingStep.ConnectToServer
+                    }
+                    .buttonStyle(.bordered)
+                    Spacer()
+                    Button("Close Onboarding", role: .none) {
+                        SettingsStore.global.hasOnboarded = true
+                        dismiss()
+                    }
+                    .buttonStyle(.borderedProminent)
+                    Spacer()
+                }
+            }
+        }
+        HStack {
+            Spacer()
+            Image("taklogo").resizable().frame(width: 100, height: 100)
+            Spacer()
+        }
+    }
+}

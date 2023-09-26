@@ -176,7 +176,7 @@ struct DataPackageEnrollment: View {
         Group {
             VStack {
                 HStack {
-                    Text("Data Package")
+                    Text("Upload Data Package")
                         .font(.system(size: 18, weight: .medium))
                         .foregroundColor(.secondary)
                     Spacer()

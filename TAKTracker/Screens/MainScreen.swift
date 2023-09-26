@@ -205,9 +205,9 @@ extension View {
 }
 
 struct MainScreen: View {
-    @StateObject var manager = LocationManager()
+    @StateObject var manager: LocationManager
+    @StateObject var takManager: TAKManager
     @StateObject var settingsStore = SettingsStore.global
-    @StateObject var takManager = TAKManager()
     
     @State var displayUIState = DisplayUIState()
     @State var tracking:MapUserTrackingMode = .none
@@ -245,12 +245,12 @@ struct MainScreen: View {
                                           location: manager)
                             }
                         Spacer()
-                        NavigationLink(destination: ChatView(chatMessage: ChatMessage())) {
-                            Image(systemName: "bubble.left")
-                                .imageScale(.large)
-                                .foregroundColor(.white)
-                        }
-                        Spacer()
+//                        NavigationLink(destination: ChatView(chatMessage: ChatMessage())) {
+//                            Image(systemName: "bubble.left")
+//                                .imageScale(.large)
+//                                .foregroundColor(.white)
+//                        }
+//                        Spacer()
                         NavigationLink(destination: SettingsView()) {
                             Image(systemName: "gear")
                                 .imageScale(.large)
@@ -350,6 +350,7 @@ struct MainScreen: View {
                 .background(lightGray)
                 .padding()
                 .onAppear {
+                    broadcastLocation()
                     Timer.scheduledTimer(withTimeInterval: settingsStore.broadcastIntervalSeconds, repeats: true) { timer in
                         broadcastLocation()
                    }
@@ -367,11 +368,5 @@ struct MainScreen: View {
             return
         }
         takManager.broadcastLocation(location: location)
-    }
-}
-
-struct MainScreen_Previews: PreviewProvider {
-    static var previews: some View {
-        MainScreen()
     }
 }
