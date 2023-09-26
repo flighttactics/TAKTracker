@@ -13,6 +13,16 @@ import UIKit
 class SettingsStore: ObservableObject {
     static let global = SettingsStore()
     
+    static func generateDefaultCallSign() -> String {
+        let deviceID = AppConstants.getClientID().hashValue.description
+        var appendValue = String(deviceID.prefix(5))
+        if(appendValue.isEmpty) {
+            appendValue = Int.random(in: 1..<40).description
+        }
+        return "TRACKER-\(appendValue)"
+    }
+    
+    
     func storeIdentity(identity: SecIdentity, label: String) {
         
         //Clean up any existing identities
@@ -216,9 +226,9 @@ class SettingsStore: ObservableObject {
             UserDefaults.standard.set(hasOnboarded, forKey: "hasOnboarded")
         }
     }
-    
+
     private init() {
-        let defaultSign = "TRACKER-\(Int.random(in: 1..<40))"
+        let defaultSign = SettingsStore.generateDefaultCallSign()
         self.callSign = (UserDefaults.standard.object(forKey: "callSign") == nil ? defaultSign : UserDefaults.standard.object(forKey: "callSign") as! String)
         
         self.team = (UserDefaults.standard.object(forKey: "team") == nil ? TeamColor.Cyan.rawValue : UserDefaults.standard.object(forKey: "team") as! String)
