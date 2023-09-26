@@ -36,20 +36,52 @@ class TAKManager: NSObject, URLSessionDelegate, ObservableObject {
         tcpMessage.send(messageContent)
     }
     
-    func broadcastLocation(location: CLLocation) {
-        let message = cotMessage.generateCOTXml(heightAboveElipsoid: location.altitude.description, latitude: location.coordinate.latitude.formatted(), longitude: location.coordinate.longitude.formatted(), callSign: SettingsStore.global.callSign, group: SettingsStore.global.team, role: SettingsStore.global.role, phoneBatteryStatus: AppConstants.getPhoneBatteryStatus().description)
+    func generatePositionInfo(location: CLLocation?, heading: CLHeading? = nil) -> COTPositionInformation {
+        var positionInfo = COTPositionInformation()
+        
+        if(location != nil) {
+            positionInfo.heightAboveElipsoid = location!.altitude
+            positionInfo.latitude = location!.coordinate.latitude
+            positionInfo.longitude = location!.coordinate.longitude
+            positionInfo.speed = location!.speed
+        }
+        
+        if(heading != nil) {
+            positionInfo.course = heading!.magneticHeading
+        }
 
-        TAKLogger.debug("[TAKManager]: Getting ready to broadcast location CoT")
-        TAKLogger.debug(message)
-        sendToUDP(message: message)
-        sendToTCP(message: message)
-        TAKLogger.debug("[TAKManager]: Done broadcasting")
+        return positionInfo
+    }
+    
+    func broadcastLocation(locationManager: LocationManager) {
+        DispatchQueue.global(qos: .background).async {
+            var location: CLLocation? = nil
+            var heading: CLHeading? = nil
+            
+            if(locationManager.lastLocation != nil) {
+                location = locationManager.lastLocation
+            }
+            
+            if(locationManager.lastHeading != nil) {
+                heading = locationManager.lastHeading
+            }
+            
+            let postionInfo = self.generatePositionInfo(location: location, heading: heading)
+            
+            let message = self.cotMessage.generateCOTXml(positionInfo: postionInfo, callSign: SettingsStore.global.callSign, group: SettingsStore.global.team, role: SettingsStore.global.role, phoneBatteryStatus: AppConstants.getPhoneBatteryStatus().description)
+
+            TAKLogger.debug("[TAKManager]: Getting ready to broadcast location CoT")
+            TAKLogger.debug(message)
+            self.sendToUDP(message: message)
+            self.sendToTCP(message: message)
+            TAKLogger.debug("[TAKManager]: Done broadcasting")
+        }
     }
     
     func initiateEmergencyAlert(location: CLLocation?) {
         let alertType = EmergencyType(rawValue: SettingsStore.global.activeAlertType)!
         
-        let alert = cotMessage.generateEmergencyCOTXml(latitude: location?.coordinate.latitude.formatted() ?? "", longitude: location?.coordinate.longitude.formatted() ?? "", callSign: SettingsStore.global.callSign, emergencyType: alertType, isCancelled: false)
+        let alert = cotMessage.generateEmergencyCOTXml(positionInfo: generatePositionInfo(location: location), callSign: SettingsStore.global.callSign, emergencyType: alertType, isCancelled: false)
 
         TAKLogger.debug("[TAKManager]: Getting ready to broadcast emergency alert CoT")
         TAKLogger.debug(alert)
@@ -64,7 +96,7 @@ class TAKManager: NSObject, URLSessionDelegate, ObservableObject {
         
         let alertType = EmergencyType.Cancel
         
-        let alert = cotMessage.generateEmergencyCOTXml(latitude: location?.coordinate.latitude.formatted() ?? "", longitude: location?.coordinate.longitude.formatted() ?? "", callSign: SettingsStore.global.callSign, emergencyType: alertType, isCancelled: true)
+        let alert = cotMessage.generateEmergencyCOTXml(positionInfo: generatePositionInfo(location: location), callSign: SettingsStore.global.callSign, emergencyType: alertType, isCancelled: true)
 
         TAKLogger.debug("[TAKManager]: Getting ready to broadcast emergency alert cancellation CoT")
         TAKLogger.debug(alert)

@@ -26,9 +26,18 @@ class LocationManager: NSObject,CLLocationManagerDelegate, ObservableObject {
         manager.allowsBackgroundLocationUpdates = true
         manager.showsBackgroundLocationIndicator = true
         manager.pausesLocationUpdatesAutomatically = false
-        manager.requestAlwaysAuthorization()
         manager.startUpdatingLocation()
         manager.startUpdatingHeading()
+    }
+    
+    func requestAlwaysAuthorization() {
+        manager.requestWhenInUseAuthorization()
+        manager.requestAlwaysAuthorization()
+    }
+    
+    func isLocationAuthorized() -> Bool {
+        return manager.authorizationStatus == .authorizedWhenInUse
+            || manager.authorizationStatus == .authorizedAlways
     }
     
     var statusString: String {

@@ -13,6 +13,22 @@ import UIKit
 class SettingsStore: ObservableObject {
     static let global = SettingsStore()
     
+    static func generateDefaultCallSign() -> String {
+        
+        let appendValue: String = Int.random(in: 1..<40).description
+        
+        guard let firstIdBlock = AppConstants.getClientID().split(separator: "-").first else {
+            return "TRACKER-\(appendValue)"
+        }
+        
+        if(firstIdBlock.isEmpty) {
+            return "TRACKER-\(appendValue)"
+        }
+        
+        return "TRACKER-\(String(firstIdBlock))"
+    }
+    
+    
     func storeIdentity(identity: SecIdentity, label: String) {
         
         //Clean up any existing identities
@@ -211,8 +227,14 @@ class SettingsStore: ObservableObject {
         }
     }
     
+    @Published var hasOnboarded: Bool {
+        didSet {
+            UserDefaults.standard.set(hasOnboarded, forKey: "hasOnboarded")
+        }
+    }
+
     private init() {
-        let defaultSign = "TRACKER-\(Int.random(in: 1..<40))"
+        let defaultSign = SettingsStore.generateDefaultCallSign()
         self.callSign = (UserDefaults.standard.object(forKey: "callSign") == nil ? defaultSign : UserDefaults.standard.object(forKey: "callSign") as! String)
         
         self.team = (UserDefaults.standard.object(forKey: "team") == nil ? TeamColor.Cyan.rawValue : UserDefaults.standard.object(forKey: "team") as! String)
@@ -264,5 +286,7 @@ class SettingsStore: ObservableObject {
         self.isAlertActivated = (UserDefaults.standard.object(forKey: "isAlertActivated") == nil ? false : UserDefaults.standard.object(forKey: "isAlertActivated") as! Bool)
         
         self.activeAlertType = (UserDefaults.standard.object(forKey: "activeAlertType") == nil ? "" : UserDefaults.standard.object(forKey: "activeAlertType") as! String)
+        
+        self.hasOnboarded = (UserDefaults.standard.object(forKey: "hasOnboarded") == nil ? false : UserDefaults.standard.object(forKey: "hasOnboarded") as! Bool)
     }
 }

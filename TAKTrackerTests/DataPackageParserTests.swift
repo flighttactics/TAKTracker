@@ -43,7 +43,7 @@ final class DataPackageParserTests: XCTestCase {
                                                     policy,
                                                     &optionalTrust)
         guard status == errSecSuccess else { TAKLogger.error("Failed! \(status)"); return }
-        let trust = optionalTrust!    // Safe to force unwrap now
+        //let trust = optionalTrust!    // Safe to force unwrap now
         TAKLogger.debug("Made it here!")
 
 //        TAKLogger.debug("Cert: " + String(describing: parsedCert))
