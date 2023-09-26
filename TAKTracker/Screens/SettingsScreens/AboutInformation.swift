@@ -24,22 +24,33 @@ Unless required by applicable law or agreed to in writing, software distributed 
     }
 }
 
+struct TAKTrackerInfo: View {
+    var body: some View {
+        List {
+            Text("Copyright 2023, Flight Tactics")
+                .listRowSeparator(.hidden)
+            Text("For support or feature suggestions contact:")
+                .listRowSeparator(.hidden)
+            Link("opensource@flighttactics.com", destination: URL(string: "mailto:opensource@flighttactics.com")!)
+                .listRowSeparator(.hidden)
+            Text("This app uses the following open-source libraries:")
+                .listRowSeparator(.hidden)
+            NavigationLink(destination: SwiftTAK()) {
+                Text("SwiftTAK")
+            }
+        }
+    }
+}
+
 struct AboutInformation: View {
     var body: some View {
         Group {
             Text("TAK Tracker v\(AppConstants.getAppVersion())")
                 .frame(maxWidth: .infinity, alignment: .center)
-            Text("""
-Copyright 2023, Flight Tactics
-
-For support: \("opensource" + "@" + "flighttactics.com")
-
-This app uses the following open-source libraries:
-""")
-            NavigationLink(destination: SwiftTAK()) {
-                Text("SwiftTAK")
+                .foregroundColor(.secondary)
+            NavigationLink(destination: TAKTrackerInfo()) {
+                Text("About")
             }
         }
-        .foregroundColor(.secondary)
     }
 }
