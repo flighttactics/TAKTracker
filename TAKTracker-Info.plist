@@ -16,7 +16,7 @@
 		<key>UIColorName</key>
 		<string>launchScreenBackground</string>
 		<key>UIImageName</key>
-		<string>taklogo</string>
+		<string>launchScreenImage</string>
 	</dict>
 </dict>
 </plist>
