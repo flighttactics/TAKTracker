@@ -364,9 +364,6 @@ struct MainScreen: View {
     }
     
     func broadcastLocation() {
-        guard let location = manager.lastLocation else {
-            return
-        }
-        takManager.broadcastLocation(location: location)
+        takManager.broadcastLocation(locationManager: manager)
     }
 }
