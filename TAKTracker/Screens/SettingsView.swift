@@ -13,12 +13,13 @@ import SwiftUI
 struct SettingsView: View {
     @StateObject var settingsStore: SettingsStore = SettingsStore.global
     let defaultBackgroundColor = Color(UIColor.systemBackground)
+    @State var isProcessingDataPackage: Bool = false
 
     var body: some View {
         List {
             UserInformation()
             ServerInformation()
-            ConnectionOptions()
+            ConnectionOptions(isProcessingDataPackage: $isProcessingDataPackage)
             DeviceOptions()
             AdvancedModeToggle()
             

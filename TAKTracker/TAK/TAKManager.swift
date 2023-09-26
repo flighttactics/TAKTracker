@@ -54,26 +54,28 @@ class TAKManager: NSObject, URLSessionDelegate, ObservableObject {
     }
     
     func broadcastLocation(locationManager: LocationManager) {
-        var location: CLLocation? = nil
-        var heading: CLHeading? = nil
-        
-        if(locationManager.lastLocation != nil) {
-            location = locationManager.lastLocation
-        }
-        
-        if(locationManager.lastHeading != nil) {
-            heading = locationManager.lastHeading
-        }
-        
-        let postionInfo = generatePositionInfo(location: location, heading: heading)
-        
-        let message = cotMessage.generateCOTXml(positionInfo: postionInfo, callSign: SettingsStore.global.callSign, group: SettingsStore.global.team, role: SettingsStore.global.role, phoneBatteryStatus: AppConstants.getPhoneBatteryStatus().description)
+        DispatchQueue.global(qos: .background).async {
+            var location: CLLocation? = nil
+            var heading: CLHeading? = nil
+            
+            if(locationManager.lastLocation != nil) {
+                location = locationManager.lastLocation
+            }
+            
+            if(locationManager.lastHeading != nil) {
+                heading = locationManager.lastHeading
+            }
+            
+            let postionInfo = self.generatePositionInfo(location: location, heading: heading)
+            
+            let message = self.cotMessage.generateCOTXml(positionInfo: postionInfo, callSign: SettingsStore.global.callSign, group: SettingsStore.global.team, role: SettingsStore.global.role, phoneBatteryStatus: AppConstants.getPhoneBatteryStatus().description)
 
-        TAKLogger.debug("[TAKManager]: Getting ready to broadcast location CoT")
-        TAKLogger.debug(message)
-        sendToUDP(message: message)
-        sendToTCP(message: message)
-        TAKLogger.debug("[TAKManager]: Done broadcasting")
+            TAKLogger.debug("[TAKManager]: Getting ready to broadcast location CoT")
+            TAKLogger.debug(message)
+            self.sendToUDP(message: message)
+            self.sendToTCP(message: message)
+            TAKLogger.debug("[TAKManager]: Done broadcasting")
+        }
     }
     
     func initiateEmergencyAlert(location: CLLocation?) {

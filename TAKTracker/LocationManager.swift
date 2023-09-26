@@ -31,6 +31,7 @@ class LocationManager: NSObject,CLLocationManagerDelegate, ObservableObject {
     }
     
     func requestAlwaysAuthorization() {
+        manager.requestWhenInUseAuthorization()
         manager.requestAlwaysAuthorization()
     }
     

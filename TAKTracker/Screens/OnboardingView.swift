@@ -23,6 +23,7 @@ struct OnboardingView: View {
     @State var currentStep: OnboardingStep = OnboardingStep.AskPermissions
     @State var hasAskedPermissions = false
     @State var hasTriedToConnect = false
+    @State var isProcessingDataPackage = false
     
     var body: some View {
         List {
@@ -47,15 +48,28 @@ struct OnboardingView: View {
                         .buttonStyle(.borderedProminent)
                         Spacer()
                     }
+                    .padding(.bottom, 20)
                 } else {
-                    if(locationManager.statusString == "notDetermined") {
+                    switch(locationManager.statusString) {
+                    case "notDetermined":
                         Text("Requesting permissions")
                             .listRowSeparator(.hidden)
-                    } else if(locationManager.statusString != "authorizedWhenInUse" && locationManager.statusString != "authorizedAlways") {
-                        Text("No Location Permissions were granted. You will need to change this in your device settings to enable location tracking.")
+                    case "authorizedWhenInUse":
+                        Text("We also need to request to always track your location so it will continue to work in the background")
                             .listRowSeparator(.hidden)
-                    } else {
+                        HStack {
+                            Spacer()
+                            Button("Enable Background Tracking") {
+                                locationManager.requestAlwaysAuthorization()
+                            }
+                            .buttonStyle(.borderedProminent)
+                            Spacer()
+                        }
+                    case "authorizedAlways":
                         Text("Location Permissions granted. Now let's set up your user information")
+                            .listRowSeparator(.hidden)
+                    default:
+                        Text("No Location Permissions were granted. You will need to change this in your device settings to enable location tracking.")
                             .listRowSeparator(.hidden)
                     }
                     
@@ -66,6 +80,7 @@ struct OnboardingView: View {
                         }
                         .buttonStyle(.borderedProminent)
                     }
+                    .padding(.bottom, 20)
                 }
             case .SetUserInformation:
                 HStack {
@@ -84,6 +99,7 @@ struct OnboardingView: View {
                     }
                     .buttonStyle(.borderedProminent)
                 }
+                .padding(.bottom, 20)
             case .ConnectToServer:
                 HStack {
                     Spacer()
@@ -92,11 +108,15 @@ struct OnboardingView: View {
                         .listRowSeparator(.hidden)
                     Spacer()
                 }
-                ConnectionOptions()
+                ConnectionOptions(isProcessingDataPackage: $isProcessingDataPackage)
                     .listRowSeparator(.hidden)
-                if(!SettingsStore.global.takServerUrl.isEmpty) {
+                
+                if(isProcessingDataPackage) {
+                    Text("Processing Data Package...")
+                } else if(!SettingsStore.global.takServerUrl.isEmpty) {
                     Text("Configured TAK Server \(SettingsStore.global.takServerUrl)")
                 }
+                
                 HStack {
                     Button("Previous") {
                         currentStep = OnboardingStep.SetUserInformation
@@ -108,6 +128,7 @@ struct OnboardingView: View {
                     }
                     .buttonStyle(.borderedProminent)
                 }
+                .padding(.bottom, 20)
             case .Finished:
                 Text("And we're all done! You can update these settings at any time by clicking on the gear/wheel icon from the main screen. You'll also find the support contact information there if you have any problems. Happy TAK'ing!")
                     .listRowSeparator(.hidden)
@@ -125,6 +146,7 @@ struct OnboardingView: View {
                     .buttonStyle(.borderedProminent)
                     Spacer()
                 }
+                .padding(.bottom, 20)
             }
         }
         HStack {

@@ -168,6 +168,7 @@ func didDismissCertEnrollment() {
 }
 
 struct DataPackageEnrollment: View {
+    @Binding var isProcessingDataPackage: Bool
     @StateObject var settingsStore: SettingsStore = SettingsStore.global
 
     @State var isShowingFilePicker = false
@@ -182,6 +183,7 @@ struct DataPackageEnrollment: View {
                     Spacer()
                 }
                 Button("Data Package", role: .none) {
+                    isProcessingDataPackage = true
                     isShowingFilePicker.toggle()
                 }
                 .buttonStyle(.bordered)
@@ -189,6 +191,7 @@ struct DataPackageEnrollment: View {
                     
                     switch results {
                     case .success(let fileurls):
+                        isProcessingDataPackage = true
                         for fileurl in fileurls {
                             if(fileurl.startAccessingSecurityScopedResource()) {
                                 TAKLogger.debug("Processing Package at \(String(describing: fileurl))")
@@ -197,6 +200,7 @@ struct DataPackageEnrollment: View {
                                 )
                                 tdpp.parse()
                                 fileurl.stopAccessingSecurityScopedResource()
+                                isProcessingDataPackage = false
                             } else {
                                 TAKLogger.error("Unable to securely access  \(String(describing: fileurl))")
                             }
@@ -213,8 +217,10 @@ struct DataPackageEnrollment: View {
 }
 
 struct ConnectionOptions: View {
+    @Binding var isProcessingDataPackage: Bool
+    
     var body: some View {
         CertificateEnrollment()
-        DataPackageEnrollment()
+        DataPackageEnrollment(isProcessingDataPackage: $isProcessingDataPackage)
     }
 }
