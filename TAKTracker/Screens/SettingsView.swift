@@ -11,23 +11,30 @@ import SwiftTAK
 import SwiftUI
 
 struct SettingsView: View {
+    @Environment(\.dismiss) var dismiss
     @StateObject var settingsStore: SettingsStore = SettingsStore.global
     let defaultBackgroundColor = Color(UIColor.systemBackground)
     @State var isProcessingDataPackage: Bool = false
 
     var body: some View {
-        List {
-            UserInformation()
-            ServerInformation()
-            ConnectionOptions(isProcessingDataPackage: $isProcessingDataPackage)
-            DeviceOptions()
-            AdvancedModeToggle()
-            
-            if(settingsStore.enableAdvancedMode) {
-                MapOptions()
-                TAKOptions()
+        NavigationView {
+            List {
+                UserInformation()
+                ServerInformation()
+                ConnectionOptions(isProcessingDataPackage: $isProcessingDataPackage)
+                DeviceOptions()
+                AdvancedModeToggle()
+                
+                if(settingsStore.enableAdvancedMode) {
+                    MapOptions()
+                    TAKOptions()
+                }
+                AboutInformation()
             }
-            AboutInformation()
+            .navigationBarTitle("Settings")
+            .navigationBarItems(trailing: Button("Dismiss", action: {
+                dismiss()
+            }))
         }
     }
 }

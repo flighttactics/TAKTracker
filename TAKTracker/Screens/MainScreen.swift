@@ -142,11 +142,14 @@ struct MapView: UIViewRepresentable {
         mapView.userTrackingMode = .followWithHeading
         mapView.pointOfInterestFilter = .excludingAll
         mapView.mapType = MKMapType(rawValue: UInt(mapType))!
+        mapView.layer.borderColor = UIColor.black.cgColor
+        mapView.layer.borderWidth = 1.0
         return mapView
     }
 
     func updateUIView(_ view: MKMapView, context: Context) {
         view.mapType = MKMapType(rawValue: UInt(mapType))!
+        view.isHidden = view.frame.height < 100
     }
     
     func resetMap() {
@@ -212,6 +215,7 @@ struct MainScreen: View {
     @State var displayUIState = DisplayUIState()
     @State var tracking:MapUserTrackingMode = .none
     @State var isAlertPresented: Bool = false
+    @State var isSettingsScreenPresented: Bool = false
     
     //background #5b5557
     let lightGray = Color(hue: 0.94, saturation: 0.03, brightness: 0.35)
@@ -226,7 +230,7 @@ struct MainScreen: View {
     }
     
     var body: some View {
-        NavigationView {
+        Group {
             ZStack(alignment: .top) {
                 VStack(spacing: 10) {
                     HStack {
@@ -241,7 +245,7 @@ struct MainScreen: View {
                             }
                             .imageScale(.large)
                             .foregroundColor(settingsStore.isAlertActivated ? .red : .white)
-                            .popover(isPresented: $isAlertPresented) { AlertView(takManager: takManager,
+                            .sheet(isPresented: $isAlertPresented) { AlertView(takManager: takManager,
                                           location: manager)
                             }
                         Spacer()
@@ -251,11 +255,15 @@ struct MainScreen: View {
 //                                .foregroundColor(.white)
 //                        }
 //                        Spacer()
-                        NavigationLink(destination: SettingsView()) {
-                            Image(systemName: "gear")
-                                .imageScale(.large)
-                                .foregroundColor(.white)
-                        }
+                        Image(systemName: "gear")
+                            .imageScale(.large)
+                            .foregroundColor(.white)
+                            .onTapGesture {
+                                isSettingsScreenPresented.toggle()
+                            }
+                            .sheet(isPresented: $isSettingsScreenPresented) {
+                                SettingsView()
+                            }
                         Spacer()
                     }.background(darkGray)
                     
@@ -335,7 +343,6 @@ struct MainScreen: View {
                             region: $manager.region,
                             mapType: $settingsStore.mapTypeDisplay
                         )
-                        .border(.black)
                     }
                     Spacer()
                     HStack {
@@ -357,7 +364,6 @@ struct MainScreen: View {
                 }
                 .onRotate { newOrientation in
                     manager.deviceUpdatedOrientation(orientation: newOrientation)
-                    
                 }
               }
         }
