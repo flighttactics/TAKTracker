@@ -11,16 +11,16 @@ If you are interested in integrating this into your own product or want a custom
 - [ ] [Toggle Coordinates between DMS and MGRS](https://github.com/flighttactics/TAKTracker/issues/8)
 - [ ] [Group/Channel Support](https://github.com/flighttactics/TAKTracker/issues/14)
 - [ ] [Protobuf Support](https://github.com/flighttactics/TAKTracker/issues/9)
-- [ ] [Allow setting the Team/Role](https://github.com/flighttactics/TAKTracker/issues/10)
-- [ ] [Emergency Beacon](https://github.com/flighttactics/TAKTracker/issues/11)
 - [ ] [TAK Chat](https://github.com/flighttactics/TAKTracker/issues/12)
 - [ ] [QR Code Enrollment for connecting to server](https://github.com/flighttactics/TAKTracker/issues/15)
-- [ ] [Have compass / heading recognize landscape mode](https://github.com/flighttactics/TAKTracker/issues/16)
-- [ ] Better messages and logging about the state of parsing the packages and data connections
 - [ ] [Show GPS Status](https://github.com/flighttactics/TAKTracker/issues/7)
 - [ ] [Show Compass Accuracy](https://github.com/flighttactics/TAKTracker/issues/7)
 - [ ] [App notifications when connection lost](https://github.com/flighttactics/TAKTracker/issues/13)
 - [ ] [Allow user to toggle background update indicator](https://github.com/flighttactics/TAKTracker/issues/17)
+- [X] [Allow setting the Team/Role](https://github.com/flighttactics/TAKTracker/issues/10)
+- [X] [Emergency Beacon](https://github.com/flighttactics/TAKTracker/issues/11)
+- [X] [Have compass / heading recognize landscape mode](https://github.com/flighttactics/TAKTracker/issues/16)
+- [X] Better messages and logging about the state of parsing the packages and data connections
 - [X] ~[Allow map to be scrolled without resetting](https://github.com/flighttactics/TAKTracker/issues/1)~
 - [X] ~Certificate Enrollment for connecting to server~
 - [X] ~Toggle Compass and Speed Units by tapping the numbers~
@@ -55,3 +55,6 @@ Licensed under the Apache License, Version 2.0 (the "License"); you may not use 
 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
 
 Commercial Use support licenses are available - please contact opensource@flighttactics.com for more information.
+
+This app uses the following Open Source libraries:
+- [SwiftTAK](https://github.com/flighttactics/swifttak)
