@@ -13,37 +13,43 @@ struct TAKTrackerApp: App {
     
     @StateObject var locationManager: LocationManager = LocationManager()
     @StateObject var takManager: TAKManager = TAKManager()
+    @StateObject var settingsStore = SettingsStore.global
     
     init() {
         TAKLogger.debug("Hello, TAK Tracker!")
-        SettingsStore.global.isConnectingToServer = false
-        SettingsStore.global.isConnectedToServer = false
-        SettingsStore.global.shouldTryReconnect = true
-        SettingsStore.global.connectionStatus = "Disconnected"
     }
 
     var body: some Scene {
         WindowGroup {
-            if(!SettingsStore.global.hasOnboarded) {
+            if(!settingsStore.hasOnboarded) {
                 OnboardingView(locationManager: locationManager, takManager: takManager)
+                .onAppear {
+                    settingsStore.isConnectingToServer = false
+                    settingsStore.connectionStatus = "Disconnected"
+                    settingsStore.isConnectedToServer = false
+                    settingsStore.shouldTryReconnect = false
+                    UIApplication.shared.isIdleTimerDisabled = settingsStore.disableScreenSleep
+                }
             } else {
                 MainScreen(manager: locationManager, takManager: takManager)
                     .onAppear {
-                        UIApplication.shared.isIdleTimerDisabled = SettingsStore.global.disableScreenSleep
-                        SettingsStore.global.isConnectedToServer = false
-                        SettingsStore.global.shouldTryReconnect = true
+                        settingsStore.isConnectingToServer = false
+                        settingsStore.connectionStatus = "Disconnected"
+                        settingsStore.isConnectedToServer = false
+                        settingsStore.shouldTryReconnect = true
+                        UIApplication.shared.isIdleTimerDisabled = settingsStore.disableScreenSleep
                         UIDevice.current.isBatteryMonitoringEnabled = true
                     }
                     .onChange(of: scenePhase) { newPhase in
                         if newPhase == .inactive {
                             TAKLogger.debug("[ScenePhase] Moving to inactive")
-                            SettingsStore.global.shouldTryReconnect = true
+                            settingsStore.shouldTryReconnect = true
                         } else if newPhase == .active {
                             TAKLogger.debug("[ScenePhase] Moving to active")
-                            SettingsStore.global.shouldTryReconnect = true
+                            settingsStore.shouldTryReconnect = true
                         } else if newPhase == .background {
                             TAKLogger.debug("[ScenePhase] Moving to background")
-                            SettingsStore.global.shouldTryReconnect = true
+                            settingsStore.shouldTryReconnect = true
                         }
                     }
             }
