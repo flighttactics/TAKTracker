@@ -79,6 +79,7 @@ struct OnboardingView: View {
                             currentStep = OnboardingStep.SetUserInformation
                         }
                         .buttonStyle(.borderedProminent)
+                        .disabled(locationManager.statusString == "notDetermined")
                     }
                     .padding(.bottom, 20)
                 }
