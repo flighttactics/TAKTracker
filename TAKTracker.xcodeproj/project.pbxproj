@@ -657,7 +657,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = TAKTracker/TAKTracker.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 52;
+				CURRENT_PROJECT_VERSION = 54;
 				DEVELOPMENT_ASSET_PATHS = "TAKTracker/Preview\\ Content";
 				DEVELOPMENT_TEAM = 5LZ5HR44P3;
 				ENABLE_PREVIEWS = YES;
@@ -666,8 +666,8 @@
 				INFOPLIST_KEY_CFBundleDisplayName = "TAK Tracker";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.navigation";
 				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "Allow TAK Tracker to access the local network to broadcast CoT?";
-				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Allow TAK Tracker to continue broadcasting your location to TAK Servers in the background?";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Allow TAK Tracker to broadcast your location to TAK Servers?";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "TAK Tracker can continue to share your location in the background with your teammates and connected TAK Servers for situational awareness";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "TAK Tracker uses your location to share with your teammates and connected TAK Servers for situational awareness";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
@@ -694,7 +694,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = TAKTracker/TAKTracker.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 52;
+				CURRENT_PROJECT_VERSION = 54;
 				DEVELOPMENT_ASSET_PATHS = "TAKTracker/Preview\\ Content";
 				DEVELOPMENT_TEAM = 5LZ5HR44P3;
 				ENABLE_PREVIEWS = YES;
@@ -703,8 +703,8 @@
 				INFOPLIST_KEY_CFBundleDisplayName = "TAK Tracker";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.navigation";
 				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "Allow TAK Tracker to access the local network to broadcast CoT?";
-				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Allow TAK Tracker to continue broadcasting your location to TAK Servers in the background?";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Allow TAK Tracker to broadcast your location to TAK Servers?";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "TAK Tracker can continue to share your location in the background with your teammates and connected TAK Servers for situational awareness";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "TAK Tracker uses your location to share with your teammates and connected TAK Servers for situational awareness";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
