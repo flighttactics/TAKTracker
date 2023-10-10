@@ -15,6 +15,7 @@
 		A54F70872AB0AEA400D8C541 /* DataPackageParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54F70862AB0AEA400D8C541 /* DataPackageParserTests.swift */; };
 		A54F70892AB0C40B00D8C541 /* TCPMessageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54F70882AB0C40B00D8C541 /* TCPMessageTests.swift */; };
 		A54F708A2AB0C41100D8C541 /* TCPMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5BF02012A5EBCA40043065B /* TCPMessage.swift */; };
+		A5582CC32AD5CB4600DE0D5C /* TAKTrackerTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5582CC22AD5CB4600DE0D5C /* TAKTrackerTestCase.swift */; };
 		A55ABF452ABDBF9A00195AB7 /* UserInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = A55ABF442ABDBF9A00195AB7 /* UserInformation.swift */; };
 		A55ABF472ABDBFEA00195AB7 /* ServerInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = A55ABF462ABDBFEA00195AB7 /* ServerInformation.swift */; };
 		A55ABF492ABDC02200195AB7 /* ConnectionOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A55ABF482ABDC02200195AB7 /* ConnectionOptions.swift */; };
@@ -86,6 +87,7 @@
 		A50C5F602A6032E8001E52E6 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
 		A54F70862AB0AEA400D8C541 /* DataPackageParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataPackageParserTests.swift; sourceTree = "<group>"; };
 		A54F70882AB0C40B00D8C541 /* TCPMessageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TCPMessageTests.swift; sourceTree = "<group>"; };
+		A5582CC22AD5CB4600DE0D5C /* TAKTrackerTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TAKTrackerTestCase.swift; sourceTree = "<group>"; };
 		A55ABF442ABDBF9A00195AB7 /* UserInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInformation.swift; sourceTree = "<group>"; };
 		A55ABF462ABDBFEA00195AB7 /* ServerInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerInformation.swift; sourceTree = "<group>"; };
 		A55ABF482ABDC02200195AB7 /* ConnectionOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionOptions.swift; sourceTree = "<group>"; };
@@ -229,6 +231,7 @@
 				A54F70882AB0C40B00D8C541 /* TCPMessageTests.swift */,
 				A55CE96C2AB1D8A20081AF86 /* ConverterTests.swift */,
 				A5AA510E2AC35B75006696B2 /* SettingsStoreTests.swift */,
+				A5582CC22AD5CB4600DE0D5C /* TAKTrackerTestCase.swift */,
 			);
 			path = TAKTrackerTests;
 			sourceTree = "<group>";
@@ -503,6 +506,7 @@
 				A54F70872AB0AEA400D8C541 /* DataPackageParserTests.swift in Sources */,
 				A5FB4E7C2AAA4B4F0034966D /* SettingsStore.swift in Sources */,
 				A55CE96D2AB1D8A20081AF86 /* ConverterTests.swift in Sources */,
+				A5582CC32AD5CB4600DE0D5C /* TAKTrackerTestCase.swift in Sources */,
 				A5FB4E782AAA49D30034966D /* TestConstants.swift in Sources */,
 				A5FB4E6B2AA751890034966D /* CertificateSigningRequestTests.swift in Sources */,
 				A5FB4E7F2AAA4BCB0034966D /* TAKConstants.swift in Sources */,
@@ -729,7 +733,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 52;
+				CURRENT_PROJECT_VERSION = 53;
 				DEVELOPMENT_TEAM = 5LZ5HR44P3;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
@@ -749,7 +753,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 52;
+				CURRENT_PROJECT_VERSION = 53;
 				DEVELOPMENT_TEAM = 5LZ5HR44P3;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
@@ -768,7 +772,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 52;
+				CURRENT_PROJECT_VERSION = 53;
 				DEVELOPMENT_TEAM = 5LZ5HR44P3;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
@@ -786,7 +790,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 52;
+				CURRENT_PROJECT_VERSION = 53;
 				DEVELOPMENT_TEAM = 5LZ5HR44P3;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;

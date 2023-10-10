@@ -356,12 +356,10 @@ struct MainScreen: View {
                                 Text("Server: Connected")
                                     .foregroundColor(.green)
                                     .font(.system(size: 15))
-                                    .background(.black)
-                                    .padding(.all, 10)
-                                    .overlay(
-                                        RoundedRectangle(cornerRadius: 12)
-                                            .stroke(lineWidth: 1.0)
-                                            .fill(.black)
+                                    .padding(.all, 5)
+                                    .background(
+                                        RoundedRectangle(cornerRadius: 5, style: .continuous)
+                                            .fill(Color.black)
                                     )
                             } else {
                                 Text("Server: \(settingsStore.connectionStatus)")

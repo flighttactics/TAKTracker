@@ -8,7 +8,7 @@
 import MapKit
 import XCTest
 
-final class ConverterTests: XCTestCase {
+final class ConverterTests: TAKTrackerTestCase {
     
     // Location converstions: Lat Long in MGRS, DMS
     // Heading Conversions: True North, Magnetic North - These are both provided automatically by LocationServices

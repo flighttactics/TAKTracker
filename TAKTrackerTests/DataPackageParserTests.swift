@@ -14,7 +14,7 @@ import X509
 import XCTest
 import ZIPFoundation
 
-final class DataPackageParserTests: XCTestCase {
+final class DataPackageParserTests: TAKTrackerTestCase {
     var parser:TAKDataPackageParser? = nil
     var archiveURL:URL? = nil
 

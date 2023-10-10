@@ -12,7 +12,7 @@ import SwiftASN1
 import X509
 import XCTest
 
-final class CertificateSigningRequestTests: XCTestCase {
+final class CertificateSigningRequestTests: TAKTrackerTestCase {
     
     var certString = ""
     var privateKey = ""
