@@ -52,6 +52,7 @@ struct TAKTrackerApp: App {
                             settingsStore.shouldTryReconnect = true
                         }
                     }
+                    .preferredColorScheme(.dark)
             }
         }
     }
