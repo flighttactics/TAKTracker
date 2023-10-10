@@ -59,7 +59,9 @@ class TCPMessage: NSObject, ObservableObject {
         
         guard let connection = connection else {
             TAKLogger.debug("[TCPMessage]: Connection was not viable so doing a full connect")
-            SettingsStore.global.isConnectingToServer = false
+            DispatchQueue.main.async {
+                SettingsStore.global.isConnectingToServer = false
+            }
             connect()
             return
         }

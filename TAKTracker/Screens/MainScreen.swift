@@ -149,7 +149,7 @@ struct MapView: UIViewRepresentable {
 
     func updateUIView(_ view: MKMapView, context: Context) {
         view.mapType = MKMapType(rawValue: UInt(mapType))!
-        view.isHidden = view.frame.height < 100
+        view.isHidden = view.frame.height < 150
     }
     
     func resetMap() {
@@ -343,19 +343,40 @@ struct MainScreen: View {
                             region: $manager.region,
                             mapType: $settingsStore.mapTypeDisplay
                         )
+                    } else {
+                        Spacer()
                     }
-                    Spacer()
-                    HStack {
-                        if(settingsStore.isConnectedToServer) {
-                            Text("Server: Connected").foregroundColor(.green)
-                        } else {
-                            Text("Server: \(settingsStore.connectionStatus)").foregroundColor(.red)
-                        }
-                    }
-                    .font(.system(size: 15))
                 }
                 .background(lightGray)
-                .padding()
+                .ignoresSafeArea(edges: .bottom)
+                .safeAreaInset(edge: .bottom, alignment: .trailing) {
+                    VStack {
+                        HStack {
+                            if(settingsStore.isConnectedToServer) {
+                                Text("Server: Connected")
+                                    .foregroundColor(.green)
+                                    .font(.system(size: 15))
+                                    .background(.black)
+                                    .padding(.all, 10)
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 12)
+                                            .stroke(lineWidth: 1.0)
+                                            .fill(.black)
+                                    )
+                            } else {
+                                Text("Server: \(settingsStore.connectionStatus)")
+                                    .foregroundColor(.red)
+                                    .font(.system(size: 15))
+                                    .padding(.all, 5)
+                                    .background(
+                                        RoundedRectangle(cornerRadius: 5, style: .continuous)
+                                            .fill(Color.black)
+                                    )
+                            }
+                        }
+                    }
+                    .padding(.horizontal)
+                }
                 .onAppear {
                     broadcastLocation()
                     Timer.scheduledTimer(withTimeInterval: settingsStore.broadcastIntervalSeconds, repeats: true) { timer in
