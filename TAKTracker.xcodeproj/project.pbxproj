@@ -13,6 +13,8 @@
 		A50C5F5D2A601CF0001E52E6 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A50C5F5C2A601CF0001E52E6 /* SettingsView.swift */; };
 		A50C5F5F2A6032D2001E52E6 /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A50C5F5E2A6032D2001E52E6 /* AlertView.swift */; };
 		A50C5F612A6032E8001E52E6 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A50C5F602A6032E8001E52E6 /* ChatView.swift */; };
+		A54CEB252AD886AD0090DB09 /* ChatStore.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A54CEB232AD886AD0090DB09 /* ChatStore.xcdatamodeld */; };
+		A54CEB272AD887310090DB09 /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54CEB262AD887310090DB09 /* PersistenceController.swift */; };
 		A54F70872AB0AEA400D8C541 /* DataPackageParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54F70862AB0AEA400D8C541 /* DataPackageParserTests.swift */; };
 		A54F70892AB0C40B00D8C541 /* TCPMessageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54F70882AB0C40B00D8C541 /* TCPMessageTests.swift */; };
 		A54F708A2AB0C41100D8C541 /* TCPMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5BF02012A5EBCA40043065B /* TCPMessage.swift */; };
@@ -91,6 +93,8 @@
 		A50C5F5C2A601CF0001E52E6 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		A50C5F5E2A6032D2001E52E6 /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
 		A50C5F602A6032E8001E52E6 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
+		A54CEB242AD886AD0090DB09 /* ChatStore.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ChatStore.xcdatamodel; sourceTree = "<group>"; };
+		A54CEB262AD887310090DB09 /* PersistenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceController.swift; sourceTree = "<group>"; };
 		A54F70862AB0AEA400D8C541 /* DataPackageParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataPackageParserTests.swift; sourceTree = "<group>"; };
 		A54F70882AB0C40B00D8C541 /* TCPMessageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TCPMessageTests.swift; sourceTree = "<group>"; };
 		A5582CC22AD5CB4600DE0D5C /* TAKTrackerTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TAKTrackerTestCase.swift; sourceTree = "<group>"; };
@@ -230,6 +234,8 @@
 				A5A49D912A547378009764C1 /* TAKTracker-Info.plist */,
 				A599D66C2A5E45CD00B507D9 /* TAKTracker.entitlements */,
 				A5E2F8FF2A791F6B00EDD0B4 /* Utilities */,
+				A54CEB232AD886AD0090DB09 /* ChatStore.xcdatamodeld */,
+				A54CEB262AD887310090DB09 /* PersistenceController.swift */,
 			);
 			path = TAKTracker;
 			sourceTree = "<group>";
@@ -590,9 +596,11 @@
 				A5D8D37E2A53B0F9002F0E3E /* TAKTrackerApp.swift in Sources */,
 				A5E7B00B2A70B5FA00D9203F /* TAKDataPackageParser.swift in Sources */,
 				A5A49D902A5459B5009764C1 /* TAKManager.swift in Sources */,
+				A54CEB252AD886AD0090DB09 /* ChatStore.xcdatamodeld in Sources */,
 				A5AA510A2AC33488006696B2 /* OnboardingView.swift in Sources */,
 				A5E7B0182A76AA8B00D9203F /* TAKLogger.swift in Sources */,
 				A508213F2AB3D19B00E0CBD8 /* TAKCAConfigResponseParser.swift in Sources */,
+				A54CEB272AD887310090DB09 /* PersistenceController.swift in Sources */,
 				A55ABF492ABDC02200195AB7 /* ConnectionOptions.swift in Sources */,
 				A5D8D3A82A53B465002F0E3E /* LocationManager.swift in Sources */,
 				A55ABF4D2ABDC08800195AB7 /* DeviceOptions.swift in Sources */,
@@ -1018,6 +1026,19 @@
 			productName = X509;
 		};
 /* End XCSwiftPackageProductDependency section */
+
+/* Begin XCVersionGroup section */
+		A54CEB232AD886AD0090DB09 /* ChatStore.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				A54CEB242AD886AD0090DB09 /* ChatStore.xcdatamodel */,
+			);
+			currentVersion = A54CEB242AD886AD0090DB09 /* ChatStore.xcdatamodel */;
+			path = ChatStore.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = A5D8D3722A53B0F9002F0E3E /* Project object */;
 }

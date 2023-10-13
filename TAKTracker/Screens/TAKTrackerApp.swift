@@ -9,6 +9,7 @@ import SwiftUI
 
 @main
 struct TAKTrackerApp: App {
+    let persistenceController = PersistenceController.shared
     @Environment(\.scenePhase) var scenePhase
     
     @StateObject var locationManager: LocationManager = LocationManager()
@@ -41,6 +42,7 @@ struct TAKTrackerApp: App {
                         UIDevice.current.isBatteryMonitoringEnabled = true
                     }
                     .onChange(of: scenePhase) { newPhase in
+                        persistenceController.save()
                         if newPhase == .inactive {
                             TAKLogger.debug("[ScenePhase] Moving to inactive")
                             settingsStore.shouldTryReconnect = true
@@ -53,6 +55,7 @@ struct TAKTrackerApp: App {
                         }
                     }
                     .preferredColorScheme(.dark)
+                    .environment(\.managedObjectContext, persistenceController.container.viewContext)
             }
         }
     }

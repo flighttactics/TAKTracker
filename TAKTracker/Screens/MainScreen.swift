@@ -222,6 +222,7 @@ struct MainScreen: View {
     @State var tracking:MapUserTrackingMode = .none
     @State var isAlertPresented: Bool = false
     @State var isSettingsScreenPresented: Bool = false
+    @State var isChatPresented: Bool = false
     
     //background #5b5557
     let lightGray = Color(hue: 0.94, saturation: 0.03, brightness: 0.35)
@@ -255,12 +256,16 @@ struct MainScreen: View {
                                           location: manager)
                             }
                         Spacer()
-//                        NavigationLink(destination: ChatView(chatMessage: ChatMessage())) {
-//                            Image(systemName: "bubble.left")
-//                                .imageScale(.large)
-//                                .foregroundColor(.white)
-//                        }
-//                        Spacer()
+                        Image(systemName: "bubble.left")
+                            .imageScale(.large)
+                            .foregroundColor(.white)
+                            .onTapGesture {
+                                isChatPresented.toggle()
+                            }
+                            .sheet(isPresented: $isChatPresented) {
+                                ChatView()
+                            }
+                        Spacer()
                         Image(systemName: "gear")
                             .imageScale(.large)
                             .foregroundColor(.white)
