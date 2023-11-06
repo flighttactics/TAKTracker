@@ -31,7 +31,7 @@
 		A55CE96B2AB1D8860081AF86 /* Converter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A55CE96A2AB1D8860081AF86 /* Converter.swift */; };
 		A55CE96D2AB1D8A20081AF86 /* ConverterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A55CE96C2AB1D8A20081AF86 /* ConverterTests.swift */; };
 		A55CE96E2AB1D8AA0081AF86 /* Converter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A55CE96A2AB1D8860081AF86 /* Converter.swift */; };
-		A57BA53B2AB8DB3800452D85 /* SwiftTAK in Frameworks */ = {isa = PBXBuildFile; productRef = A57BA53A2AB8DB3800452D85 /* SwiftTAK */; };
+		A59160A92AE9A42400DBB5F4 /* SwiftTAK in Frameworks */ = {isa = PBXBuildFile; productRef = A59160A82AE9A42400DBB5F4 /* SwiftTAK */; };
 		A59C08472AACF95100C33B44 /* CertificateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59C08462AACF95100C33B44 /* CertificateManager.swift */; };
 		A59C08482AAE105100C33B44 /* CertificateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59C08462AACF95100C33B44 /* CertificateManager.swift */; };
 		A5A49D902A5459B5009764C1 /* TAKManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5A49D8F2A5459B5009764C1 /* TAKManager.swift */; };
@@ -148,9 +148,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A57BA53B2AB8DB3800452D85 /* SwiftTAK in Frameworks */,
 				A5FB4E622A8FDF430034966D /* X509 in Frameworks */,
 				B6C8997D4C1B298C733111DC /* Pods_TAKTracker.framework in Frameworks */,
+				A59160A92AE9A42400DBB5F4 /* SwiftTAK in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -194,6 +194,13 @@
 				A55ABF522ABDC11900195AB7 /* AboutInformation.swift */,
 			);
 			path = SettingsScreens;
+			sourceTree = "<group>";
+		};
+		A59160A72AE9A42400DBB5F4 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		A5D8D3712A53B0F9002F0E3E = {
@@ -375,7 +382,7 @@
 			name = TAKTracker;
 			packageProductDependencies = (
 				A5FB4E612A8FDF430034966D /* X509 */,
-				A57BA53A2AB8DB3800452D85 /* SwiftTAK */,
+				A59160A82AE9A42400DBB5F4 /* SwiftTAK */,
 			);
 			productName = "TAK Spike";
 			productReference = A5D8D37A2A53B0F9002F0E3E /* TAKTracker.app */;
@@ -984,7 +991,7 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/flighttactics/SwiftTAK";
 			requirement = {
-				branch = main;
+				branch = cf/xmltocot;
 				kind = branch;
 			};
 		};
@@ -1015,7 +1022,7 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		A57BA53A2AB8DB3800452D85 /* SwiftTAK */ = {
+		A59160A82AE9A42400DBB5F4 /* SwiftTAK */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = A57BA5392AB8DB3800452D85 /* XCRemoteSwiftPackageReference "SwiftTAK" */;
 			productName = SwiftTAK;

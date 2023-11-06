@@ -37,16 +37,18 @@ struct ChatBubble<Content>: View where Content: View {
                         .offset(x: position == .left ? -5 : 5)
                     ,alignment: position == .left ? .bottomLeading : .bottomTrailing)
         }
-        .padding(position == .left ? .leading : .trailing , 15)
-        .padding(position == .right ? .leading : .trailing , 60)
+        .padding(position == .left ? .leading : .trailing , 30)
+        .padding(position == .right ? .leading : .trailing , 75)
         .frame(width: UIScreen.main.bounds.width, alignment: position == .left ? .leading : .trailing)
     }
 }
 
 struct ChatView: View {
-    @FetchRequest(sortDescriptors: [SortDescriptor(\.timestamp, order: .reverse)]) var messages: FetchedResults<ChatMessage>
+    @FetchRequest(sortDescriptors: [SortDescriptor(\.timestamp)]) var messages: FetchedResults<ChatMessage>
     @Environment(\.managedObjectContext) var managedObjectContext
     @Environment(\.dismiss) var dismiss
+    var takManager: TAKManager
+    var location: LocationManager
     
     @State var chatMessage: String = ""
     
@@ -61,7 +63,7 @@ struct ChatView: View {
         msg.message = chatMessage
         msg.timestamp = Date()
         PersistenceController.shared.save()
-        TAKLogger.debug("Saved")
+        takManager.broadcastChatMessage(locationManager: location, message: chatMessage)
         chatMessage = ""
     }
     
@@ -78,17 +80,22 @@ struct ChatView: View {
                     let fromUs = (message.sender == SettingsStore.global.callSign)
                     let bubblePos = fromUs ? BubblePosition.right : BubblePosition.left
                     let bubbleCol = fromUs ? Color.green : Color.gray
-                    if(!fromUs) {
-                        Text(message.sender ?? "Unknown")
+                    VStack {
+                        ChatBubble(position: bubblePos, color: bubbleCol) {
+                            Text(message.message ?? "Unknown")
+                        }
+                        if(!fromUs) {
+                            Text(message.sender ?? "Unknown")
+                                .font(.system(size: 10))
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .padding([.leading], 25)
+                        }
                     }
-                    ChatBubble(position: bubblePos, color: bubbleCol) {
-                        Text(message.message ?? "Unknown")
-                    }
-                    .scaleEffect(x: 1, y: -1, anchor: .center)
+
+                    //.scaleEffect(x: 1, y: -1, anchor: .center)
                 }
-                .listRowSeparator(.hidden)
-                .scaleEffect(x: 1, y: -1, anchor: .center)
-                .offset(x: 0, y: 2)
+                //.scaleEffect(x: 1, y: -1, anchor: .center)
+                //.offset(x: 0, y: 2)
                 
                 HStack {
                     TextField("Type a message", text: $chatMessage)

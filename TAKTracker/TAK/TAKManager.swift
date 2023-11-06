@@ -78,6 +78,13 @@ class TAKManager: NSObject, URLSessionDelegate, ObservableObject {
         }
     }
     
+    func broadcastChatMessage(locationManager: LocationManager, message: String, to: String = TAKConstants.DEFAULT_CHATROOM_NAME) {
+        let chatMessage = cotMessage.generateChatMessage(message: message, sender: SettingsStore.global.callSign)
+        TAKLogger.debug("[TAKManager]: Broadcasting chat message \(chatMessage)")
+        sendToUDP(message: chatMessage)
+        sendToTCP(message: chatMessage)
+    }
+    
     func initiateEmergencyAlert(location: CLLocation?) {
         let alertType = EmergencyType(rawValue: SettingsStore.global.activeAlertType)!
         

@@ -37,15 +37,6 @@
       }
     },
     {
-      "identity" : "swifttak",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/flighttactics/SwiftTAK",
-      "state" : {
-        "branch" : "main",
-        "revision" : "07c3d2682443ac79a56aebbcd199df3f31589275"
-      }
-    },
-    {
       "identity" : "zipfoundation",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/weichsel/ZIPFoundation.git",

@@ -263,7 +263,8 @@ struct MainScreen: View {
                                 isChatPresented.toggle()
                             }
                             .sheet(isPresented: $isChatPresented) {
-                                ChatView()
+                                ChatView(takManager: takManager,
+                                         location: manager)
                             }
                         Spacer()
                         Image(systemName: "gear")

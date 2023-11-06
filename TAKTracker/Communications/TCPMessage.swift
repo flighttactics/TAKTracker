@@ -7,6 +7,7 @@
 
 import Foundation
 import Network
+import SwiftTAK
 
 enum ConnectionStatus : String, CustomStringConvertible {
     case Starting = "Starting"
@@ -26,6 +27,8 @@ enum ConnectionStatus : String, CustomStringConvertible {
 
 class TCPMessage: NSObject, ObservableObject {
     var connection: NWConnection?
+    var currentReceivedMessage: String = ""
+    let persistenceController = PersistenceController.shared
     
     override init() {
         TAKLogger.debug("[TCPMessage]: Init")
@@ -48,6 +51,53 @@ class TCPMessage: NSObject, ObservableObject {
             TAKLogger.debug("[TCPMessage]: Reconnecting as we were not ready to send")
             reconnect()
         }
+    }
+    
+    func receive()
+    {
+        self.connection?.receive(minimumIncompleteLength: 1, maximumLength: 65535, completion:
+            {
+                (data, context, isComplete, error) in
+                if let err = error {
+                    TAKLogger.error("[TCPMessage]: Receive error: \(err)")
+                }
+                
+                if let rcvData = data,
+                    let str = String(data:rcvData, encoding: .utf8) {
+                    
+                    if(str.starts(with: "<?xml")) {
+                        self.currentReceivedMessage = ""
+                    }
+                    
+                    self.currentReceivedMessage += str
+                    
+                    if str.range(of:"</event>") != nil {
+                        //We have a complete message
+                        TAKLogger.debug("[TCPMessage]: Complete message received: \(self.currentReceivedMessage)")
+                        if self.currentReceivedMessage.range(of:"__chat") != nil {
+                            TAKLogger.debug("[TCPMessage]: Received Chat!")
+                            if let event = COTXMLParser.cotXmlToEvent(cotXml: self.currentReceivedMessage) {
+                                TAKLogger.debug("[TCPMessage]: Event parsed: \(String(describing: event))")
+                                if let chat = event.detail?.chat,
+                                   let remarks = event.detail?.remarks {
+                                    let msg = ChatMessage(context: self.persistenceController.container.viewContext)
+                                    msg.group = "All Chat Rooms"
+                                    msg.sender = chat.senderCallsign
+                                    msg.message = remarks.message
+                                    msg.timestamp = event.time
+                                    PersistenceController.shared.save()
+                                    TAKLogger.debug("[TCPMessage]: Saved")
+                                }
+                            }
+                        }
+                    } else {
+                        TAKLogger.debug("[TCPMessage]: Incomplete message received: \(str)")
+                    }
+                }
+                
+                self.receive()
+                
+        })
     }
     
     func reconnect() {
@@ -224,6 +274,7 @@ class TCPMessage: NSObject, ObservableObject {
                 SettingsStore.global.isConnectedToServer = true
                 SettingsStore.global.isConnectingToServer = false
                 SettingsStore.global.connectionStatus = ConnectionStatus.Connected.description
+                self.receive()
             }
         case .setup:
             TAKLogger.debug("[TCPMessage]: Entered state: setup")
