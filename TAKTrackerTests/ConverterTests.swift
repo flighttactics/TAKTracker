@@ -28,13 +28,13 @@ final class ConverterTests: TAKTrackerTestCase {
         return CLLocation(coordinate: mockLocationCoordinate, altitude: mockDistance, horizontalAccuracy: mockAccuracy, verticalAccuracy: mockAccuracy, course: mockDirection, speed: mockSpeedMetersPerSecond, timestamp: Date())
     }
     
-//    func testLatLongToMGRS() {
-//        let expected = "18S UJ 26938 05973"
-//        let coordinate = mockLocationCoordinate()
-//        let latitude = coordinate.latitude as Double
-//        let longitude = coordinate.longitude as Double
-//        XCTAssertEqual(expected, Converter.LatLongToMGRS(latitude: latitude, longitude: longitude))
-//    }
+    func testLatLongToMGRS() {
+        let expected = "18S UJ 26938 05973"
+        let coordinate = mockLocationCoordinate()
+        let latitude = coordinate.latitude as Double
+        let longitude = coordinate.longitude as Double
+        XCTAssertEqual(expected, Converter.LatLongToMGRS(latitude: latitude, longitude: longitude))
+    }
     
     func testLatitudeToDMS() {
         let latitude = mockLocationCoordinate().latitude as Double
@@ -66,22 +66,19 @@ final class ConverterTests: TAKTrackerTestCase {
         XCTAssertEqual("67", Converter.convertToSpeedUnit(unit: SpeedUnit.MilesPerHour, location: location))
     }
     
-    func testTogglingDMStoDecimal() {
-        XCTAssertEqual(LocationUnit.Decimal, UnitOrder.nextLocationUnit(unit: LocationUnit.DMS))
+    //DMS -> MGRS -> Decimal
+    
+    func testTogglingDMStoMGRS() {
+        XCTAssertEqual(LocationUnit.MGRS, UnitOrder.nextLocationUnit(unit: LocationUnit.DMS))
+    }
+    
+    func testTogglingMGRStoDecimal() {
+        XCTAssertEqual(LocationUnit.Decimal, UnitOrder.nextLocationUnit(unit: LocationUnit.MGRS))
     }
     
     func testTogglingDecimaltoDMS() {
         XCTAssertEqual(LocationUnit.DMS, UnitOrder.nextLocationUnit(unit: LocationUnit.Decimal))
     }
-    
-    
-//    func testTogglingDMStoMGRS() {
-//        XCTAssertEqual(LocationUnit.MGRS, UnitOrder.nextLocationUnit(unit: LocationUnit.DMS))
-//    }
-//
-//    func testTogglingMGRStoDMS() {
-//        XCTAssertEqual(LocationUnit.DMS, UnitOrder.nextLocationUnit(unit: LocationUnit.MGRS))
-//    }
     
     func testTogglingMNtoTN() {
         XCTAssertEqual(DirectionUnit.TN, UnitOrder.nextDirectionUnit(unit: DirectionUnit.MN))

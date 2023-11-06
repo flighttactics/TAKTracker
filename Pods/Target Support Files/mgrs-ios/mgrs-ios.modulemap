@@ -1,0 +1,6 @@
+framework module mgrs_ios {
+  umbrella header "mgrs-ios-umbrella.h"
+
+  export *
+  module * { export * }
+}

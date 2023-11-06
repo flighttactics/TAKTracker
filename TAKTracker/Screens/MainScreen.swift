@@ -69,7 +69,7 @@ struct DisplayUIState {
         switch(currentLocationUnit) {
             case .DMS: return "DMS"
             case .Decimal: return "Decimal"
-            //case .MGRS: return "MGRS"
+            case .MGRS: return "MGRS"
         }
     }
     
@@ -103,6 +103,12 @@ struct DisplayUIState {
                 lineTitle: "Lon",
                 lineContents: Converter.LatLonToDecimal(latitude: location.coordinate.longitude)
             ))
+        case .MGRS:
+            let mgrsString = Converter.LatLongToMGRS(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
+            display.addLine(line: CoordinateDisplayLine(
+                lineContents: mgrsString
+            ))
+
         }
         
         return display
@@ -278,6 +284,7 @@ struct MainScreen: View {
                                     Spacer()
                                     Text(line.lineContents)
                                 } else {
+                                    Spacer()
                                     Text(line.lineContents).padding(.leading, 5)
                                 }
                                 Spacer()

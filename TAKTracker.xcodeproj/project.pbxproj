@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		479B8B617AB264363ABCD93B /* Pods_TAKTracker_TAKTrackerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEFD401A913144B7229D2781 /* Pods_TAKTracker_TAKTrackerTests.framework */; };
 		A508213F2AB3D19B00E0CBD8 /* TAKCAConfigResponseParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A508213E2AB3D19B00E0CBD8 /* TAKCAConfigResponseParser.swift */; };
 		A50C5F5B2A5F92FF001E52E6 /* SettingsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A50C5F5A2A5F92FF001E52E6 /* SettingsStore.swift */; };
 		A50C5F5D2A601CF0001E52E6 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A50C5F5C2A601CF0001E52E6 /* SettingsView.swift */; };
@@ -60,6 +61,7 @@
 		A5FB4E8B2AACF2830034966D /* itak-do-foyc.zip in Resources */ = {isa = PBXBuildFile; fileRef = A5FB4E862AACF2820034966D /* itak-do-foyc.zip */; };
 		A5FB4E8C2AACF2830034966D /* foyc.p12 in Resources */ = {isa = PBXBuildFile; fileRef = A5FB4E872AACF2830034966D /* foyc.p12 */; };
 		A5FB4E8E2AACF2A20034966D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A5FB4E8D2AACF2A10034966D /* Assets.xcassets */; };
+		B6C8997D4C1B298C733111DC /* Pods_TAKTracker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0840B3A75D0239E21ADEA2E7 /* Pods_TAKTracker.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -80,6 +82,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0840B3A75D0239E21ADEA2E7 /* Pods_TAKTracker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TAKTracker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		0CD85BD73504580BC32FA239 /* Pods-TAKTracker-TAKTrackerTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TAKTracker-TAKTrackerTests.debug.xcconfig"; path = "Target Support Files/Pods-TAKTracker-TAKTrackerTests/Pods-TAKTracker-TAKTrackerTests.debug.xcconfig"; sourceTree = "<group>"; };
+		4B2EC40D21C80BEBE05D29F8 /* Pods-TAKTracker.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TAKTracker.debug.xcconfig"; path = "Target Support Files/Pods-TAKTracker/Pods-TAKTracker.debug.xcconfig"; sourceTree = "<group>"; };
+		94A6A10561B512E86B0E9DC2 /* Pods-TAKTracker.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TAKTracker.release.xcconfig"; path = "Target Support Files/Pods-TAKTracker/Pods-TAKTracker.release.xcconfig"; sourceTree = "<group>"; };
 		A508213E2AB3D19B00E0CBD8 /* TAKCAConfigResponseParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TAKCAConfigResponseParser.swift; sourceTree = "<group>"; };
 		A50C5F5A2A5F92FF001E52E6 /* SettingsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsStore.swift; sourceTree = "<group>"; };
 		A50C5F5C2A601CF0001E52E6 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
@@ -129,6 +135,8 @@
 		A5FB4E862AACF2820034966D /* itak-do-foyc.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = "itak-do-foyc.zip"; sourceTree = "<group>"; };
 		A5FB4E872AACF2830034966D /* foyc.p12 */ = {isa = PBXFileReference; lastKnownFileType = file; path = foyc.p12; sourceTree = "<group>"; };
 		A5FB4E8D2AACF2A10034966D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		CEFD401A913144B7229D2781 /* Pods_TAKTracker_TAKTrackerTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TAKTracker_TAKTrackerTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E7150D9B3F41CFFF2C34C4A3 /* Pods-TAKTracker-TAKTrackerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TAKTracker-TAKTrackerTests.release.xcconfig"; path = "Target Support Files/Pods-TAKTracker-TAKTrackerTests/Pods-TAKTracker-TAKTrackerTests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -138,6 +146,7 @@
 			files = (
 				A57BA53B2AB8DB3800452D85 /* SwiftTAK in Frameworks */,
 				A5FB4E622A8FDF430034966D /* X509 in Frameworks */,
+				B6C8997D4C1B298C733111DC /* Pods_TAKTracker.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -145,6 +154,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				479B8B617AB264363ABCD93B /* Pods_TAKTracker_TAKTrackerTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -158,6 +168,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		085BD5615028DC7C36297967 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				0840B3A75D0239E21ADEA2E7 /* Pods_TAKTracker.framework */,
+				CEFD401A913144B7229D2781 /* Pods_TAKTracker_TAKTrackerTests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		A55ABF432ABDBF7600195AB7 /* SettingsScreens */ = {
 			isa = PBXGroup;
 			children = (
@@ -183,6 +202,8 @@
 				A5D8D38D2A53B0FB002F0E3E /* TAKTrackerTests */,
 				A5D8D3972A53B0FB002F0E3E /* TAKTrackerUITests */,
 				A5D8D37B2A53B0F9002F0E3E /* Products */,
+				B7B57F813DDA55B613DBA70B /* Pods */,
+				085BD5615028DC7C36297967 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -317,6 +338,17 @@
 			path = "Test Files";
 			sourceTree = "<group>";
 		};
+		B7B57F813DDA55B613DBA70B /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				4B2EC40D21C80BEBE05D29F8 /* Pods-TAKTracker.debug.xcconfig */,
+				94A6A10561B512E86B0E9DC2 /* Pods-TAKTracker.release.xcconfig */,
+				0CD85BD73504580BC32FA239 /* Pods-TAKTracker-TAKTrackerTests.debug.xcconfig */,
+				E7150D9B3F41CFFF2C34C4A3 /* Pods-TAKTracker-TAKTrackerTests.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -324,9 +356,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = A5D8D39E2A53B0FB002F0E3E /* Build configuration list for PBXNativeTarget "TAKTracker" */;
 			buildPhases = (
+				764FA0D86787F8AAAE7F1B0D /* [CP] Check Pods Manifest.lock */,
 				A5D8D3762A53B0F9002F0E3E /* Sources */,
 				A5D8D3772A53B0F9002F0E3E /* Frameworks */,
 				A5D8D3782A53B0F9002F0E3E /* Resources */,
+				CCCAF8052769F0D0661730AA /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -345,9 +379,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = A5D8D3A12A53B0FB002F0E3E /* Build configuration list for PBXNativeTarget "TAKTrackerTests" */;
 			buildPhases = (
+				4F091DA11E97FA41B7E18FCD /* [CP] Check Pods Manifest.lock */,
 				A5D8D3862A53B0FA002F0E3E /* Sources */,
 				A5D8D3872A53B0FA002F0E3E /* Frameworks */,
 				A5D8D3882A53B0FA002F0E3E /* Resources */,
+				1BC6F84570B200F9E37EC8D9 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -456,6 +492,87 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		1BC6F84570B200F9E37EC8D9 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-TAKTracker-TAKTrackerTests/Pods-TAKTracker-TAKTrackerTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-TAKTracker-TAKTrackerTests/Pods-TAKTracker-TAKTrackerTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TAKTracker-TAKTrackerTests/Pods-TAKTracker-TAKTrackerTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		4F091DA11E97FA41B7E18FCD /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-TAKTracker-TAKTrackerTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		764FA0D86787F8AAAE7F1B0D /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-TAKTracker-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		CCCAF8052769F0D0661730AA /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-TAKTracker/Pods-TAKTracker-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-TAKTracker/Pods-TAKTracker-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TAKTracker/Pods-TAKTracker-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		A5D8D3762A53B0F9002F0E3E /* Sources */ = {
@@ -657,6 +774,7 @@
 		};
 		A5D8D39F2A53B0FB002F0E3E /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4B2EC40D21C80BEBE05D29F8 /* Pods-TAKTracker.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -667,6 +785,7 @@
 				DEVELOPMENT_ASSET_PATHS = "TAKTracker/Preview\\ Content";
 				DEVELOPMENT_TEAM = 5LZ5HR44P3;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "TAKTracker-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "TAK Tracker";
@@ -694,6 +813,7 @@
 		};
 		A5D8D3A02A53B0FB002F0E3E /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 94A6A10561B512E86B0E9DC2 /* Pods-TAKTracker.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -704,6 +824,7 @@
 				DEVELOPMENT_ASSET_PATHS = "TAKTracker/Preview\\ Content";
 				DEVELOPMENT_TEAM = 5LZ5HR44P3;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "TAKTracker-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "TAK Tracker";
@@ -731,12 +852,14 @@
 		};
 		A5D8D3A22A53B0FB002F0E3E /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0CD85BD73504580BC32FA239 /* Pods-TAKTracker-TAKTrackerTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 53;
 				DEVELOPMENT_TEAM = 5LZ5HR44P3;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				MARKETING_VERSION = 1.0;
@@ -751,12 +874,14 @@
 		};
 		A5D8D3A32A53B0FB002F0E3E /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E7150D9B3F41CFFF2C34C4A3 /* Pods-TAKTracker-TAKTrackerTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 53;
 				DEVELOPMENT_TEAM = 5LZ5HR44P3;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				MARKETING_VERSION = 1.0;
