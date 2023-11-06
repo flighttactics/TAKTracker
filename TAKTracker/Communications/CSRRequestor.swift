@@ -43,7 +43,6 @@ class CSRRequestor: NSObject, ObservableObject, URLSessionDelegate {
     var derEncodedCertificate: [UInt8] = []
     var derEncodedPrivateKey: Data = Data()
     
-    var csrPort = TAKConstants.DEFAULT_CSR_PORT
     var tlsConfigPath = TAKConstants.CERT_CONFIG_PATH
     var csrRequestPath = TAKConstants.certificateSigningPath(
         clientUid: AppConstants.getClientID(),
@@ -84,6 +83,7 @@ class CSRRequestor: NSObject, ObservableObject, URLSessionDelegate {
         let caConfigMethod = "GET"
         let csrMethod = "POST"
         let host = "https://\(SettingsStore.global.takServerUrl)"
+        let csrPort = SettingsStore.global.takServerCSRPort
         var caConfigEntries : [String:String] = [:]
         var orgNameEntry = ""
         var orgUnitNameEntry = ""
@@ -139,7 +139,7 @@ class CSRRequestor: NSObject, ObservableObject, URLSessionDelegate {
                 }
                 
                 // create the request
-                let csrURL = URL(string: "\(host):\(self.csrPort)\(self.csrRequestPath)")!
+                let csrURL = URL(string: "\(host):\(csrPort)\(self.csrRequestPath)")!
                 var csrRequest = URLRequest(url: csrURL)
                 csrRequest.httpMethod = csrMethod
                 csrRequest.setValue("text/plain; charset=utf-8", forHTTPHeaderField: "Content-Type")  // the request is JSON
