@@ -4,4 +4,7 @@
    <FileRef
       location = "group:TAKTracker.xcodeproj">
    </FileRef>
+   <FileRef
+      location = "group:Pods/Pods.xcodeproj">
+   </FileRef>
 </Workspace>

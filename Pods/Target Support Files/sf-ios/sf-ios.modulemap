@@ -1,0 +1,6 @@
+framework module sf_ios {
+  umbrella header "sf-ios-umbrella.h"
+
+  export *
+  module * { export * }
+}

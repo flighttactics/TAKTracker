@@ -1,0 +1,6 @@
+framework module grid_ios {
+  umbrella header "grid-ios-umbrella.h"
+
+  export *
+  module * { export * }
+}

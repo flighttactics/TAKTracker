@@ -2,13 +2,12 @@
 
 TAK Tracker is a update-only version of [TAK](https://www.tak.gov) for Apple Devices. It is designed to be quick to deploy and easy to use for teams to give to users who just need location tracked. The app is configured to send both broadcast and to a TAK Server directly, and is being to developed to support all of the features from the Android TAK Tracker.
 
-Below is a portion of the roadmap being tracked. It is _highly_ likely that this project will end up spawing a separate iOS TAK app since TAK Tracker is supposed to be very lightweight. So if something isn't working or you don't see something on the list below, please use [GitHub Issues](https://github.com/flighttactics/TAKTracker/issues) to let us know about it if it isn't already being tracked there.
+Below is a portion of the roadmap being tracked. If something isn't working or you don't see something on the list below, please use [GitHub Issues](https://github.com/flighttactics/TAKTracker/issues) to let us know about it (if it isn't already being tracked there) and we'll route it either to this project or to [SwiftTAK](https://github.com/flighttactics/SwiftTAK) depending on where the issue/feature is.
 
-If you are interested in integrating this into your own product or want a custom iOS/Android/etc TAK app, plugins or features, let us know by contacting foyc at flighttactics dot com or visiting [Flight Tactics](https://www.flighttactics.com)
+If you are interested in integrating this into your own product or want a custom iOS/Android/etc TAK app, plugins or features, let us know by contacting opensource at flighttactics dot com or visiting [Flight Tactics](https://www.flighttactics.com)
 
 ## Current TAK Tracker Parity Feature Status in rough priority / sequence:
 
-- [ ] [Toggle Coordinates between DMS and MGRS](https://github.com/flighttactics/TAKTracker/issues/8)
 - [ ] [Group/Channel Support](https://github.com/flighttactics/TAKTracker/issues/14)
 - [ ] [Protobuf Support](https://github.com/flighttactics/TAKTracker/issues/9)
 - [ ] [TAK Chat](https://github.com/flighttactics/TAKTracker/issues/12)
@@ -17,10 +16,11 @@ If you are interested in integrating this into your own product or want a custom
 - [ ] [Show Compass Accuracy](https://github.com/flighttactics/TAKTracker/issues/7)
 - [ ] [App notifications when connection lost](https://github.com/flighttactics/TAKTracker/issues/13)
 - [ ] [Allow user to toggle background update indicator](https://github.com/flighttactics/TAKTracker/issues/17)
-- [X] [Allow setting the Team/Role](https://github.com/flighttactics/TAKTracker/issues/10)
-- [X] [Emergency Beacon](https://github.com/flighttactics/TAKTracker/issues/11)
-- [X] [Have compass / heading recognize landscape mode](https://github.com/flighttactics/TAKTracker/issues/16)
-- [X] Better messages and logging about the state of parsing the packages and data connections
+- [X] ~[Toggle Coordinates between DMS and MGRS](https://github.com/flighttactics/TAKTracker/issues/8)~
+- [X] ~[Allow setting the Team/Role](https://github.com/flighttactics/TAKTracker/issues/10)~
+- [X] ~[Emergency Beacon](https://github.com/flighttactics/TAKTracker/issues/11)~
+- [X] ~[Have compass / heading recognize landscape mode](https://github.com/flighttactics/TAKTracker/issues/16)~
+- [X] ~Better messages and logging about the state of parsing the packages and data connections~
 - [X] ~[Allow map to be scrolled without resetting](https://github.com/flighttactics/TAKTracker/issues/1)~
 - [X] ~Certificate Enrollment for connecting to server~
 - [X] ~Toggle Compass and Speed Units by tapping the numbers~
@@ -57,4 +57,5 @@ Unless required by applicable law or agreed to in writing, software distributed 
 Commercial Use support licenses are available - please contact opensource@flighttactics.com for more information.
 
 This app uses the following Open Source libraries:
-- [SwiftTAK](https://github.com/flighttactics/swifttak)
+- [SwiftTAK](https://github.com/flighttactics/swifttak) under the Apache License, Version 2.0
+- [mgrs-ios](https://github.com/ngageoint/mgrs-ios) under the MIT License

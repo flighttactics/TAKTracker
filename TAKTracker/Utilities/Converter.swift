@@ -7,6 +7,7 @@
 
 import Foundation
 import MapKit
+import mgrs_ios
 
 enum SpeedUnit {
     case MetersPerSecond
@@ -17,7 +18,7 @@ enum SpeedUnit {
 
 enum LocationUnit {
     case DMS
-    //case MGRS
+    case MGRS
     case Decimal
 }
 
@@ -47,8 +48,11 @@ struct UnitOrder {
         case LocationUnit.Decimal:
             return LocationUnit.DMS
         case LocationUnit.DMS:
+            return LocationUnit.MGRS
+        case LocationUnit.MGRS:
             return LocationUnit.Decimal
         }
+        
     }
     
     static func nextDirectionUnit(unit:DirectionUnit) -> DirectionUnit {
@@ -93,7 +97,12 @@ class Converter {
     }
     
     static func LatLongToMGRS(latitude: Double, longitude: Double) -> String {
-        return ""
+        let mgrsPoint = MGRS.from(longitude, latitude)
+        let accuracy = 5 - Int(log10(Double(GridType.METER.precision())))
+        let easting = String(format: "%05d", mgrsPoint.easting)
+        let northing = String(format: "%05d", mgrsPoint.northing)
+
+        return "\(mgrsPoint.zone)\(mgrsPoint.band) \(mgrsPoint.column)\(mgrsPoint.row) \(String(easting.prefix(accuracy))) \(String(northing.prefix(accuracy)))"
     }
     
     static func LatLonToDMS(latitude: Double) -> String {

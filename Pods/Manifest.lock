@@ -1,0 +1,31 @@
+PODS:
+  - color-ios (1.0.1)
+  - grid-ios (1.0.5):
+    - color-ios (~> 1.0.1)
+    - sf-ios (~> 4.1.2)
+  - mgrs-ios (1.1.4):
+    - grid-ios (~> 1.0.5)
+  - sf-ios (4.1.2)
+
+DEPENDENCIES:
+  - color-ios (~> 1.0.1)
+  - grid-ios (~> 1.0.5)
+  - mgrs-ios (~> 1.1.4)
+  - sf-ios (~> 4.1.2)
+
+SPEC REPOS:
+  trunk:
+    - color-ios
+    - grid-ios
+    - mgrs-ios
+    - sf-ios
+
+SPEC CHECKSUMS:
+  color-ios: ab7521e896b4e061905d292aa7ff675d7e7f801d
+  grid-ios: 29d32ac8d78771b1d7a91ebeba85c5d49785c4bd
+  mgrs-ios: d96be2123562dbd99194bcdc75d54d8ac13afa3a
+  sf-ios: 16cfda9dd8971cb0216ac911840bb72727bf2397
+
+PODFILE CHECKSUM: dbd0a9268ba081e0455ceff020ce5b76d767b558
+
+COCOAPODS: 1.14.2
