@@ -22,6 +22,20 @@ struct CertificateEnrollmentParameters: View {
             Group {
                 VStack {
                     HStack {
+                        Text("CSR Port")
+                            .font(.system(size: 18, weight: .medium))
+                            .foregroundColor(.secondary)
+                        Spacer()
+                    }
+                    TextField("CSR Port", text: $settingsStore.takServerCSRPort)
+                        .keyboardType(.numberPad)
+                }
+                .padding(.top, 20)
+            }
+            
+            Group {
+                VStack {
+                    HStack {
                         Text("Username")
                             .font(.system(size: 18, weight: .medium))
                             .foregroundColor(.secondary)
