@@ -1,5 +1,5 @@
 //
-//  AlertView.swift
+//  EmergencyView.swift
 //  TAKTracker
 //
 //  Created by Cory Foy on 7/13/23.
@@ -10,10 +10,10 @@ import MapKit
 import SwiftTAK
 import SwiftUI
 
-struct AlertView: View {
+struct EmergencyView: View {
     @Environment(\.dismiss) var dismiss
-    var takManager: TAKManager
-    var location: LocationManager
+    @EnvironmentObject var takManager: TAKManager
+    @EnvironmentObject var location: LocationManager
 
     @State var alertActivated: Bool = false
     @State var alertConfirmed: Bool = false

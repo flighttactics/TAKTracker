@@ -7,12 +7,19 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4630FD0E2B506EC000988ED4 /* Palette+Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4630FD0D2B506EC000988ED4 /* Palette+Color.swift */; };
+		4630FD132B5071A100988ED4 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4630FD102B5071A100988ED4 /* ChatView.swift */; };
+		4630FD142B5071A100988ED4 /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4630FD122B5071A100988ED4 /* MessageView.swift */; };
+		4630FD192B5071BD00988ED4 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4630FD162B5071BD00988ED4 /* String+Extension.swift */; };
+		4630FD1A2B5071BD00988ED4 /* ChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4630FD182B5071BD00988ED4 /* ChatViewModel.swift */; };
+		4630FD1C2B5071D200988ED4 /* MessageData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4630FD1B2B5071D200988ED4 /* MessageData.swift */; };
+		4630FD1E2B5072D300988ED4 /* Sheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4630FD1D2B5072D300988ED4 /* Sheet.swift */; };
+		4630FD4C2B51A34500988ED4 /* MessageModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4630FD4A2B51A34500988ED4 /* MessageModel.xcdatamodeld */; };
 		479B8B617AB264363ABCD93B /* Pods_TAKTracker_TAKTrackerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEFD401A913144B7229D2781 /* Pods_TAKTracker_TAKTrackerTests.framework */; };
 		A508213F2AB3D19B00E0CBD8 /* TAKCAConfigResponseParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A508213E2AB3D19B00E0CBD8 /* TAKCAConfigResponseParser.swift */; };
 		A50C5F5B2A5F92FF001E52E6 /* SettingsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A50C5F5A2A5F92FF001E52E6 /* SettingsStore.swift */; };
 		A50C5F5D2A601CF0001E52E6 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A50C5F5C2A601CF0001E52E6 /* SettingsView.swift */; };
-		A50C5F5F2A6032D2001E52E6 /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A50C5F5E2A6032D2001E52E6 /* AlertView.swift */; };
-		A50C5F612A6032E8001E52E6 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A50C5F602A6032E8001E52E6 /* ChatView.swift */; };
+		A50C5F5F2A6032D2001E52E6 /* EmergencyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A50C5F5E2A6032D2001E52E6 /* EmergencyView.swift */; };
 		A54F70872AB0AEA400D8C541 /* DataPackageParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54F70862AB0AEA400D8C541 /* DataPackageParserTests.swift */; };
 		A54F70892AB0C40B00D8C541 /* TCPMessageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54F70882AB0C40B00D8C541 /* TCPMessageTests.swift */; };
 		A54F708A2AB0C41100D8C541 /* TCPMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5BF02012A5EBCA40043065B /* TCPMessage.swift */; };
@@ -84,13 +91,20 @@
 /* Begin PBXFileReference section */
 		0840B3A75D0239E21ADEA2E7 /* Pods_TAKTracker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TAKTracker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0CD85BD73504580BC32FA239 /* Pods-TAKTracker-TAKTrackerTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TAKTracker-TAKTrackerTests.debug.xcconfig"; path = "Target Support Files/Pods-TAKTracker-TAKTrackerTests/Pods-TAKTracker-TAKTrackerTests.debug.xcconfig"; sourceTree = "<group>"; };
+		4630FD0D2B506EC000988ED4 /* Palette+Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Palette+Color.swift"; sourceTree = "<group>"; };
+		4630FD102B5071A100988ED4 /* ChatView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
+		4630FD122B5071A100988ED4 /* MessageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
+		4630FD162B5071BD00988ED4 /* String+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
+		4630FD182B5071BD00988ED4 /* ChatViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatViewModel.swift; sourceTree = "<group>"; };
+		4630FD1B2B5071D200988ED4 /* MessageData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageData.swift; sourceTree = "<group>"; };
+		4630FD1D2B5072D300988ED4 /* Sheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sheet.swift; sourceTree = "<group>"; };
+		4630FD4B2B51A34500988ED4 /* Message.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Message.xcdatamodel; sourceTree = "<group>"; };
 		4B2EC40D21C80BEBE05D29F8 /* Pods-TAKTracker.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TAKTracker.debug.xcconfig"; path = "Target Support Files/Pods-TAKTracker/Pods-TAKTracker.debug.xcconfig"; sourceTree = "<group>"; };
 		94A6A10561B512E86B0E9DC2 /* Pods-TAKTracker.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TAKTracker.release.xcconfig"; path = "Target Support Files/Pods-TAKTracker/Pods-TAKTracker.release.xcconfig"; sourceTree = "<group>"; };
 		A508213E2AB3D19B00E0CBD8 /* TAKCAConfigResponseParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TAKCAConfigResponseParser.swift; sourceTree = "<group>"; };
 		A50C5F5A2A5F92FF001E52E6 /* SettingsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsStore.swift; sourceTree = "<group>"; };
 		A50C5F5C2A601CF0001E52E6 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
-		A50C5F5E2A6032D2001E52E6 /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
-		A50C5F602A6032E8001E52E6 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
+		A50C5F5E2A6032D2001E52E6 /* EmergencyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmergencyView.swift; sourceTree = "<group>"; };
 		A54F70862AB0AEA400D8C541 /* DataPackageParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataPackageParserTests.swift; sourceTree = "<group>"; };
 		A54F70882AB0C40B00D8C541 /* TCPMessageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TCPMessageTests.swift; sourceTree = "<group>"; };
 		A5582CC22AD5CB4600DE0D5C /* TAKTrackerTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TAKTrackerTestCase.swift; sourceTree = "<group>"; };
@@ -177,6 +191,38 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		4630FD0F2B5071A100988ED4 /* Chat */ = {
+			isa = PBXGroup;
+			children = (
+				4630FD102B5071A100988ED4 /* ChatView.swift */,
+			);
+			path = Chat;
+			sourceTree = "<group>";
+		};
+		4630FD112B5071A100988ED4 /* Message */ = {
+			isa = PBXGroup;
+			children = (
+				4630FD122B5071A100988ED4 /* MessageView.swift */,
+			);
+			path = Message;
+			sourceTree = "<group>";
+		};
+		4630FD152B5071BD00988ED4 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				4630FD162B5071BD00988ED4 /* String+Extension.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		4630FD172B5071BD00988ED4 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				4630FD182B5071BD00988ED4 /* ChatViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		A55ABF432ABDBF7600195AB7 /* SettingsScreens */ = {
 			isa = PBXGroup;
 			children = (
@@ -220,6 +266,8 @@
 		A5D8D37C2A53B0F9002F0E3E /* TAKTracker */ = {
 			isa = PBXGroup;
 			children = (
+				4630FD152B5071BD00988ED4 /* Extensions */,
+				4630FD172B5071BD00988ED4 /* ViewModel */,
 				A5E2F8FC2A791F0600EDD0B4 /* Communications */,
 				A5E2F8FE2A791F5600EDD0B4 /* Data Models */,
 				A5D8D3A72A53B465002F0E3E /* LocationManager.swift */,
@@ -289,12 +337,13 @@
 		A5E2F8FD2A791F3000EDD0B4 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				4630FD0F2B5071A100988ED4 /* Chat */,
+				4630FD112B5071A100988ED4 /* Message */,
 				A55ABF432ABDBF7600195AB7 /* SettingsScreens */,
 				A5D8D37F2A53B0F9002F0E3E /* MainScreen.swift */,
 				A50C5F5C2A601CF0001E52E6 /* SettingsView.swift */,
 				A5D8D37D2A53B0F9002F0E3E /* TAKTrackerApp.swift */,
-				A50C5F5E2A6032D2001E52E6 /* AlertView.swift */,
-				A50C5F602A6032E8001E52E6 /* ChatView.swift */,
+				A50C5F5E2A6032D2001E52E6 /* EmergencyView.swift */,
 				A5AA51092AC33488006696B2 /* OnboardingView.swift */,
 			);
 			path = Screens;
@@ -303,8 +352,10 @@
 		A5E2F8FE2A791F5600EDD0B4 /* Data Models */ = {
 			isa = PBXGroup;
 			children = (
+				4630FD1B2B5071D200988ED4 /* MessageData.swift */,
 				A50C5F5A2A5F92FF001E52E6 /* SettingsStore.swift */,
 				A5FB4E652A98D0FF0034966D /* TAKConstants.swift */,
+				4630FD4A2B51A34500988ED4 /* MessageModel.xcdatamodeld */,
 			);
 			path = "Data Models";
 			sourceTree = "<group>";
@@ -314,6 +365,8 @@
 			children = (
 				A5E7B0172A76AA8B00D9203F /* TAKLogger.swift */,
 				A55CE96A2AB1D8860081AF86 /* Converter.swift */,
+				4630FD0D2B506EC000988ED4 /* Palette+Color.swift */,
+				4630FD1D2B5072D300988ED4 /* Sheet.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -583,13 +636,16 @@
 				A55ABF4F2ABDC0A800195AB7 /* TAKOptions.swift in Sources */,
 				A5BF02002A5EB7440043065B /* UDPMessage.swift in Sources */,
 				A5FB4E662A98D0FF0034966D /* TAKConstants.swift in Sources */,
+				4630FD132B5071A100988ED4 /* ChatView.swift in Sources */,
+				4630FD0E2B506EC000988ED4 /* Palette+Color.swift in Sources */,
 				A5FB4E642A8FE0020034966D /* CSRRequestor.swift in Sources */,
 				A55ABF532ABDC11900195AB7 /* AboutInformation.swift in Sources */,
 				A55ABF512ABDC0E900195AB7 /* MapOptions.swift in Sources */,
-				A50C5F612A6032E8001E52E6 /* ChatView.swift in Sources */,
 				A5D8D37E2A53B0F9002F0E3E /* TAKTrackerApp.swift in Sources */,
 				A5E7B00B2A70B5FA00D9203F /* TAKDataPackageParser.swift in Sources */,
 				A5A49D902A5459B5009764C1 /* TAKManager.swift in Sources */,
+				4630FD4C2B51A34500988ED4 /* MessageModel.xcdatamodeld in Sources */,
+				4630FD142B5071A100988ED4 /* MessageView.swift in Sources */,
 				A5AA510A2AC33488006696B2 /* OnboardingView.swift in Sources */,
 				A5E7B0182A76AA8B00D9203F /* TAKLogger.swift in Sources */,
 				A508213F2AB3D19B00E0CBD8 /* TAKCAConfigResponseParser.swift in Sources */,
@@ -597,14 +653,18 @@
 				A5D8D3A82A53B465002F0E3E /* LocationManager.swift in Sources */,
 				A55ABF4D2ABDC08800195AB7 /* DeviceOptions.swift in Sources */,
 				A55CE96B2AB1D8860081AF86 /* Converter.swift in Sources */,
+				4630FD1C2B5071D200988ED4 /* MessageData.swift in Sources */,
 				A55ABF472ABDBFEA00195AB7 /* ServerInformation.swift in Sources */,
 				A5BF02022A5EBCA40043065B /* TCPMessage.swift in Sources */,
 				A55ABF452ABDBF9A00195AB7 /* UserInformation.swift in Sources */,
-				A50C5F5F2A6032D2001E52E6 /* AlertView.swift in Sources */,
+				A50C5F5F2A6032D2001E52E6 /* EmergencyView.swift in Sources */,
 				A59C08472AACF95100C33B44 /* CertificateManager.swift in Sources */,
 				A50C5F5D2A601CF0001E52E6 /* SettingsView.swift in Sources */,
 				A50C5F5B2A5F92FF001E52E6 /* SettingsStore.swift in Sources */,
+				4630FD192B5071BD00988ED4 /* String+Extension.swift in Sources */,
+				4630FD1A2B5071BD00988ED4 /* ChatViewModel.swift in Sources */,
 				A55ABF4B2ABDC05800195AB7 /* AdvancedModeToggle.swift in Sources */,
+				4630FD1E2B5072D300988ED4 /* Sheet.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -781,9 +841,9 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = TAKTracker/TAKTracker.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 57;
+				CURRENT_PROJECT_VERSION = 58;
 				DEVELOPMENT_ASSET_PATHS = "TAKTracker/Preview\\ Content";
-				DEVELOPMENT_TEAM = 5LZ5HR44P3;
+				DEVELOPMENT_TEAM = BCKVL9BZPW;
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -820,9 +880,9 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = TAKTracker/TAKTracker.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 57;
+				CURRENT_PROJECT_VERSION = 58;
 				DEVELOPMENT_ASSET_PATHS = "TAKTracker/Preview\\ Content";
-				DEVELOPMENT_TEAM = 5LZ5HR44P3;
+				DEVELOPMENT_TEAM = BCKVL9BZPW;
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -857,7 +917,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 57;
+				CURRENT_PROJECT_VERSION = 58;
 				DEVELOPMENT_TEAM = 5LZ5HR44P3;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -879,7 +939,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 57;
+				CURRENT_PROJECT_VERSION = 58;
 				DEVELOPMENT_TEAM = 5LZ5HR44P3;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -899,7 +959,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 57;
+				CURRENT_PROJECT_VERSION = 58;
 				DEVELOPMENT_TEAM = 5LZ5HR44P3;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.1;
@@ -917,7 +977,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 57;
+				CURRENT_PROJECT_VERSION = 58;
 				DEVELOPMENT_TEAM = 5LZ5HR44P3;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.1;
@@ -1018,6 +1078,19 @@
 			productName = X509;
 		};
 /* End XCSwiftPackageProductDependency section */
+
+/* Begin XCVersionGroup section */
+		4630FD4A2B51A34500988ED4 /* MessageModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				4630FD4B2B51A34500988ED4 /* Message.xcdatamodel */,
+			);
+			currentVersion = 4630FD4B2B51A34500988ED4 /* Message.xcdatamodel */;
+			path = MessageModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = A5D8D3722A53B0F9002F0E3E /* Project object */;
 }

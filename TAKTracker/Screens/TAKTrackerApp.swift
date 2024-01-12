@@ -23,6 +23,9 @@ struct TAKTrackerApp: App {
         WindowGroup {
             if(!settingsStore.hasOnboarded) {
                 OnboardingView(locationManager: locationManager, takManager: takManager)
+                .environmentObject(locationManager)
+                .environmentObject(takManager)
+                .environmentObject(settingsStore)
                 .onAppear {
                     settingsStore.isConnectingToServer = false
                     settingsStore.connectionStatus = "Disconnected"
@@ -31,7 +34,10 @@ struct TAKTrackerApp: App {
                     UIApplication.shared.isIdleTimerDisabled = settingsStore.disableScreenSleep
                 }
             } else {
-                MainScreen(manager: locationManager, takManager: takManager)
+                MainScreen()
+                    .environmentObject(locationManager)
+                    .environmentObject(takManager)
+                    .environmentObject(settingsStore)
                     .onAppear {
                         settingsStore.isConnectingToServer = false
                         settingsStore.connectionStatus = "Disconnected"

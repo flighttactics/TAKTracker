@@ -212,21 +212,16 @@ extension View {
         self.modifier(DeviceRotationViewModifier(action: action))
     }
 }
+let navBarAppearence = UINavigationBarAppearance()
 
 struct MainScreen: View {
-    @StateObject var manager: LocationManager
-    @StateObject var takManager: TAKManager
-    @StateObject var settingsStore = SettingsStore.global
+    @EnvironmentObject var settingsStore: SettingsStore
+    @EnvironmentObject var takManager: TAKManager
+    @EnvironmentObject var manager: LocationManager
     
-    @State var displayUIState = DisplayUIState()
-    @State var tracking:MapUserTrackingMode = .none
-    @State var isAlertPresented: Bool = false
-    @State var isSettingsScreenPresented: Bool = false
-    
-    //background #5b5557
-    let lightGray = Color(hue: 0.94, saturation: 0.03, brightness: 0.35)
-    //header: #3d3739
-    let darkGray = Color(hue: 0.94, saturation: 0.05, brightness: 0.23)
+    @State private var displayUIState = DisplayUIState()
+    @State private var tracking:MapUserTrackingMode = .none
+    @State private var sheet: Sheet.SheetType?
     
     func formatOrZero(item: Double?, formatter: String = "%.0f") -> String {
         guard let item = item else {
@@ -235,164 +230,217 @@ struct MainScreen: View {
         return String(format: formatter, item)
     }
     
+    init() {
+        navBarAppearence.configureWithOpaqueBackground()
+        navBarAppearence.backgroundColor = UIColor.baseDarkGray
+        navBarAppearence.titleTextAttributes = [.foregroundColor: UIColor.white]
+        navBarAppearence.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
+        
+        UINavigationBar.appearance().standardAppearance = navBarAppearence
+        UINavigationBar.appearance().scrollEdgeAppearance = navBarAppearence
+    }
+    
     var body: some View {
-        Group {
-            ZStack(alignment: .top) {
-                VStack(spacing: 10) {
+        NavigationView {
+            trackerStatus
+            .background(Color.baseMediumGray)
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItemGroup(placement: .principal) {
                     HStack {
+                        Text("TAK Tracker").font(.headline)
                         Spacer()
-                        Text("TAK Tracker")
-                            .bold()
-                            .foregroundColor(.white)
+                        Button(action: { sheet = .emergencySettings }) {
+                            Image(systemName: "exclamationmark.triangle")
+                                .imageScale(.large)
+                                .foregroundColor(settingsStore.isAlertActivated ? .red : .white)
+                        }
                         Spacer()
-                        Image(systemName: "exclamationmark.triangle")
-                            .onTapGesture {
-                                isAlertPresented.toggle()
-                            }
-                            .imageScale(.large)
-                            .foregroundColor(settingsStore.isAlertActivated ? .red : .white)
-                            .sheet(isPresented: $isAlertPresented) { AlertView(takManager: takManager,
-                                          location: manager)
-                            }
+                        
+                        Button(action: { sheet = .chat }) {
+                            Image(systemName: "bubble.left")
+                                .imageScale(.large)
+                                .foregroundColor(.white)
+                        }
                         Spacer()
-//                        NavigationLink(destination: ChatView(chatMessage: ChatMessage())) {
-//                            Image(systemName: "bubble.left")
-//                                .imageScale(.large)
-//                                .foregroundColor(.white)
-//                        }
-//                        Spacer()
-                        Image(systemName: "gear")
-                            .imageScale(.large)
-                            .foregroundColor(.white)
-                            .onTapGesture {
-                                isSettingsScreenPresented.toggle()
-                            }
-                            .sheet(isPresented: $isSettingsScreenPresented) {
-                                SettingsView()
-                            }
-                        Spacer()
-                    }.background(darkGray)
-                    
-                    Text(settingsStore.callSign).foregroundColor(.white).bold()
-                    
-                    VStack(alignment: .leading) {
-                        Text("Location (\(displayUIState.coordinateText()))").padding(.leading, 5)
-                        ForEach(displayUIState.coordinateValue(location: manager.lastLocation).lines, id: \.id) { line in
-                            HStack {
-                                if(line.hasLineTitle()) {
-                                    Text(line.lineTitle).padding(.leading, 5)
-                                    Spacer()
-                                    Text(line.lineContents)
-                                } else {
-                                    Spacer()
-                                    Text(line.lineContents).padding(.leading, 5)
-                                }
-                                Spacer()
-                            }.font(.system(size: 30))
+                        
+                        Button(action: { sheet = .settings }) {
+                            Image(systemName: "gear")
+                                .imageScale(.large)
+                                .foregroundColor(.white)
                         }
-                    }
-                    .border(.blue)
-                    .foregroundColor(.white)
-                    .background(.black)
-                    .padding(10)
-                    .onTapGesture {
-                        displayUIState.nextLocationUnit()
-                    }
-                    
-                    HStack(alignment: .center) {
-                        VStack {
-                            Text("Heading")
-                                .frame(maxWidth: .infinity)
-                            Text("(\(displayUIState.headingText(unit: displayUIState.currentHeadingUnit)))")
-                                .frame(maxWidth: .infinity)
-                            Text(displayUIState.headingValue(
-                                unit: displayUIState.currentHeadingUnit,
-                                heading: manager.lastHeading)).font(.system(size: 30))
-                        }
-                        .background(.black)
-                        .border(.blue)
-                        .onTapGesture {
-                            displayUIState.nextHeadingUnit()
-                        }
-                        VStack {
-                            Text("Compass")
-                                .frame(maxWidth: .infinity)
-                            Text("(\(displayUIState.headingText(unit: displayUIState.currentCompassUnit)))")
-                                .frame(maxWidth: .infinity)
-                            Text(displayUIState.headingValue(
-                                unit: displayUIState.currentCompassUnit,
-                                heading: manager.lastHeading)).font(.system(size: 30))
-                        }
-                        .background(.black)
-                        .border(.blue)
-                        .onTapGesture {
-                            displayUIState.nextCompassUnit()
-                        }
-                        VStack {
-                            Text("Speed")
-                                .frame(maxWidth: .infinity)
-                            Text("(\(displayUIState.speedText()))")
-                                .frame(maxWidth: .infinity)
-                            Text(displayUIState.speedValue(
-                                location: manager.lastLocation)).font(.system(size: 30))
-                        }
-                        .background(.black)
-                        .border(.blue)
-                        .onTapGesture {
-                            displayUIState.nextSpeedUnit()
-                        }
-                    }
-                    .foregroundColor(.white)
-                    .padding(10)
-
-                    if(settingsStore.enableAdvancedMode) {
-                        MapView(
-                            region: $manager.region,
-                            mapType: $settingsStore.mapTypeDisplay
-                        )
-                    } else {
-                        Spacer()
                     }
                 }
-                .background(lightGray)
-                .ignoresSafeArea(edges: .bottom)
-                .safeAreaInset(edge: .bottom, alignment: .trailing) {
-                    VStack {
-                        HStack {
-                            if(settingsStore.isConnectedToServer) {
-                                Text("Server: Connected")
-                                    .foregroundColor(.green)
-                                    .font(.system(size: 15))
-                                    .padding(.all, 5)
-                                    .background(
-                                        RoundedRectangle(cornerRadius: 5, style: .continuous)
-                                            .fill(Color.black)
-                                    )
-                            } else {
-                                Text("Server: \(settingsStore.connectionStatus)")
-                                    .foregroundColor(.red)
-                                    .font(.system(size: 15))
-                                    .padding(.all, 5)
-                                    .background(
-                                        RoundedRectangle(cornerRadius: 5, style: .continuous)
-                                            .fill(Color.black)
-                                    )
-                            }
-                        }
-                    }
-                    .padding(.horizontal)
-                }
-                .onAppear {
-                    broadcastLocation()
-                    Timer.scheduledTimer(withTimeInterval: settingsStore.broadcastIntervalSeconds, repeats: true) { timer in
-                        broadcastLocation()
-                   }
-                }
-                .onRotate { newOrientation in
-                    manager.deviceUpdatedOrientation(orientation: newOrientation)
-                }
-              }
+            }
         }
+        .fullScreenCover(item: $sheet, content: { Sheet(type: $0) })
+        .background(Color.baseMediumGray)
+        .ignoresSafeArea(edges: .bottom)
+        .overlay(alignment: .bottomTrailing, content: {
+            serverStatus
+        })
+        .onAppear {
+            broadcastLocation()
+            Timer.scheduledTimer(withTimeInterval: settingsStore.broadcastIntervalSeconds, repeats: true) { timer in
+                broadcastLocation()
+            }
+        }
+        .onRotate { newOrientation in
+            manager.deviceUpdatedOrientation(orientation: newOrientation)
+        }
+    }
+    
+    var trackerStatus: some View {
+        VStack(spacing: 10) {
+            Text(settingsStore.callSign)
+                .foregroundColor(.white)
+                .bold()
+                .padding(.top, 10)
+            
+            VStack(alignment: .leading) {
+                Text("Location (\(displayUIState.coordinateText()))").padding(.leading, 5)
+                ForEach(displayUIState.coordinateValue(location: manager.lastLocation).lines, id: \.id) { line in
+                    HStack {
+                        if(line.hasLineTitle()) {
+                            Text(line.lineTitle).padding(.leading, 5)
+                            Spacer()
+                            Text(line.lineContents)
+                        } else {
+                            Spacer()
+                            Text(line.lineContents).padding(.leading, 5)
+                        }
+                        Spacer()
+                    }.font(.system(size: 30))
+                }
+            }
+            .border(.blue)
+            .foregroundColor(.white)
+            .background(.black)
+            .padding(10)
+            .onTapGesture {
+                displayUIState.nextLocationUnit()
+            }
+            
+            HStack(alignment: .center) {
+                VStack {
+                    Text("Heading")
+                        .frame(maxWidth: .infinity)
+                    Text("(\(displayUIState.headingText(unit: displayUIState.currentHeadingUnit)))")
+                        .frame(maxWidth: .infinity)
+                    Text(displayUIState.headingValue(
+                        unit: displayUIState.currentHeadingUnit,
+                        heading: manager.lastHeading)).font(.system(size: 30))
+                }
+                .background(.black)
+                .border(.blue)
+                .onTapGesture {
+                    displayUIState.nextHeadingUnit()
+                }
+                VStack {
+                    Text("Compass")
+                        .frame(maxWidth: .infinity)
+                    Text("(\(displayUIState.headingText(unit: displayUIState.currentCompassUnit)))")
+                        .frame(maxWidth: .infinity)
+                    Text(displayUIState.headingValue(
+                        unit: displayUIState.currentCompassUnit,
+                        heading: manager.lastHeading)).font(.system(size: 30))
+                }
+                .background(.black)
+                .border(.blue)
+                .onTapGesture {
+                    displayUIState.nextCompassUnit()
+                }
+                
+                VStack {
+                    Text("Speed")
+                        .frame(maxWidth: .infinity)
+                    Text("(\(displayUIState.speedText()))")
+                        .frame(maxWidth: .infinity)
+                    Text(displayUIState.speedValue(
+                        location: manager.lastLocation)).font(.system(size: 30))
+                }
+                .background(.black)
+                .border(.blue)
+                .onTapGesture {
+                    displayUIState.nextSpeedUnit()
+                }
+            }
+            .foregroundColor(.white)
+            .padding(10)
+            
+            if(settingsStore.enableAdvancedMode) {
+                MapView(
+                    region: $manager.region,
+                    mapType: $settingsStore.mapTypeDisplay
+                )
+                .ignoresSafeArea(edges: .all)
+            } else {
+                Spacer()
+            }
+        }
+    }
+    var toolbarItemsLeft: some View {
+        Group {
+            Button(action: { sheet = .emergencySettings }) {
+                Image(systemName: "exclamationmark.triangle")
+                    .imageScale(.large)
+                    .foregroundColor(settingsStore.isAlertActivated ? .red : .white)
+            }
+            
+            Button(action: { sheet = .chat }) {
+                Image(systemName: "bubble.left")
+                    .imageScale(.large)
+                    .foregroundColor(.white)
+            }
+        }
+    }
+    var toolbarItems: some View {
+        Group {
+            Button(action: { sheet = .emergencySettings }) {
+                Image(systemName: "exclamationmark.triangle")
+                    .imageScale(.large)
+                    .foregroundColor(settingsStore.isAlertActivated ? .red : .white)
+            }
+            
+            Button(action: { sheet = .chat }) {
+                Image(systemName: "bubble.left")
+                    .imageScale(.large)
+                    .foregroundColor(.white)
+            }
+            
+            Button(action: { sheet = .settings }) {
+                Image(systemName: "gear")
+                    .imageScale(.large)
+                    .foregroundColor(.white)
+            }
+        }
+    }
+    
+    var serverStatus: some View {
+        VStack {
+            HStack {
+                if(settingsStore.isConnectedToServer) {
+                    Text("Server: Connected")
+                        .foregroundColor(.green)
+                        .font(.system(size: 15))
+                        .padding(.all, 5)
+                        .background(
+                            RoundedRectangle(cornerRadius: 5, style: .continuous)
+                                .fill(Color.black)
+                        )
+                } else {
+                    Text("Server: \(settingsStore.connectionStatus)")
+                        .foregroundColor(.red)
+                        .font(.system(size: 15))
+                        .padding(.all, 5)
+                        .background(
+                            RoundedRectangle(cornerRadius: 5, style: .continuous)
+                                .fill(Color.black)
+                        )
+                }
+            }
+        }
+        .padding(.horizontal)
     }
     
     func broadcastLocation() {
