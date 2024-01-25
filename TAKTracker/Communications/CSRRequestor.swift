@@ -166,9 +166,10 @@ class CSRRequestor: NSObject, ObservableObject, URLSessionDelegate {
                 csrRequest.httpBody = rawCertData.base64EncodedData()
                 
                 self.enrollmentStatus = CSREnrollmentStatus.Enrolling
-                
+                TAKLogger.debug("[CSRRequestor] Starting actual CSR")
                 // TODO: Actually let the user know this failed if it, uh, fails
                 let task = session.dataTask(with: csrRequest) { data, response, error in
+                    TAKLogger.debug("[CSRRequestor] In CSR dataTask Block")
                     if let error = error {
                         TAKLogger.error("[CSRRequestor] Error: \(error)")
                         TAKLogger.error("[CSRRequestor] Response: \(String(describing: response))")
@@ -176,6 +177,7 @@ class CSRRequestor: NSObject, ObservableObject, URLSessionDelegate {
                         self.enrollmentStatus = CSREnrollmentStatus.Failed
                         return
                     }
+                    TAKLogger.debug("[CSRRequestor] No error, checking response")
                     guard let response = response as? HTTPURLResponse,
                         (200...299).contains(response.statusCode) else {
                         TAKLogger.error("[CSRRequestor] Error: \(String(describing: error))")
@@ -184,6 +186,7 @@ class CSRRequestor: NSObject, ObservableObject, URLSessionDelegate {
                         self.enrollmentStatus = CSREnrollmentStatus.Failed
                         return
                     }
+                    TAKLogger.debug("[CSRRequestor] Got a 200 Response, checking mimeType")
                     if let mimeType = response.mimeType,
                         (mimeType == "application/json" || mimeType == "text/plain"),
                         let data = data,

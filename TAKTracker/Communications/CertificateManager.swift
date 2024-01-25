@@ -148,6 +148,15 @@ class CertificateManager {
         // back into ObjC code.
         return (resultRef as! SecIdentity)
     }
+    
+    static func removeIdentity(label: String) -> OSStatus {
+        let deleteArgs: [NSString: Any] = [
+            kSecClass: kSecClassIdentity,
+            kSecAttrLabel: label ]
+
+        let deleteStatus = SecItemDelete(deleteArgs as CFDictionary)
+        return deleteStatus
+    }
 
     // Remember any OBJECTIVE-C code that calls this method needs to call CFRetain
     static func getCertificate(label: String) -> SecCertificate? {

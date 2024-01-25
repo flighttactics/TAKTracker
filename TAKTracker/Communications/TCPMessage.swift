@@ -127,7 +127,9 @@ class TCPMessage: NSObject, ObservableObject {
 
         if (SettingsStore.global.takServerChanged) {
             TAKLogger.debug("[TCPMessage]: TAKServer was marked as changing, so cancelling and reconnecting")
-            SettingsStore.global.takServerChanged = false
+            DispatchQueue.main.async {
+                SettingsStore.global.takServerChanged = false
+            }
             connection.forceCancel()
             connect()
             return
