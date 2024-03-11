@@ -184,7 +184,7 @@ class TCPMessage: NSObject, ObservableObject {
     
     func betterPathUpdateHandler(betterPathAvailable: Bool) {
         if (betterPathAvailable) {
-            TAKLogger.debug("[TCPMessage]: A better path is availble")
+            TAKLogger.debug("[TCPMessage]: A better path is available")
         } else {
             TAKLogger.debug("[TCPMessage]: No better path is available")
         }
@@ -201,6 +201,14 @@ class TCPMessage: NSObject, ObservableObject {
             }
             TAKLogger.debug("[TCPMessage]: Connection is not viable")
         }
+    }
+    
+    func receive(content: Data?, error: NWError?) {
+        guard let data = content else { return }
+
+        TAKLogger.debug("[TCPMessage]: Received payload \(String(decoding: data, as: UTF8.self))")
+                
+        // send data over to parsers
     }
     
     func stateUpdateHandler(newState: NWConnection.State) {
@@ -224,6 +232,9 @@ class TCPMessage: NSObject, ObservableObject {
                 SettingsStore.global.isConnectedToServer = true
                 SettingsStore.global.isConnectingToServer = false
                 SettingsStore.global.connectionStatus = ConnectionStatus.Connected.description
+                self.connection?.receive(minimumIncompleteLength: 0, maximumLength: 8000) { content, _, _, error in
+                    self.receive(content: content, error: error)
+                }
             }
         case .setup:
             TAKLogger.debug("[TCPMessage]: Entered state: setup")
