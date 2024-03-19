@@ -7,6 +7,7 @@
 
 import Foundation
 import Network
+import SWXMLHash
 
 enum ConnectionStatus : String, CustomStringConvertible {
     case Starting = "Starting"
@@ -184,7 +185,7 @@ class TCPMessage: NSObject, ObservableObject {
     
     func betterPathUpdateHandler(betterPathAvailable: Bool) {
         if (betterPathAvailable) {
-            TAKLogger.debug("[TCPMessage]: A better path is availble")
+            TAKLogger.debug("[TCPMessage]: A better path is available")
         } else {
             TAKLogger.debug("[TCPMessage]: No better path is available")
         }
@@ -202,6 +203,32 @@ class TCPMessage: NSObject, ObservableObject {
             TAKLogger.debug("[TCPMessage]: Connection is not viable")
         }
     }
+    
+    func receive(content: Data?, error: NWError?, connection: NWConnection?) {
+        guard let data = content else { return }
+
+        // send data over to parsers
+        TAKLogger.debug("[TCPMessage]: Received payload \(String(decoding: data, as: UTF8.self))")
+        let parser = StreamParser()
+        let events = parser.parse(dataStream: data)
+        events.forEach {
+            let xml = XMLHash.parse($0)
+            let point = xml["event"]["point"].element
+            var lat = "No EP Lat"
+            var lon = "No EP Lon"
+            
+            if let eventPoint = point {
+                lat = eventPoint.attribute(by: "lat")?.text ?? "No Lat"
+                lon = eventPoint.attribute(by: "lon")?.text ?? "No Lon"
+            }
+            TAKLogger.debug("[TCPMessage]: XML Parsed Data? \(lat), \(lon)")
+        }
+
+        self.connection?.receive(minimumIncompleteLength: 0, maximumLength: 8000) { content, _, _, error in
+            self.receive(content: content, error: error, connection: connection)
+        }
+        
+      }
     
     func stateUpdateHandler(newState: NWConnection.State) {
         DispatchQueue.main.async {
@@ -224,6 +251,9 @@ class TCPMessage: NSObject, ObservableObject {
                 SettingsStore.global.isConnectedToServer = true
                 SettingsStore.global.isConnectingToServer = false
                 SettingsStore.global.connectionStatus = ConnectionStatus.Connected.description
+                self.connection?.receive(minimumIncompleteLength: 0, maximumLength: 8000) { content, _, _, error in
+                    self.receive(content: content, error: error, connection: self.connection)
+                }
             }
         case .setup:
             TAKLogger.debug("[TCPMessage]: Entered state: setup")

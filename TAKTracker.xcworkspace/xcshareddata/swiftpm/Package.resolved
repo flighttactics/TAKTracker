@@ -1,4 +1,5 @@
 {
+  "originHash" : "f8ec0e999287659ae439dea2bed0b16393ecb7f1653492e85b87269bd3181a64",
   "pins" : [
     {
       "identity" : "certificatesigningrequest",
@@ -46,6 +47,15 @@
       }
     },
     {
+      "identity" : "swxmlhash",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/drmohundro/swxmlhash",
+      "state" : {
+        "revision" : "a853604c9e9a83ad9954c7e3d2a565273982471f",
+        "version" : "7.0.2"
+      }
+    },
+    {
       "identity" : "zipfoundation",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/weichsel/ZIPFoundation.git",
@@ -55,5 +65,5 @@
       }
     }
   ],
-  "version" : 2
+  "version" : 3
 }

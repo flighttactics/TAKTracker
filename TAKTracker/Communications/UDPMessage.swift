@@ -27,6 +27,12 @@ class UDPMessage: NSObject, ObservableObject {
         }))
     }
     
+    func receive(content: Data?, error: NWError?) {
+        guard let data = content else { return }
+
+        TAKLogger.debug("[UDPMessage]: Received payload \(String(decoding: data, as: UTF8.self))")
+    }
+    
     func connect() {
         TAKLogger.debug("[UDPMessage]: Connecting to UDP")
         connection = NWConnection(host: host, port: port, using: .udp)
@@ -39,6 +45,9 @@ class UDPMessage: NSObject, ObservableObject {
             case .ready:
                 TAKLogger.debug("[UDPMessage]: Entered state: ready")
                 self.connected = true
+                self.connection?.receive(minimumIncompleteLength: 0, maximumLength: 8000) { content, _, _, error in
+                    self.receive(content: content, error: error)
+                }
             case .setup:
                 TAKLogger.debug("[UDPMessage]: Entered state: setup")
             case .cancelled:

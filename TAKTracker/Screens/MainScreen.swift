@@ -150,6 +150,19 @@ struct MapView: UIViewRepresentable {
         mapView.mapType = MKMapType(rawValue: UInt(mapType))!
         mapView.layer.borderColor = UIColor.black.cgColor
         mapView.layer.borderWidth = 1.0
+        
+        let home = TAKAnnotation(takType: "a-f-G-U-C", takHow: "m-g")
+        home.title = "FT Home"
+        home.subtitle = "Home of FT"
+        home.coordinate = CLLocationCoordinate2D(latitude: 37.4751, longitude: -121.8197)
+        mapView.addAnnotation(home)
+        
+        let home2 = TAKAnnotation(takType: "a-h-G-U-C", takHow: "m-g")
+        home2.title = "Apple Home"
+        home2.subtitle = "Home of FT Apple"
+        home2.coordinate = CLLocationCoordinate2D(latitude: 37.555, longitude: -121.734)
+        mapView.addAnnotation(home2)
+        
         return mapView
     }
 
@@ -166,6 +179,36 @@ struct MapView: UIViewRepresentable {
     func makeCoordinator() -> Coordinator {
         return Coordinator(self)
     }
+    
+    class TAKAnnotation: MKPointAnnotation {
+        var takType: String
+        var takHow: String
+        
+        init(takType: String, takHow: String) {
+            self.takType = takType
+            self.takHow = takHow
+        }
+    }
+    
+    class TAKAnnotationView: MKAnnotationView {
+        private let annotationFrame = CGRect(x: 0, y: 0, width: 40, height: 40)
+        private let label: UILabel
+
+        override init(annotation: MKAnnotation?, reuseIdentifier: String?) {
+            self.label = UILabel(frame: annotationFrame.offsetBy(dx: 0, dy: -6))
+            super.init(annotation: annotation, reuseIdentifier: reuseIdentifier)
+            self.frame = annotationFrame
+            self.label.font = UIFont.systemFont(ofSize: 24, weight: .semibold)
+            self.label.textColor = .white
+            self.label.textAlignment = .center
+            self.backgroundColor = .clear
+            self.addSubview(label)
+        }
+
+        required init?(coder aDecoder: NSCoder) {
+            fatalError("init(coder:) not implemented!")
+        }
+    }
 
     class Coordinator: NSObject, MKMapViewDelegate, UIGestureRecognizerDelegate {
         var parent: MapView
@@ -179,6 +222,10 @@ struct MapView: UIViewRepresentable {
             self.gRecognizer.delegate = self
             self.parent.mapView.addGestureRecognizer(gRecognizer)
         }
+        
+        func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+            return true
+        }
 
         @objc func tapHandler(_ gesture: UITapGestureRecognizer) {
             // position on the screen, CGPoint
@@ -186,7 +233,37 @@ struct MapView: UIViewRepresentable {
             // position on the map, CLLocationCoordinate2D
             let coordinate = self.parent.mapView.convert(location, toCoordinateFrom: self.parent.mapView)
             TAKLogger.debug("Map Tapped! \(String(describing: coordinate))")
-            parent.resetMap()
+            if self.parent.mapView.selectedAnnotations.isEmpty {
+                parent.resetMap()
+            }
+        }
+        
+        func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+            guard annotation is MKPointAnnotation else { return nil }
+
+            let identifier = "Annotation"
+            var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier)
+
+            if annotationView == nil {
+                annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+                
+                if annotation is TAKAnnotation {
+                    let ta = annotation as! TAKAnnotation
+                    if ta.takType.hasPrefix("a-h") {
+                        annotationView!.image = UIImage(named: "shap-----------")
+                    } else {
+                        annotationView!.image = UIImage(named: "sfap-----------")
+                    }
+                } else {
+                    annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+                }
+                
+                annotationView!.canShowCallout = true
+            } else {
+                annotationView!.annotation = annotation
+            }
+
+            return annotationView
         }
     }
 }
