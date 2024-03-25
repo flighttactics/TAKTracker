@@ -1,4 +1,5 @@
 {
+  "originHash" : "fde2bb25a2ae91a7c7605521d48605d47226394f8d90d6636a7f3cb6288cdeec",
   "pins" : [
     {
       "identity" : "certificatesigningrequest",
@@ -55,5 +56,5 @@
       }
     }
   ],
-  "version" : 2
+  "version" : 3
 }
