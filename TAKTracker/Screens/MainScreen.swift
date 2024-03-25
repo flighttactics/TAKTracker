@@ -255,14 +255,11 @@ struct MainScreen: View {
                                 .imageScale(.large)
                                 .foregroundColor(settingsStore.isAlertActivated ? .red : .white)
                         }
-                        Spacer()
-                        
-                        Button(action: { sheet = .chat }) {
-                            Image(systemName: "bubble.left")
-                                .imageScale(.large)
-                                .foregroundColor(.white)
-                        }
-                        Spacer()
+//                        Button(action: { sheet = .chat }) {
+//                            Image(systemName: "bubble.left")
+//                                .imageScale(.large)
+//                                .foregroundColor(.white)
+//                        }
                         
                         Button(action: { sheet = .settings }) {
                             Image(systemName: "gear")
