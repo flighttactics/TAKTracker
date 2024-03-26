@@ -22,13 +22,8 @@ struct SettingsView: View {
                 UserInformation()
                 ServerInformation()
                 ConnectionOptions(isProcessingDataPackage: $isProcessingDataPackage)
-                DeviceOptions()
-                AdvancedModeToggle()
-                
-                if(settingsStore.enableAdvancedMode) {
-                    MapOptions()
-                    TAKOptions()
-                }
+                SituationalAwarenessOptions()
+                AdvancedOptions()
                 AboutInformation()
             }
             .navigationBarTitle("Settings")
