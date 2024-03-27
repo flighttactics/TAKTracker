@@ -24,7 +24,7 @@ class TAKCAConfigResponseParser: NSObject, XMLParserDelegate {
                 if(!nameEntries.keys.contains(nameVal)) {
                     nameEntries[nameVal] = valueVal
                 } else {
-                    TAKLogger.info("[TAKConfigResponseParser]: Muktiple entries received for \(nameVal), only using first")
+                    TAKLogger.info("[TAKConfigResponseParser]: Multiple entries received for \(nameVal), only using first")
                 }
             }
         }
