@@ -240,6 +240,9 @@ class TCPMessage: NSObject, ObservableObject {
         case .waiting:
             TAKLogger.debug("[TCPMessage]: Entered state: waiting")
             DispatchQueue.main.async {
+                SettingsStore.global.isConnectedToServer = false
+                SettingsStore.global.shouldTryReconnect = true
+                SettingsStore.global.isConnectingToServer = false
                 SettingsStore.global.connectionStatus = ConnectionStatus.Waiting.description
             }
         case .failed:

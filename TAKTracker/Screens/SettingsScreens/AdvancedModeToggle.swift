@@ -15,13 +15,13 @@ struct AdvancedModeToggle: View {
         Group {
             VStack {
                 HStack {
-                    Text("Enable Advanced Mode")
+                    Text("Enable Map Display")
                         .font(.system(size: 18, weight: .medium))
                         .foregroundColor(.secondary)
                     Spacer()
                 }
 
-                Picker(selection: $settingsStore.enableAdvancedMode, label: Text("Advanced Mode"), content: {
+                Picker(selection: $settingsStore.enableAdvancedMode, label: Text("Map Display"), content: {
                     Text("On").tag(true)
                     Text("Off").tag(false)
                 })

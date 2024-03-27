@@ -20,7 +20,12 @@ class TAKCAConfigResponseParser: NSObject, XMLParserDelegate {
         if(elementName == "nameEntry") {
             if let nameVal = attributeDict["name"],
                let valueVal = attributeDict["value"] {
-                nameEntries[nameVal] = valueVal
+                // Only ever take the first value coming back
+                if(!nameEntries.keys.contains(nameVal)) {
+                    nameEntries[nameVal] = valueVal
+                } else {
+                    TAKLogger.info("[TAKConfigResponseParser]: Multiple entries received for \(nameVal), only using first")
+                }
             }
         }
         
