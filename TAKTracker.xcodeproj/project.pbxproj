@@ -52,6 +52,9 @@
 		A5D8D3992A53B0FB002F0E3E /* TAKTrackerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D8D3982A53B0FB002F0E3E /* TAKTrackerUITests.swift */; };
 		A5D8D39B2A53B0FB002F0E3E /* TAKTrackerUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D8D39A2A53B0FB002F0E3E /* TAKTrackerUITestsLaunchTests.swift */; };
 		A5D8D3A82A53B465002F0E3E /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D8D3A72A53B465002F0E3E /* LocationManager.swift */; };
+		A5DCC16F2BBB9CF300F974AE /* StreamParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5DCC16E2BBB9CF300F974AE /* StreamParser.swift */; };
+		A5DCC1702BBB9CF300F974AE /* StreamParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5DCC16E2BBB9CF300F974AE /* StreamParser.swift */; };
+		A5DCC1732BBB9D1800F974AE /* StreamParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5DCC1712BBB9D1800F974AE /* StreamParserTests.swift */; };
 		A5E7B00B2A70B5FA00D9203F /* TAKDataPackageParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E7B00A2A70B5F900D9203F /* TAKDataPackageParser.swift */; };
 		A5E7B0182A76AA8B00D9203F /* TAKLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E7B0172A76AA8B00D9203F /* TAKLogger.swift */; };
 		A5FB4E622A8FDF430034966D /* X509 in Frameworks */ = {isa = PBXBuildFile; productRef = A5FB4E612A8FDF430034966D /* X509 */; };
@@ -141,6 +144,8 @@
 		A5D8D3982A53B0FB002F0E3E /* TAKTrackerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TAKTrackerUITests.swift; sourceTree = "<group>"; };
 		A5D8D39A2A53B0FB002F0E3E /* TAKTrackerUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TAKTrackerUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		A5D8D3A72A53B465002F0E3E /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
+		A5DCC16E2BBB9CF300F974AE /* StreamParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamParser.swift; sourceTree = "<group>"; };
+		A5DCC1712BBB9D1800F974AE /* StreamParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamParserTests.swift; sourceTree = "<group>"; };
 		A5E7B00A2A70B5F900D9203F /* TAKDataPackageParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TAKDataPackageParser.swift; sourceTree = "<group>"; };
 		A5E7B0172A76AA8B00D9203F /* TAKLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TAKLogger.swift; sourceTree = "<group>"; };
 		A5FB4E632A8FE0020034966D /* CSRRequestor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CSRRequestor.swift; sourceTree = "<group>"; };
@@ -307,6 +312,7 @@
 				A55CE96C2AB1D8A20081AF86 /* ConverterTests.swift */,
 				A5AA510E2AC35B75006696B2 /* SettingsStoreTests.swift */,
 				A5582CC22AD5CB4600DE0D5C /* TAKTrackerTestCase.swift */,
+				A5DCC1712BBB9D1800F974AE /* StreamParserTests.swift */,
 			);
 			path = TAKTrackerTests;
 			sourceTree = "<group>";
@@ -325,6 +331,7 @@
 			children = (
 				A5E7B00A2A70B5F900D9203F /* TAKDataPackageParser.swift */,
 				A508213E2AB3D19B00E0CBD8 /* TAKCAConfigResponseParser.swift */,
+				A5DCC16E2BBB9CF300F974AE /* StreamParser.swift */,
 			);
 			path = Parsers;
 			sourceTree = "<group>";
@@ -648,6 +655,7 @@
 				A55ABF532ABDC11900195AB7 /* AboutInformation.swift in Sources */,
 				A55ABF512ABDC0E900195AB7 /* MapOptions.swift in Sources */,
 				A5D8D37E2A53B0F9002F0E3E /* TAKTrackerApp.swift in Sources */,
+				A5DCC16F2BBB9CF300F974AE /* StreamParser.swift in Sources */,
 				A5E7B00B2A70B5FA00D9203F /* TAKDataPackageParser.swift in Sources */,
 				A5A49D902A5459B5009764C1 /* TAKManager.swift in Sources */,
 				4630FD4C2B51A34500988ED4 /* MessageModel.xcdatamodeld in Sources */,
@@ -688,7 +696,9 @@
 				A5FB4E792AAA4B410034966D /* TAKDataPackageParser.swift in Sources */,
 				A54F70892AB0C40B00D8C541 /* TCPMessageTests.swift in Sources */,
 				A55ABF542ABDD7C400195AB7 /* TAKCAConfigResponseParser.swift in Sources */,
+				A5DCC1702BBB9CF300F974AE /* StreamParser.swift in Sources */,
 				A54F70872AB0AEA400D8C541 /* DataPackageParserTests.swift in Sources */,
+				A5DCC1732BBB9D1800F974AE /* StreamParserTests.swift in Sources */,
 				A5FB4E7C2AAA4B4F0034966D /* SettingsStore.swift in Sources */,
 				A55CE96D2AB1D8A20081AF86 /* ConverterTests.swift in Sources */,
 				A5582CC32AD5CB4600DE0D5C /* TAKTrackerTestCase.swift in Sources */,
