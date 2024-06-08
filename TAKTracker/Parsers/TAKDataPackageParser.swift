@@ -6,10 +6,12 @@
 //
 
 import Foundation
+import NIOSSL
 import SwiftTAK
 
 class TAKDataPackageParser: NSObject {
     var archiveLocation: URL
+    var parsingErrors: [String] = []
     
     init (fileLocation: URL) {
         TAKLogger.debug("[TAKDataPackageParser]: Initializing")
@@ -34,6 +36,7 @@ class TAKDataPackageParser: NSObject {
         let parsedCert = PKCS12(data: packageContents.userCertificate, password: packageContents.userCertificatePassword)
         
         guard let identity = parsedCert.identity else {
+            parsingErrors.append("No User Certificate found")
             TAKLogger.error("[TAKDataPackageParser]: Identity was not present in the parsed cert")
             return
         }
@@ -44,7 +47,33 @@ class TAKDataPackageParser: NSObject {
     }
     
     func storeServerCertificate(packageContents: DataPackageContents) {
-        SettingsStore.global.serverCertificate = packageContents.serverCertificate
+        TAKLogger.debug("[TAKDataPackageParser]: Storing Server Certificate")
+        
+        let certData = packageContents.serverCertificate
+        var serverCertChain: [Data] = []
+        
+        guard !certData.isEmpty else {
+            parsingErrors.append("No Server truststore certificate was found in the data package")
+            SettingsStore.global.serverCertificateTruststore = serverCertChain
+            return
+        }
+        
+        do {
+            let p12Bundle = try NIOSSLPKCS12Bundle(buffer: Array(certData), passphrase: Array(packageContents.serverCertificatePassword.utf8))
+            try p12Bundle.certificateChain.forEach { cert in
+                try serverCertChain.append(Data(cert.toDERBytes()))
+            }
+        } catch {
+            parsingErrors.append("Could not process server certificates \(error)")
+            TAKLogger.error("[TAKDataPackageParser]: Unable to store Server Certificate from Data Package: \(error)")
+        }
+        
+        if(serverCertChain.isEmpty) {
+            parsingErrors.append("No Server truststore certificate was found in the data package")
+        }
+        
+        TAKLogger.debug("[TAKDataPackageParser]: Storing cert chain with \(serverCertChain.count) cert(s)")
+        SettingsStore.global.serverCertificateTruststore = serverCertChain
     }
     
     func storePreferences(packageContents: DataPackageContents) {        

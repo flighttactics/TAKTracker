@@ -151,9 +151,11 @@ class TCPMessage: NSObject, ObservableObject {
             isValidCertificate = SecTrustEvaluateWithError(secTrust, &error)
             
             if !isValidCertificate {
+                TAKLogger.debug("[TCPMessage]: Server not trusted with default certs, seeing if we have custom ones")
                 var customCerts: [SecCertificate] = []
                 
                 let trustCerts = SettingsStore.global.serverCertificateTruststore
+                TAKLogger.debug("[TCPMessage]: Truststore contains \(trustCerts.count) cert(s)")
                 if !trustCerts.isEmpty {
                     TAKLogger.debug("[TCPMessage]: Trusting Trust Store Certs")
                     trustCerts.forEach { cert in
@@ -162,23 +164,6 @@ class TCPMessage: NSObject, ObservableObject {
                         }
                     }
                 }
-                
-    //            let certificateData = SettingsStore.global.serverCertificate
-    //            if !certificateData.isEmpty {
-    //                TAKLogger.debug("[TCPMessage]: Trusting DP Server Certificate")
-    //                do {
-    //                    let certPw = Array("atakatak".utf8) //Array(SettingsStore.global.serverCertificatePassword.utf8)
-    //                    let p12Bundle = try NIOSSLPKCS12Bundle(buffer: Array(certificateData), passphrase: certPw)
-    //                    var customCerts: [SecCertificate] = []
-    //                    try p12Bundle.certificateChain.forEach { cert in
-    //                        if let convertedCert = try SecCertificateCreateWithData(nil, Data(cert.toDERBytes()) as CFData) {
-    //                            customCerts.append(convertedCert)
-    //                        }
-    //                    }
-    //                } catch {
-    //                    TAKLogger.error("[TCPMessage]: Unable to add custom certificates to root trust because of error: \(error)")
-    //                }
-    //            }
                 
                 if !customCerts.isEmpty {
                     // Disable hostname validation if using custom certs

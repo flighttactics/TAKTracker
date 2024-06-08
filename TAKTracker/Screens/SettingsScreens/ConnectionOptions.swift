@@ -186,6 +186,8 @@ struct DataPackageEnrollment: View {
     @StateObject var settingsStore: SettingsStore = SettingsStore.global
 
     @State var isShowingFilePicker = false
+    @State var isShowingAlert = false
+    @State var alertText: String = ""
     
     var body: some View {
         Group {
@@ -215,6 +217,12 @@ struct DataPackageEnrollment: View {
                                 tdpp.parse()
                                 fileurl.stopAccessingSecurityScopedResource()
                                 isProcessingDataPackage = false
+                                if(tdpp.parsingErrors.isEmpty) {
+                                    alertText = "Data package processed successfully!"
+                                } else {
+                                    alertText = "Data package could not be processed\n\n\(tdpp.parsingErrors.joined(separator: "\n\n"))"
+                                }
+                                isShowingAlert = true
                             } else {
                                 TAKLogger.error("Unable to securely access  \(String(describing: fileurl))")
                             }
@@ -226,6 +234,9 @@ struct DataPackageEnrollment: View {
                 })
             }
             .padding(.top, 20)
+        }
+        .alert(isPresented: $isShowingAlert) {
+            Alert(title: Text("Data Package"), message: Text(alertText), dismissButton: .default(Text("OK")))
         }
     }
 }
