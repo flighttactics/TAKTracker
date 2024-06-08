@@ -40,7 +40,7 @@ struct TAKTrackerInfo: View {
             NavigationLink(destination: SwiftTAK()) {
                 Text("SwiftTAK")
             }
-            .navigationBarTitleDisplayMode(.inline)
+            .navigationTitle("About")
         }
     }
 }
@@ -55,5 +55,6 @@ struct AboutInformation: View {
                 .frame(maxWidth: .infinity, alignment: .center)
                 .foregroundColor(.secondary)
         }
+        .navigationBarTitleDisplayMode(.inline)
     }
 }

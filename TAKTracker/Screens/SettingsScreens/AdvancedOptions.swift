@@ -23,5 +23,6 @@ struct AdvancedOptionsScreen: View {
             DeviceOptions()
             TAKOptions()
         }
+        .navigationTitle("Advanced Options")
     }
 }

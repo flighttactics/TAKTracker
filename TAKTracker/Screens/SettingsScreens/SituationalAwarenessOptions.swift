@@ -28,5 +28,6 @@ struct SituationalAwarenessScreen: View {
                 MapOptions()
             }
         }
+        .navigationTitle("Situational Awareness")
     }
 }

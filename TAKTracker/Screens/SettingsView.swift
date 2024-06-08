@@ -31,5 +31,6 @@ struct SettingsView: View {
                 dismiss()
             }))
         }
+        .navigationViewStyle(StackNavigationViewStyle())
     }
 }
