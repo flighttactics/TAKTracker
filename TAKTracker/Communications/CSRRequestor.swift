@@ -200,45 +200,14 @@ class CSRRequestor: NSObject, ObservableObject, URLSessionDelegate {
                     let derData = self.certStringToDER(certString: certEntry.value)
                     trustChain.append(derData)
                 }
-//                if var ca0String = dictionary["ca0"] {
-//                    let derData = certStringToDER(certString: ca0String)
-//                    trustChain.append(derData)
-//                }
-//                
-//                if var ca1String = dictionary["ca1"] {
-//                    let derData = certStringToDER(certString: ca1String)
-//                    trustChain.append(derData)
-//                }
 
-                if var certString = dictionary["signedCert"] {
+                if let certString = dictionary["signedCert"] {
                     let derData = certStringToDER(certString: certString)
-//                    var serializer = DER.Serializer()
-//                    certString = wrapCertificate(certString: certString)
-//                    let parsedCert = try Certificate(pemEncoded: certString)
-//                    TAKLogger.debug("Parsed Certificate:")
-//                    TAKLogger.debug(String(describing: parsedCert))
-//                    TAKLogger.debug("Storing Certificate")
-//                    
-//                    TAKLogger.debug("Serializing to DER")
-//                    try serializer.serialize(parsedCert)
-//                    let derData = Data(serializer.serializedBytes)
                     SettingsStore.global.userCertificate = derData
                     TAKLogger.debug("[CSRRequestor]: Attemping to add Identity")
                     try CertificateManager.addIdentity(clientCertificate: derData, label: SettingsStore.global.takServerUrl)
                     
                     TAKLogger.debug("[CSRRequestor]: Identity Added")
-//
-//                                    guard let identityCert = CertificateManager.getCertificate(label: SettingsStore.global.takServerUrl) else {
-//                                        TAKLogger.error("Could not get Identity Cert")
-//                                        self.enrollmentStatus = CSREnrollmentStatus.Failed
-//                                        return
-//                                    }
-//
-//                                    let certData = SecCertificateCopyData(identityCert) as Data
-//
-//                                    //let responseCertData = certString.data(using: String.Encoding.utf8)!
-//                                    SettingsStore.global.userCertificate = certData
-//                                    SettingsStore.global.userCertificatePassword = ""
                     SettingsStore.global.serverCertificate = Data()
                     SettingsStore.global.takServerChanged = true
                     self.enrollmentStatus = CSREnrollmentStatus.Succeeded

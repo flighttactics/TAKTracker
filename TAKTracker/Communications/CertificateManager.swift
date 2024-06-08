@@ -99,26 +99,23 @@ class CertificateManager {
 
         var resultRef:AnyObject?
         let status = SecItemCopyMatching(findPrivKeyArgs as CFDictionary, &resultRef)
-        guard status == errSecSuccess, let privateKeyData = resultRef as? Data else {
+        guard status == errSecSuccess, let _ = resultRef as? Data else {
             TAKLogger.error("Private Key not found: \(status))")
             throw KeychainError.privateKeyNotFound(status)
         }
     }
     
     static func clearAllCertsAndIdentities() {
-        let secItemClasses = [kSecClassGenericPassword,
-            kSecClassInternetPassword,
-            kSecClassCertificate,
-            kSecClassKey,
+        let secItemClasses = [kSecClassCertificate,
             kSecClassIdentity]
         for secItemClass in secItemClasses {
             let dictionary = [kSecClass as String:secItemClass]
-            let resultStatus = SecItemDelete(dictionary as CFDictionary)
+            SecItemDelete(dictionary as CFDictionary)
         }
     }
     
     static func addIdentity(clientCertificate: Data, label: String) throws {
-        TAKLogger.debug("[CertificateManager]: Clearing existing certs with label \(label)")
+        TAKLogger.debug("[CertificateManager]: Clearing existing certs")
         clearAllCertsAndIdentities()
         
         TAKLogger.debug("[CertificateManager]: Adding client certificate to keychain with label \(label)")
@@ -147,9 +144,6 @@ class CertificateManager {
         // Retrieve the client certificate issuer and serial number which will be used to retrieve the identity
         let issuer = certAttrs[kSecAttrIssuer] as! Data
         let serialNumber = certAttrs[kSecAttrSerialNumber] as! Data
-        let publicKeyHash = certAttrs[kSecAttrPublicKeyHash] as! Data
-        
-        try generatePrivateKeyUsingPublicKeyHash(publicKeyHash: publicKeyHash)
 
         // Retrieve a persistent reference to the identity consisting of the client certificate and the pre-existing private key
         let copyArgs: [NSString: Any] = [

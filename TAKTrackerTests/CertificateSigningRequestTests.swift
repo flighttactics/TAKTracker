@@ -131,6 +131,8 @@ CAV5I6j1L3RcBDHy5ddXg755wjnijj2pFBgX8LONpS5PwKc3aNe9KUwgpiKEniJ+
 6C/M6ndPiavDO7QyUPcGeEjCqVSfTu+xNFXOaf182v19QizIGGDvRt4z
 -----END CERTIFICATE-----
 """
+        
+        try setupPrivateKeyStore()
     }
     
     func stripWrapper(_ cert: String) -> String {
@@ -154,11 +156,33 @@ CAV5I6j1L3RcBDHy5ddXg755wjnijj2pFBgX8LONpS5PwKc3aNe9KUwgpiKEniJ+
             kSecClassIdentity]
         for secItemClass in secItemClasses {
             let dictionary = [kSecClass as String:secItemClass]
-            let result = SecItemDelete(dictionary as CFDictionary)
+            SecItemDelete(dictionary as CFDictionary)
         }
     }
-
-    func testStoringIdentityStoresInKeychain() throws {
+    
+    func setupPrivateKeyStore() throws {
+        let swiftCryptoKey = try _RSA.Signing.PrivateKey(pemRepresentation: privateKey)
+        
+        let options: [String: Any] = [kSecAttrKeyType as String: kSecAttrKeyTypeRSA,
+                                      kSecAttrKeyClass as String: kSecAttrKeyClassPrivate]
+        var error: Unmanaged<CFError>?
+        guard let key = SecKeyCreateWithData(swiftCryptoKey.derRepresentation as CFData,
+                                             options as CFDictionary,
+                                             &error) else {
+                                                throw error!.takeRetainedValue() as Error
+        }
+        
+        let privateKeyTag = "tak.flighttactics.com-\(hostName)-pk".data(using: .utf8)!
+        let addquery: [String: Any] = [kSecClass as String: kSecClassKey,
+                                       kSecAttrApplicationTag as String: privateKeyTag,
+                                       kSecValueRef as String: key]
+        
+        let status = SecItemAdd(addquery as CFDictionary, nil)
+        XCTAssert(status == 0, "Could not add private key to key chain")
+    }
+    
+    func testStoringIdentityWithKeyStoresInKeychain() throws {
+        
         let parsedCert = try Certificate(pemEncoded: certString)
 
         var serializer = DER.Serializer()
