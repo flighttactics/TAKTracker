@@ -19,6 +19,7 @@ enum CSREnrollmentStatus : CustomStringConvertible {
     case Enrolling
     case Failed
     case Succeeded
+    case Untrusted
     
     var description: String {
         switch self {
@@ -28,6 +29,7 @@ enum CSREnrollmentStatus : CustomStringConvertible {
         case .Enrolling: return "Enrolling"
         case .Failed: return "Failed"
         case .Succeeded: return "Succeeded"
+        case .Untrusted: return "Untrusted Server SSL"
         }
     }
 }
@@ -88,13 +90,13 @@ class CSRRequestor: NSObject, ObservableObject, URLSessionDelegate {
     
     func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
             if (challenge.protectionSpace.authenticationMethod == NSURLAuthenticationMethodClientCertificate) {
-                TAKLogger.debug("CSR Request recieved a client auth challenge. Rejecting.")
+                TAKLogger.debug("[CSRRequestor] CSR Request recieved a client auth challenge. Rejecting.")
                 completionHandler(.rejectProtectionSpace, nil)
             }
             if (challenge.protectionSpace.authenticationMethod == NSURLAuthenticationMethodServerTrust) {
-                TAKLogger.debug("Auth Trust challenge for \(challenge.protectionSpace.host)")
+                TAKLogger.debug("[CSRRequestor] Auth Trust challenge for \(challenge.protectionSpace.host)")
                 guard let serverTrust = challenge.protectionSpace.serverTrust else {
-                    TAKLogger.debug("No Server Trust in Auth Trust Challenge. Using default handling.")
+                    TAKLogger.debug("[CSRRequestor] No Server Trust in Auth Trust Challenge. Using default handling.")
                     completionHandler(.performDefaultHandling, nil)
                     return
                 }
@@ -129,7 +131,12 @@ class CSRRequestor: NSObject, ObservableObject, URLSessionDelegate {
         TAKLogger.error("[CSRRequestor] Error: \(config.error.debugDescription)")
         TAKLogger.error("[CSRRequestor] Response: \(String(describing: config.response))")
         TAKLogger.error("[CSRRequestor] Data: \(String(describing: config.responseData))")
-        self.enrollmentStatus = CSREnrollmentStatus.Failed
+        
+        if(config.error != nil && config.error!.localizedDescription.debugDescription.contains("SSL error")) {
+            self.enrollmentStatus = CSREnrollmentStatus.Untrusted
+        } else {
+            self.enrollmentStatus = CSREnrollmentStatus.Failed
+        }
     }
     
     func processConfigResponse(data: Data, dataString: String) {
