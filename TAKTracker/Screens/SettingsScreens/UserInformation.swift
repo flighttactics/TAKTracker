@@ -17,23 +17,10 @@ struct UserInformation: View {
             VStack {
                 HStack {
                     Text("Call Sign")
-                        .font(.system(size: 18, weight: .medium))
                         .foregroundColor(.secondary)
-                    Spacer()
-                }
-                TextField("Call Sign", text: $settingsStore.callSign)
-                    .keyboardType(.asciiCapable)
-            }
-            .padding(.top, 20)
-        }
-        
-        Group {
-            VStack {
-                HStack {
-                    Text("Team")
-                        .font(.system(size: 18, weight: .medium))
-                        .foregroundColor(.secondary)
-                    Spacer()
+                    TextField("Call Sign", text: $settingsStore.callSign)
+                        .keyboardType(.asciiCapable)
+                        .multilineTextAlignment(.trailing)
                 }
                 Picker("Choose your team", selection: $settingsStore.team) {
                     ForEach(TAKConstants.TEAM_COLORS, id: \.self) {
@@ -41,20 +28,16 @@ struct UserInformation: View {
                                 }
                             }
                             .pickerStyle(.menu)
-                HStack {
-                    Text("Role")
-                        .font(.system(size: 18, weight: .medium))
-                        .foregroundColor(.secondary)
-                    Spacer()
-                }
+                            .foregroundColor(.secondary)
                 Picker("Choose your role", selection: $settingsStore.role) {
                     ForEach(TAKConstants.TEAM_ROLES, id: \.self) {
                                     Text($0)
                                 }
                             }
                             .pickerStyle(.menu)
+                            .foregroundColor(.secondary)
+                
             }
-            .padding(.top, 20)
         }
     }
 }

@@ -19,12 +19,24 @@ struct SettingsView: View {
     var body: some View {
         NavigationView {
             List {
-                UserInformation()
-                ServerInformation()
-                ConnectionOptions(isProcessingDataPackage: $isProcessingDataPackage)
-                SituationalAwarenessOptions()
-                AdvancedOptions()
-                AboutInformation()
+                Section(header:
+                            Text("User Information")
+                    .font(.system(size: 14, weight: .medium))
+                ) {
+                    UserInformation()
+                }
+                Section(header:
+                            Text("Server Information")
+                    .font(.system(size: 14, weight: .medium))
+                ) {
+                    ServerInformationDisplay()
+                    ConnectionOptions(isProcessingDataPackage: $isProcessingDataPackage)
+                }
+                Section {
+                    SituationalAwarenessOptions()
+                    AdvancedOptions()
+                    AboutInformation()
+                }
             }
             .navigationBarTitle("Settings")
             .navigationBarItems(trailing: Button("Dismiss", action: {

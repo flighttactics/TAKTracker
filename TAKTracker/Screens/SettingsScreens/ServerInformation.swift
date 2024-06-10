@@ -15,37 +15,57 @@ struct ServerInformation: View {
         Group {
             VStack {
                 HStack {
-                    Text("Server Address")
-                        .font(.system(size: 18, weight: .medium))
+                    Text("Host Name")
                         .foregroundColor(.secondary)
-                    Spacer()
+                    TextField("Host Name", text: $settingsStore.takServerUrl)
+                        .autocorrectionDisabled(true)
+                        .textInputAutocapitalization(.never)
+                        .keyboardType(.URL)
+                        .onSubmit {
+                            SettingsStore.global.takServerChanged = true
+                        }
                 }
-                TextField("Server Address", text: $settingsStore.takServerUrl)
-                    .autocorrectionDisabled(true)
-                    .textInputAutocapitalization(.never)
-                    .keyboardType(.URL)
-                    .onSubmit {
-                        SettingsStore.global.takServerChanged = true
-                    }
             }
-            .padding(.top, 20)
+            
+            VStack {
+                HStack {
+                    Text("Port")
+                        .foregroundColor(.secondary)
+                    TextField("Server Port", text: $settingsStore.takServerPort)
+                        .keyboardType(.numberPad)
+                        .onSubmit {
+                            SettingsStore.global.takServerChanged = true
+                        }
+                }
+            }
         }
+        .multilineTextAlignment(.trailing)
+    }
+}
 
+struct ServerInformationDisplay: View {
+    @StateObject var settingsStore: SettingsStore = SettingsStore.global
+    
+    var body: some View {
         Group {
             VStack {
                 HStack {
-                    Text("Server Port")
-                        .font(.system(size: 18, weight: .medium))
+                    Text("Host Name")
                         .foregroundColor(.secondary)
                     Spacer()
+                    Text(settingsStore.takServerUrl)
                 }
-                TextField("Server Port", text: $settingsStore.takServerPort)
-                    .keyboardType(.numberPad)
-                    .onSubmit {
-                        SettingsStore.global.takServerChanged = true
-                    }
             }
-            .padding(.top, 20)
+            
+            VStack {
+                HStack {
+                    Text("Port")
+                        .foregroundColor(.secondary)
+                    Spacer()
+                    Text(settingsStore.takServerPort)
+                }
+            }
         }
+        .multilineTextAlignment(.trailing)
     }
 }
