@@ -213,7 +213,6 @@ struct DataPackageEnrollment: View {
                         }
                         
                     })
-                    Spacer()
                 }
             }
         }
