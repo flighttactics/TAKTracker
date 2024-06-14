@@ -245,9 +245,17 @@ class SettingsStore: ObservableObject {
             UserDefaults.standard.set(hasOnboarded, forKey: "hasOnboarded")
         }
     }
+    
+    @Published var lastAppVersionRun: String {
+        didSet {
+            UserDefaults.standard.set(lastAppVersionRun, forKey: "lastAppVersionRun")
+        }
+    }
 
     private init() {
         let defaultSign = SettingsStore.generateDefaultCallSign()
+        self.lastAppVersionRun = (UserDefaults.standard.object(forKey: "lastAppVersionRun") == nil ? "" : UserDefaults.standard.object(forKey: "lastAppVersionRun") as! String)
+        
         self.callSign = (UserDefaults.standard.object(forKey: "callSign") == nil ? defaultSign : UserDefaults.standard.object(forKey: "callSign") as! String)
         
         self.team = (UserDefaults.standard.object(forKey: "team") == nil ? TeamColor.Cyan.rawValue : UserDefaults.standard.object(forKey: "team") as! String)

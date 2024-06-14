@@ -222,6 +222,8 @@ struct MainScreen: View {
     @State private var displayUIState = DisplayUIState()
     @State private var tracking:MapUserTrackingMode = .none
     @State private var sheet: Sheet.SheetType?
+    @State private var migrator = Migrator()
+    @State var isShowingAlert = false
     
     func formatOrZero(item: Double?, formatter: String = "%.0f") -> String {
         guard let item = item else {
@@ -277,6 +279,14 @@ struct MainScreen: View {
             serverStatus
         })
         .onAppear {
+            TAKLogger.debug("[MainScreen]: App Version? \(AppConstants.getAppVersion())")
+            TAKLogger.debug("[MainScreen]: Last App Version? \(SettingsStore.global.lastAppVersionRun)")
+            if(AppConstants.getAppVersion() != SettingsStore.global.lastAppVersionRun) {
+                TAKLogger.debug("[MainScreen]: App Requires Migration, attempting to migrate")
+                migrator.migrate(from: settingsStore.lastAppVersionRun)
+                settingsStore.lastAppVersionRun = AppConstants.getAppVersion()
+                isShowingAlert = !migrator.migrationSucceeded
+            }
             broadcastLocation()
             Timer.scheduledTimer(withTimeInterval: settingsStore.broadcastIntervalSeconds, repeats: true) { timer in
                 broadcastLocation()
@@ -284,6 +294,13 @@ struct MainScreen: View {
         }
         .onRotate { newOrientation in
             manager.deviceUpdatedOrientation(orientation: newOrientation)
+        }
+        .alert(isPresented: $isShowingAlert) {
+            Alert(
+                title: Text("App Migration"),
+                message: Text("This version of TAK Tracker requires the use of server certificates. We attempted to migrate your existing connection but were unable to. Please reconnect or upload your data package again to connect to your TAK server"),
+                dismissButton: .default(Text("OK"))
+            )
         }
     }
     

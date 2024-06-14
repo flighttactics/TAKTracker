@@ -362,7 +362,7 @@
 		9912976AE55386F8962DE76F6C738746 /* Pods-TAKTracker-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-TAKTracker-frameworks.sh"; sourceTree = "<group>"; };
 		9BF125EC77C10CFFE724AB465DBEF5E7 /* SFCompoundCurve.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SFCompoundCurve.h; path = "sf-ios/SFCompoundCurve.h"; sourceTree = "<group>"; };
 		9D31CEE8BD52C5C0BD08FC7F3D9E9257 /* Pods-TAKTracker-TAKTrackerTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-TAKTracker-TAKTrackerTests.debug.xcconfig"; sourceTree = "<group>"; };
-		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		9F6EB542086BD931C888EE2394148556 /* SFEventQueue.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SFEventQueue.h; path = "sf-ios/util/sweep/SFEventQueue.h"; sourceTree = "<group>"; };
 		A1F34BA5218CED0EB4EC1ADC65FA96CB /* SFMultiPolygon.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SFMultiPolygon.h; path = "sf-ios/SFMultiPolygon.h"; sourceTree = "<group>"; };
 		A285519FAD68A4B91EF421B349AEB9D9 /* color-ios-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "color-ios-dummy.m"; sourceTree = "<group>"; };
@@ -549,7 +549,6 @@
 				81AC2DC77BEA1280D97530A4D94D6B4F /* Unit.swift */,
 				1905B00953440D8C51C6E44D9D4A60C6 /* Support Files */,
 			);
-			name = "grid-ios";
 			path = "grid-ios";
 			sourceTree = "<group>";
 		};
@@ -581,7 +580,6 @@
 				7E5CB85025787D52ED52C39CD46D349D /* Resources */,
 				AC0E7BF3FB86C37094AE26C0875BEFBA /* Support Files */,
 			);
-			name = "mgrs-ios";
 			path = "mgrs-ios";
 			sourceTree = "<group>";
 		};
@@ -774,7 +772,6 @@
 				1B3EDB3F6C36DC0596E30D4B9C4B9077 /* SFTriangle.m */,
 				63A0D987D61F6CDB9D1CE57B2AC88ADE /* Support Files */,
 			);
-			name = "sf-ios";
 			path = "sf-ios";
 			sourceTree = "<group>";
 		};
@@ -808,7 +805,6 @@
 				271FE6CD6C70D881EC77AD64E8071CD8 /* color_ios.h */,
 				5FB02F906F212F4182A69889F9F45CBD /* Support Files */,
 			);
-			name = "color-ios";
 			path = "color-ios";
 			sourceTree = "<group>";
 		};

@@ -49,19 +49,23 @@ class TAKDataPackageParser: NSObject {
     func storeServerCertificate(packageContents: DataPackageContents) {
         TAKLogger.debug("[TAKDataPackageParser]: Storing Server Certificate")
         
-        let certData = packageContents.serverCertificate
+        let serverCerts = packageContents.serverCertificates
         var serverCertChain: [Data] = []
         
-        guard !certData.isEmpty else {
+        guard !serverCerts.isEmpty else {
             parsingErrors.append("No Server truststore certificate was found in the data package")
             SettingsStore.global.serverCertificateTruststore = serverCertChain
             return
         }
         
         do {
-            let p12Bundle = try NIOSSLPKCS12Bundle(buffer: Array(certData), passphrase: Array(packageContents.serverCertificatePassword.utf8))
-            try p12Bundle.certificateChain.forEach { cert in
-                try serverCertChain.append(Data(cert.toDERBytes()))
+            try serverCerts.forEach { serverCert in
+                print(serverCert)
+                let p12Bundle = try NIOSSLPKCS12Bundle(buffer: Array(serverCert.certificateData), passphrase: Array(serverCert.certificatePassword.utf8))
+                try p12Bundle.certificateChain.forEach { cert in
+                    print(cert)
+                    try serverCertChain.append(Data(cert.toDERBytes()))
+                }
             }
         } catch {
             parsingErrors.append("Could not process server certificates \(error)")

@@ -91,12 +91,12 @@
       }
     },
     {
-      "identity" : "swifttak",
+      "identity" : "swxmlhash",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/flighttactics/SwiftTAK",
+      "location" : "https://github.com/drmohundro/SWXMLHash.git",
       "state" : {
-        "branch" : "main",
-        "revision" : "07c3d2682443ac79a56aebbcd199df3f31589275"
+        "revision" : "a853604c9e9a83ad9954c7e3d2a565273982471f",
+        "version" : "7.0.2"
       }
     },
     {
