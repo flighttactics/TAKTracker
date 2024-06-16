@@ -16,6 +16,11 @@
 		4630FD1E2B5072D300988ED4 /* Sheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4630FD1D2B5072D300988ED4 /* Sheet.swift */; };
 		4630FD4C2B51A34500988ED4 /* MessageModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4630FD4A2B51A34500988ED4 /* MessageModel.xcdatamodeld */; };
 		479B8B617AB264363ABCD93B /* Pods_TAKTracker_TAKTrackerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEFD401A913144B7229D2781 /* Pods_TAKTracker_TAKTrackerTests.framework */; };
+		A5014F9B2C178C5300BE40C1 /* Migrator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5014F9A2C178C5300BE40C1 /* Migrator.swift */; };
+		A5014F9C2C178C5300BE40C1 /* Migrator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5014F9A2C178C5300BE40C1 /* Migrator.swift */; };
+		A5014F9F2C17973E00BE40C1 /* MigratorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5014F9D2C17973E00BE40C1 /* MigratorTests.swift */; };
+		A507C0712C1BE5CE0022BB0F /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = A507C0702C1BE5CE0022BB0F /* PrivacyInfo.xcprivacy */; };
+		A507C0742C1BECE80022BB0F /* SwiftTAK in Frameworks */ = {isa = PBXBuildFile; productRef = A507C0732C1BECE80022BB0F /* SwiftTAK */; };
 		A508213F2AB3D19B00E0CBD8 /* TAKCAConfigResponseParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A508213E2AB3D19B00E0CBD8 /* TAKCAConfigResponseParser.swift */; };
 		A50C5F5B2A5F92FF001E52E6 /* SettingsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A50C5F5A2A5F92FF001E52E6 /* SettingsStore.swift */; };
 		A50C5F5D2A601CF0001E52E6 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A50C5F5C2A601CF0001E52E6 /* SettingsView.swift */; };
@@ -38,12 +43,13 @@
 		A55CE96B2AB1D8860081AF86 /* Converter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A55CE96A2AB1D8860081AF86 /* Converter.swift */; };
 		A55CE96D2AB1D8A20081AF86 /* ConverterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A55CE96C2AB1D8A20081AF86 /* ConverterTests.swift */; };
 		A55CE96E2AB1D8AA0081AF86 /* Converter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A55CE96A2AB1D8860081AF86 /* Converter.swift */; };
-		A57BA53B2AB8DB3800452D85 /* SwiftTAK in Frameworks */ = {isa = PBXBuildFile; productRef = A57BA53A2AB8DB3800452D85 /* SwiftTAK */; };
+		A56679832C04DACD00C453DC /* NIOSSL in Frameworks */ = {isa = PBXBuildFile; productRef = A56679822C04DACD00C453DC /* NIOSSL */; };
 		A59C08472AACF95100C33B44 /* CertificateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59C08462AACF95100C33B44 /* CertificateManager.swift */; };
 		A59C08482AAE105100C33B44 /* CertificateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59C08462AACF95100C33B44 /* CertificateManager.swift */; };
 		A5A49D902A5459B5009764C1 /* TAKManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5A49D8F2A5459B5009764C1 /* TAKManager.swift */; };
 		A5AA510A2AC33488006696B2 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5AA51092AC33488006696B2 /* OnboardingView.swift */; };
 		A5AA510F2AC35B75006696B2 /* SettingsStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5AA510E2AC35B75006696B2 /* SettingsStoreTests.swift */; };
+		A5B5E6922BEDC4F600EB0FE4 /* NIOSSL in Frameworks */ = {isa = PBXBuildFile; productRef = A5B5E6912BEDC4F600EB0FE4 /* NIOSSL */; };
 		A5BF02002A5EB7440043065B /* UDPMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5BF01FF2A5EB63F0043065B /* UDPMessage.swift */; };
 		A5BF02022A5EBCA40043065B /* TCPMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5BF02012A5EBCA40043065B /* TCPMessage.swift */; };
 		A5D8D37E2A53B0F9002F0E3E /* TAKTrackerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D8D37D2A53B0F9002F0E3E /* TAKTrackerApp.swift */; };
@@ -90,6 +96,19 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		A5DCC1862BCAACD100F974AE /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		0840B3A75D0239E21ADEA2E7 /* Pods_TAKTracker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TAKTracker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0CD85BD73504580BC32FA239 /* Pods-TAKTracker-TAKTrackerTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TAKTracker-TAKTrackerTests.debug.xcconfig"; path = "Target Support Files/Pods-TAKTracker-TAKTrackerTests/Pods-TAKTracker-TAKTrackerTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -103,6 +122,9 @@
 		4630FD4B2B51A34500988ED4 /* Message.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Message.xcdatamodel; sourceTree = "<group>"; };
 		4B2EC40D21C80BEBE05D29F8 /* Pods-TAKTracker.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TAKTracker.debug.xcconfig"; path = "Target Support Files/Pods-TAKTracker/Pods-TAKTracker.debug.xcconfig"; sourceTree = "<group>"; };
 		94A6A10561B512E86B0E9DC2 /* Pods-TAKTracker.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TAKTracker.release.xcconfig"; path = "Target Support Files/Pods-TAKTracker/Pods-TAKTracker.release.xcconfig"; sourceTree = "<group>"; };
+		A5014F9A2C178C5300BE40C1 /* Migrator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Migrator.swift; sourceTree = "<group>"; };
+		A5014F9D2C17973E00BE40C1 /* MigratorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MigratorTests.swift; sourceTree = "<group>"; };
+		A507C0702C1BE5CE0022BB0F /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		A508213E2AB3D19B00E0CBD8 /* TAKCAConfigResponseParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TAKCAConfigResponseParser.swift; sourceTree = "<group>"; };
 		A50C5F5A2A5F92FF001E52E6 /* SettingsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsStore.swift; sourceTree = "<group>"; };
 		A50C5F5C2A601CF0001E52E6 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
@@ -120,6 +142,7 @@
 		A55ABF4E2ABDC0A800195AB7 /* TAKOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TAKOptions.swift; sourceTree = "<group>"; };
 		A55ABF502ABDC0E900195AB7 /* MapOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapOptions.swift; sourceTree = "<group>"; };
 		A55ABF522ABDC11900195AB7 /* AboutInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutInformation.swift; sourceTree = "<group>"; };
+		A55ACD3E2C1A87AF0055A21A /* SwiftTAK */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = SwiftTAK; path = ../SwiftTAK; sourceTree = "<group>"; };
 		A55CE96A2AB1D8860081AF86 /* Converter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Converter.swift; sourceTree = "<group>"; };
 		A55CE96C2AB1D8A20081AF86 /* ConverterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConverterTests.swift; sourceTree = "<group>"; };
 		A58B372C2A57B0390002B984 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
@@ -162,8 +185,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A57BA53B2AB8DB3800452D85 /* SwiftTAK in Frameworks */,
 				A5FB4E622A8FDF430034966D /* X509 in Frameworks */,
+				A507C0742C1BECE80022BB0F /* SwiftTAK in Frameworks */,
+				A56679832C04DACD00C453DC /* NIOSSL in Frameworks */,
 				B6C8997D4C1B298C733111DC /* Pods_TAKTracker.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -172,6 +196,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A5B5E6922BEDC4F600EB0FE4 /* NIOSSL in Frameworks */,
 				479B8B617AB264363ABCD93B /* Pods_TAKTracker_TAKTrackerTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -189,6 +214,7 @@
 		085BD5615028DC7C36297967 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A55ACD3E2C1A87AF0055A21A /* SwiftTAK */,
 				0840B3A75D0239E21ADEA2E7 /* Pods_TAKTracker.framework */,
 				CEFD401A913144B7229D2781 /* Pods_TAKTracker_TAKTrackerTests.framework */,
 			);
@@ -247,6 +273,7 @@
 		A5D8D3712A53B0F9002F0E3E = {
 			isa = PBXGroup;
 			children = (
+				A507C0702C1BE5CE0022BB0F /* PrivacyInfo.xcprivacy */,
 				A5FB4E8D2AACF2A10034966D /* Assets.xcassets */,
 				A58B372C2A57B0390002B984 /* README.md */,
 				A58B372D2A57B38A0002B984 /* LICENSE.md */,
@@ -307,6 +334,7 @@
 				A55CE96C2AB1D8A20081AF86 /* ConverterTests.swift */,
 				A5AA510E2AC35B75006696B2 /* SettingsStoreTests.swift */,
 				A5582CC22AD5CB4600DE0D5C /* TAKTrackerTestCase.swift */,
+				A5014F9D2C17973E00BE40C1 /* MigratorTests.swift */,
 			);
 			path = TAKTrackerTests;
 			sourceTree = "<group>";
@@ -362,6 +390,7 @@
 				A50C5F5A2A5F92FF001E52E6 /* SettingsStore.swift */,
 				A5FB4E652A98D0FF0034966D /* TAKConstants.swift */,
 				4630FD4A2B51A34500988ED4 /* MessageModel.xcdatamodeld */,
+				A5014F9A2C178C5300BE40C1 /* Migrator.swift */,
 			);
 			path = "Data Models";
 			sourceTree = "<group>";
@@ -420,6 +449,7 @@
 				A5D8D3772A53B0F9002F0E3E /* Frameworks */,
 				A5D8D3782A53B0F9002F0E3E /* Resources */,
 				CCCAF8052769F0D0661730AA /* [CP] Embed Pods Frameworks */,
+				A5DCC1862BCAACD100F974AE /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -428,7 +458,8 @@
 			name = TAKTracker;
 			packageProductDependencies = (
 				A5FB4E612A8FDF430034966D /* X509 */,
-				A57BA53A2AB8DB3800452D85 /* SwiftTAK */,
+				A56679822C04DACD00C453DC /* NIOSSL */,
+				A507C0732C1BECE80022BB0F /* SwiftTAK */,
 			);
 			productName = "TAK Spike";
 			productReference = A5D8D37A2A53B0F9002F0E3E /* TAKTracker.app */;
@@ -450,6 +481,9 @@
 				A5D8D38C2A53B0FA002F0E3E /* PBXTargetDependency */,
 			);
 			name = TAKTrackerTests;
+			packageProductDependencies = (
+				A5B5E6912BEDC4F600EB0FE4 /* NIOSSL */,
+			);
 			productName = "TAK SpikeTests";
 			productReference = A5D8D38A2A53B0FA002F0E3E /* TAKTrackerTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -480,7 +514,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1430;
-				LastUpgradeCheck = 1500;
+				LastUpgradeCheck = 1540;
 				TargetAttributes = {
 					A5D8D3792A53B0F9002F0E3E = {
 						CreatedOnToolsVersion = 14.3.1;
@@ -508,7 +542,8 @@
 				A5E7B00C2A70B95E00D9203F /* XCRemoteSwiftPackageReference "ZIPFoundation" */,
 				A5FB4E602A8FDF430034966D /* XCRemoteSwiftPackageReference "swift-certificates" */,
 				A5FB4E672A9D2BE70034966D /* XCRemoteSwiftPackageReference "CertificateSigningRequest" */,
-				A57BA5392AB8DB3800452D85 /* XCRemoteSwiftPackageReference "SwiftTAK" */,
+				A5B5E68A2BEDC4DE00EB0FE4 /* XCRemoteSwiftPackageReference "swift-nio-ssl" */,
+				A507C0722C1BECE80022BB0F /* XCRemoteSwiftPackageReference "SwiftTAK" */,
 			);
 			productRefGroup = A5D8D37B2A53B0F9002F0E3E /* Products */;
 			projectDirPath = "";
@@ -526,6 +561,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A507C0712C1BE5CE0022BB0F /* PrivacyInfo.xcprivacy in Resources */,
 				A5FB4E8E2AACF2A20034966D /* Assets.xcassets in Resources */,
 				A5D8D3852A53B0FA002F0E3E /* Preview Assets.xcassets in Resources */,
 			);
@@ -640,6 +676,7 @@
 			files = (
 				A5D8D3802A53B0F9002F0E3E /* MainScreen.swift in Sources */,
 				A55ABF4F2ABDC0A800195AB7 /* TAKOptions.swift in Sources */,
+				A5014F9B2C178C5300BE40C1 /* Migrator.swift in Sources */,
 				A5BF02002A5EB7440043065B /* UDPMessage.swift in Sources */,
 				A5FB4E662A98D0FF0034966D /* TAKConstants.swift in Sources */,
 				4630FD132B5071A100988ED4 /* ChatView.swift in Sources */,
@@ -680,6 +717,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A5014F9F2C17973E00BE40C1 /* MigratorTests.swift in Sources */,
+				A5014F9C2C178C5300BE40C1 /* Migrator.swift in Sources */,
 				A5AA510F2AC35B75006696B2 /* SettingsStoreTests.swift in Sources */,
 				A5FB4E802AAA4BD70034966D /* TAKLogger.swift in Sources */,
 				A59C08482AAE105100C33B44 /* CertificateManager.swift in Sources */,
@@ -728,6 +767,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -789,6 +829,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -849,7 +890,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = TAKTracker/TAKTracker.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 59;
+				CURRENT_PROJECT_VERSION = 67;
 				DEVELOPMENT_ASSET_PATHS = "TAKTracker/Preview\\ Content";
 				DEVELOPMENT_TEAM = 5LZ5HR44P3;
 				ENABLE_PREVIEWS = YES;
@@ -870,7 +911,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2;
+				MARKETING_VERSION = 1.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.flighttactics.TAKTracker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -888,7 +929,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = TAKTracker/TAKTracker.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 59;
+				CURRENT_PROJECT_VERSION = 67;
 				DEVELOPMENT_ASSET_PATHS = "TAKTracker/Preview\\ Content";
 				DEVELOPMENT_TEAM = 5LZ5HR44P3;
 				ENABLE_PREVIEWS = YES;
@@ -909,7 +950,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2;
+				MARKETING_VERSION = 1.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.flighttactics.TAKTracker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -925,7 +966,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 59;
+				CURRENT_PROJECT_VERSION = 67;
 				DEVELOPMENT_TEAM = 5LZ5HR44P3;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -947,7 +988,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 59;
+				CURRENT_PROJECT_VERSION = 67;
 				DEVELOPMENT_TEAM = 5LZ5HR44P3;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -967,7 +1008,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 59;
+				CURRENT_PROJECT_VERSION = 67;
 				DEVELOPMENT_TEAM = 5LZ5HR44P3;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.1;
@@ -985,7 +1026,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 59;
+				CURRENT_PROJECT_VERSION = 67;
 				DEVELOPMENT_TEAM = 5LZ5HR44P3;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.1;
@@ -1040,12 +1081,20 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		A57BA5392AB8DB3800452D85 /* XCRemoteSwiftPackageReference "SwiftTAK" */ = {
+		A507C0722C1BECE80022BB0F /* XCRemoteSwiftPackageReference "SwiftTAK" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/flighttactics/SwiftTAK";
 			requirement = {
 				branch = main;
 				kind = branch;
+			};
+		};
+		A5B5E68A2BEDC4DE00EB0FE4 /* XCRemoteSwiftPackageReference "swift-nio-ssl" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-nio-ssl";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.26.0;
 			};
 		};
 		A5E7B00C2A70B95E00D9203F /* XCRemoteSwiftPackageReference "ZIPFoundation" */ = {
@@ -1075,10 +1124,19 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		A57BA53A2AB8DB3800452D85 /* SwiftTAK */ = {
+		A507C0732C1BECE80022BB0F /* SwiftTAK */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = A57BA5392AB8DB3800452D85 /* XCRemoteSwiftPackageReference "SwiftTAK" */;
+			package = A507C0722C1BECE80022BB0F /* XCRemoteSwiftPackageReference "SwiftTAK" */;
 			productName = SwiftTAK;
+		};
+		A56679822C04DACD00C453DC /* NIOSSL */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = NIOSSL;
+		};
+		A5B5E6912BEDC4F600EB0FE4 /* NIOSSL */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A5B5E68A2BEDC4DE00EB0FE4 /* XCRemoteSwiftPackageReference "swift-nio-ssl" */;
+			productName = NIOSSL;
 		};
 		A5FB4E612A8FDF430034966D /* X509 */ = {
 			isa = XCSwiftPackageProductDependency;

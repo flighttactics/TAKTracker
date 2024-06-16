@@ -111,7 +111,7 @@ class SettingsStore: ObservableObject {
     
     @Published var takServerCSRPort: String {
         didSet {
-            UserDefaults.standard.set(takServerPort, forKey: "takServerCSRPort")
+            UserDefaults.standard.set(takServerCSRPort, forKey: "takServerCSRPort")
         }
     }
     
@@ -142,6 +142,13 @@ class SettingsStore: ObservableObject {
     @Published var disableScreenSleep: Bool {
         didSet {
             UserDefaults.standard.set(disableScreenSleep, forKey: "disableScreenSleep")
+        }
+    }
+    
+    @Published var serverCertificateTruststore: [Data] {
+        didSet {
+            UserDefaults.standard.set(serverCertificateTruststore, forKey: "serverCertificateTruststore")
+            UserDefaults.standard.set(true, forKey: "shouldTryReconnect")
         }
     }
     
@@ -238,9 +245,17 @@ class SettingsStore: ObservableObject {
             UserDefaults.standard.set(hasOnboarded, forKey: "hasOnboarded")
         }
     }
+    
+    @Published var lastAppVersionRun: String {
+        didSet {
+            UserDefaults.standard.set(lastAppVersionRun, forKey: "lastAppVersionRun")
+        }
+    }
 
     private init() {
         let defaultSign = SettingsStore.generateDefaultCallSign()
+        self.lastAppVersionRun = (UserDefaults.standard.object(forKey: "lastAppVersionRun") == nil ? "" : UserDefaults.standard.object(forKey: "lastAppVersionRun") as! String)
+        
         self.callSign = (UserDefaults.standard.object(forKey: "callSign") == nil ? defaultSign : UserDefaults.standard.object(forKey: "callSign") as! String)
         
         self.team = (UserDefaults.standard.object(forKey: "team") == nil ? TeamColor.Cyan.rawValue : UserDefaults.standard.object(forKey: "team") as! String)
@@ -266,6 +281,8 @@ class SettingsStore: ObservableObject {
         self.enableAdvancedMode = (UserDefaults.standard.object(forKey: "enableAdvancedMode") == nil ? false : UserDefaults.standard.object(forKey: "enableAdvancedMode") as! Bool)
         
         self.disableScreenSleep = (UserDefaults.standard.object(forKey: "disableScreenSleep") == nil ? true : UserDefaults.standard.object(forKey: "disableScreenSleep") as! Bool)
+        
+        self.serverCertificateTruststore = (UserDefaults.standard.object(forKey: "serverCertificateTruststore") == nil ? [] : UserDefaults.standard.object(forKey: "serverCertificateTruststore") as! [Data])
         
         self.serverCertificate = (UserDefaults.standard.object(forKey: "serverCertificate") == nil ? Data() : UserDefaults.standard.object(forKey: "serverCertificate") as! Data)
         

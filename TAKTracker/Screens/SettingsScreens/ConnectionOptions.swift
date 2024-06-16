@@ -18,49 +18,70 @@ struct CertificateEnrollmentParameters: View {
     
     var body: some View {
         List {
-            ServerInformation()
             Group {
-                VStack {
-                    HStack {
-                        Text("CSR Port")
-                            .font(.system(size: 18, weight: .medium))
-                            .foregroundColor(.secondary)
-                        Spacer()
+                Section(header:
+                            Text("Server Options")
+                                .font(.system(size: 14, weight: .medium))
+                ) {
+                    VStack {
+                        HStack {
+                            Text("Host Name")
+                                .foregroundColor(.secondary)
+                            TextField("Host Name", text: $settingsStore.takServerUrl)
+                                .autocorrectionDisabled(true)
+                                .textInputAutocapitalization(.never)
+                                .keyboardType(.URL)
+                                .onSubmit {
+                                    SettingsStore.global.takServerChanged = true
+                                }
+                        }
                     }
-                    TextField("CSR Port", text: $settingsStore.takServerCSRPort)
-                        .keyboardType(.numberPad)
-                }
-                .padding(.top, 20)
-            }
-            
-            Group {
-                VStack {
-                    HStack {
-                        Text("Username")
-                            .font(.system(size: 18, weight: .medium))
-                            .foregroundColor(.secondary)
-                        Spacer()
+                    VStack {
+                        HStack {
+                            Text("Username")
+                                .foregroundColor(.secondary)
+                            TextField("Username", text: $settingsStore.takServerUsername)
+                                .autocorrectionDisabled(true)
+                                .textInputAutocapitalization(.never)
+                                .keyboardType(.asciiCapable)
+                        }
                     }
-                    TextField("Username", text: $settingsStore.takServerUsername)
-                        .autocorrectionDisabled(true)
-                        .textInputAutocapitalization(.never)
-                        .keyboardType(.asciiCapable)
-                }
-                .padding(.top, 20)
-            }
-            
-            Group {
-                VStack {
-                    HStack {
-                        Text("Password")
-                            .font(.system(size: 18, weight: .medium))
-                            .foregroundColor(.secondary)
-                        Spacer()
+                    VStack {
+                        HStack {
+                            Text("Password")
+                                .foregroundColor(.secondary)
+                            SecureField("Password", text: $settingsStore.takServerPassword)
+                        }
                     }
-                    SecureField("Password", text: $settingsStore.takServerPassword)
                 }
-                .padding(.top, 20)
+                
+                Section(header: 
+                            Text("Advanced Options")
+                                .font(.system(size: 14, weight: .medium))
+                ) {
+                    VStack {
+                        HStack {
+                            Text("Port")
+                                .foregroundColor(.secondary)
+                            TextField("Server Port", text: $settingsStore.takServerPort)
+                                .keyboardType(.numberPad)
+                                .onSubmit {
+                                    SettingsStore.global.takServerChanged = true
+                                }
+                        }
+                    }
+                    
+                    VStack {
+                        HStack {
+                            Text("CSR Port")
+                                .foregroundColor(.secondary)
+                            TextField("CSR Port", text: $settingsStore.takServerCSRPort)
+                                .keyboardType(.numberPad)
+                        }
+                    }
+                }
             }
+            .multilineTextAlignment(.trailing)
             
             // TODO: This is the UI for uploading an intermediate cert
             // Swift was having issues parsing the TAK provided p12 files
@@ -128,50 +149,6 @@ struct CertificateEnrollmentParameters: View {
     }
 }
 
-struct CertificateEnrollment: View {
-    @StateObject var settingsStore: SettingsStore = SettingsStore.global
-    @StateObject var csrRequest: CSRRequestor = CSRRequestor()
-
-    @State var isShowingEnrollment = false
-    
-    var body: some View {
-        Group {
-            VStack {
-                HStack {
-                    Text("Enroll for Certificate")
-                        .font(.system(size: 18, weight: .medium))
-                        .foregroundColor(.secondary)
-                    Spacer()
-                }
-                Button("Enroll Now", role: .none) {
-                    isShowingEnrollment.toggle()
-                }
-                .buttonStyle(.bordered)
-                .sheet(isPresented: $isShowingEnrollment, onDismiss: didDismissCertEnrollment) {
-                    CertificateEnrollmentParameters()
-                    Text("Let's Enroll")
-                        .font(.headline)
-                        .padding()
-                    if(csrRequest.enrollmentStatus == .Succeeded) {
-                        Button("Close", role: .none) {
-                            isShowingEnrollment.toggle()
-                        }
-                        .buttonStyle(.borderedProminent)
-                    } else {
-                        Button("Begin", role: .none) {
-                            csrRequest.beginEnrollment()
-                        }
-                        .buttonStyle(.borderedProminent)
-                    }
-                    Text("Status: " + csrRequest.enrollmentStatus.description)
-                    Text("For Server \(SettingsStore.global.takServerUrl)")
-                }
-            }
-            .padding(.top, 20)
-        }
-    }
-}
-
 func didDismissCertEnrollment() {
     // Clean up the variables
     let settingsStore = SettingsStore.global
@@ -186,46 +163,61 @@ struct DataPackageEnrollment: View {
     @StateObject var settingsStore: SettingsStore = SettingsStore.global
 
     @State var isShowingFilePicker = false
+    @State var isShowingAlert = false
+    @State var alertText: String = ""
     
     var body: some View {
         Group {
-            VStack {
+            VStack(alignment: .center) {
                 HStack {
-                    Text("Upload Data Package")
-                        .font(.system(size: 18, weight: .medium))
-                        .foregroundColor(.secondary)
-                    Spacer()
-                }
-                Button("Data Package", role: .none) {
-                    isProcessingDataPackage = true
-                    isShowingFilePicker.toggle()
-                }
-                .buttonStyle(.bordered)
-                .fileImporter(isPresented: $isShowingFilePicker, allowedContentTypes: [.zip], allowsMultipleSelection: false, onCompletion: { results in
-                    
-                    switch results {
-                    case .success(let fileurls):
+                    Button {
                         isProcessingDataPackage = true
-                        for fileurl in fileurls {
-                            if(fileurl.startAccessingSecurityScopedResource()) {
-                                TAKLogger.debug("Processing Package at \(String(describing: fileurl))")
-                                let tdpp = TAKDataPackageParser(
-                                    fileLocation: fileurl
-                                )
-                                tdpp.parse()
-                                fileurl.stopAccessingSecurityScopedResource()
-                                isProcessingDataPackage = false
-                            } else {
-                                TAKLogger.error("Unable to securely access  \(String(describing: fileurl))")
-                            }
+                        isShowingFilePicker.toggle()
+                    } label: {
+                        HStack {
+                            Text("Upload Data Package")
+                            Spacer()
+                            Image(systemName: "square.and.arrow.up")
+                                .multilineTextAlignment(.trailing)
                         }
-                    case .failure(let error):
-                        TAKLogger.debug(String(describing: error))
+                        
                     }
+                    .buttonStyle(.plain)
                     
-                })
+                    .fileImporter(isPresented: $isShowingFilePicker, allowedContentTypes: [.zip], allowsMultipleSelection: false, onCompletion: { results in
+                        
+                        switch results {
+                        case .success(let fileurls):
+                            isProcessingDataPackage = true
+                            for fileurl in fileurls {
+                                if(fileurl.startAccessingSecurityScopedResource()) {
+                                    TAKLogger.debug("Processing Package at \(String(describing: fileurl))")
+                                    let tdpp = TAKDataPackageParser(
+                                        fileLocation: fileurl
+                                    )
+                                    tdpp.parse()
+                                    fileurl.stopAccessingSecurityScopedResource()
+                                    isProcessingDataPackage = false
+                                    if(tdpp.parsingErrors.isEmpty) {
+                                        alertText = "Data package processed successfully!"
+                                    } else {
+                                        alertText = "Data package could not be processed\n\n\(tdpp.parsingErrors.joined(separator: "\n\n"))"
+                                    }
+                                    isShowingAlert = true
+                                } else {
+                                    TAKLogger.error("Unable to securely access  \(String(describing: fileurl))")
+                                }
+                            }
+                        case .failure(let error):
+                            TAKLogger.debug(String(describing: error))
+                        }
+                        
+                    })
+                }
             }
-            .padding(.top, 20)
+        }
+        .alert(isPresented: $isShowingAlert) {
+            Alert(title: Text("Data Package"), message: Text(alertText), dismissButton: .default(Text("OK")))
         }
     }
 }
@@ -234,7 +226,110 @@ struct ConnectionOptions: View {
     @Binding var isProcessingDataPackage: Bool
     
     var body: some View {
-        CertificateEnrollment()
+        NavigationLink(destination: ConnectionOptionsScreen(isProcessingDataPackage: $isProcessingDataPackage)) {
+            Text("Connect to a TAK Server")
+        }
         DataPackageEnrollment(isProcessingDataPackage: $isProcessingDataPackage)
+    }
+}
+
+struct ConnectionOptionsScreen: View {
+    @Environment(\.dismiss) var dismiss
+    @StateObject var settingsStore: SettingsStore = SettingsStore.global
+    @StateObject var csrRequest: CSRRequestor = CSRRequestor()
+    @Binding var isProcessingDataPackage: Bool
+    
+    var body: some View {
+        VStack {
+            List {
+                Group {
+                    Section(header:
+                                Text("Server Options")
+                        .font(.system(size: 14, weight: .medium))
+                    ) {
+                        VStack {
+                            HStack {
+                                Text("Host Name")
+                                    .foregroundColor(.secondary)
+                                TextField("Host Name", text: $settingsStore.takServerUrl)
+                                    .autocorrectionDisabled(true)
+                                    .textInputAutocapitalization(.never)
+                                    .keyboardType(.URL)
+                                    .onSubmit {
+                                        SettingsStore.global.takServerChanged = true
+                                    }
+                            }
+                        }
+                        VStack {
+                            HStack {
+                                Text("Username")
+                                    .foregroundColor(.secondary)
+                                TextField("Username", text: $settingsStore.takServerUsername)
+                                    .autocorrectionDisabled(true)
+                                    .textInputAutocapitalization(.never)
+                                    .keyboardType(.asciiCapable)
+                            }
+                        }
+                        VStack {
+                            HStack {
+                                Text("Password")
+                                    .foregroundColor(.secondary)
+                                SecureField("Password", text: $settingsStore.takServerPassword)
+                            }
+                        }
+                    }
+                    
+                    Section(header:
+                                Text("Advanced Options")
+                        .font(.system(size: 14, weight: .medium))
+                    ) {
+                        VStack {
+                            HStack {
+                                Text("Port")
+                                    .foregroundColor(.secondary)
+                                TextField("Server Port", text: $settingsStore.takServerPort)
+                                    .keyboardType(.numberPad)
+                                    .onSubmit {
+                                        SettingsStore.global.takServerChanged = true
+                                    }
+                            }
+                        }
+                        
+                        VStack {
+                            HStack {
+                                Text("CSR Port")
+                                    .foregroundColor(.secondary)
+                                TextField("CSR Port", text: $settingsStore.takServerCSRPort)
+                                    .keyboardType(.numberPad)
+                            }
+                        }
+                    }
+                }
+                .multilineTextAlignment(.trailing)
+            }
+            
+            VStack(alignment: .center) {
+                HStack {
+                    if(csrRequest.enrollmentStatus == .Succeeded) {
+                        Button("Close", role: .none) {
+                            dismiss()
+                        }
+                        .buttonStyle(.borderedProminent)
+                    } else {
+                        Button("Start Enrollment", role: .none) {
+                            csrRequest.beginEnrollment()
+                        }
+                        .buttonStyle(.borderedProminent)
+//                        Button("Scan QR", role: .none) {
+//                            
+//                        }
+//                        .buttonStyle(.borderedProminent)
+                    }
+                }
+                
+                Text("Status: " + csrRequest.enrollmentStatus.description)
+                Text("For Server \(SettingsStore.global.takServerUrl)")
+            }
+        }
     }
 }

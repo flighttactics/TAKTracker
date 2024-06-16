@@ -77,7 +77,9 @@ class TCPMessage: NSObject, ObservableObject {
 
         if (SettingsStore.global.takServerChanged) {
             TAKLogger.debug("[TCPMessage]: TAKServer was marked as changing, so cancelling and reconnecting")
-            SettingsStore.global.takServerChanged = false
+            DispatchQueue.main.async {
+                SettingsStore.global.takServerChanged = false
+            }
             connection.forceCancel()
             connect()
             return
@@ -122,9 +124,9 @@ class TCPMessage: NSObject, ObservableObject {
         
         TAKLogger.debug("[TCPMessage]: Attempting to connect to \(String(describing: host)):\(String(describing: port))")
         
-        // TODO: Are there ways of connecting to a server that don't require a certificate identity?
-        // TODO: i.e. OAuth, etc?
-        guard let clientIdentity = SettingsStore.global.retrieveIdentity(label: SettingsStore.global.takServerUrl) else {
+        // TODO: Are there ways of connecting to a server that don't require a certificate identity? i.e. OAuth, etc?
+        guard let clientIdentity = SettingsStore.global.retrieveIdentity(label: SettingsStore.global.takServerUrl),
+              let secIdentity = sec_identity_create(clientIdentity) else {
             TAKLogger.error("[TCPMessage]: Identity was not stored in the keychain")
             connectionFailed()
             return
@@ -133,41 +135,60 @@ class TCPMessage: NSObject, ObservableObject {
         let options = NWProtocolTLS.Options()
         let securityOptions = options.securityProtocolOptions
         let params = NWParameters(tls: options, tcp: .init())
+        var isValidCertificate = false
+        var error: CFError?
         
         sec_protocol_options_set_local_identity(
            securityOptions,
-           sec_identity_create(clientIdentity)!
+           secIdentity
         )
         
         // TODO: This is where we need to verify the intermediate certificate
         sec_protocol_options_set_verify_block(securityOptions, { (_, trust, completionHandler) in
             TAKLogger.debug("[TCPMessage]: Entering Verify Block")
-            let isTrusted = true
-            completionHandler(isTrusted)
-        }, .main)
+            
+            let secTrust = sec_trust_copy_ref(trust).takeRetainedValue()
+            isValidCertificate = SecTrustEvaluateWithError(secTrust, &error)
+            
+            if !isValidCertificate {
+                TAKLogger.debug("[TCPMessage]: Server not trusted with default certs, seeing if we have custom ones")
+                var customCerts: [SecCertificate] = []
+                
+                let trustCerts = SettingsStore.global.serverCertificateTruststore
+                TAKLogger.debug("[TCPMessage]: Truststore contains \(trustCerts.count) cert(s)")
+                if !trustCerts.isEmpty {
+                    TAKLogger.debug("[TCPMessage]: Trusting Trust Store Certs")
+                    trustCerts.forEach { cert in
+                        if let convertedCert = SecCertificateCreateWithData(nil, cert as CFData) {
+                            customCerts.append(convertedCert)
+                        }
+                    }
+                }
+                
+                if !customCerts.isEmpty {
+                    // Disable hostname validation if using custom certs
+                    let sslWithoutHostnamePolicy = SecPolicyCreateSSL(true, nil)
+                    SecTrustSetPolicies(secTrust, [sslWithoutHostnamePolicy] as CFArray)
+                    SecTrustSetAnchorCertificates(secTrust, customCerts as CFArray)
+                }
+                
+                // Make sure we still trust our normal root certificates
+                SecTrustSetAnchorCertificatesOnly(secTrust, false)
+                
+                // Try again
+                isValidCertificate = SecTrustEvaluateWithError(secTrust, &error)
+                
+                if let error {
+                    TAKLogger.error("[TCPConnection] SecTrustEvaluate failed with error: \(error)")
+                }
+            }
+
+            completionHandler(isValidCertificate)
+        }, .global())
         
         TAKLogger.debug("[TCPMessage]: " + String(describing: params))
         connection = NWConnection(host: host, port: port, using: params)
         TAKLogger.debug("[TCPMessage]: " + String(describing: connection))
-        
-        connection!.stateUpdateHandler = stateUpdateHandler
-        connection!.viabilityUpdateHandler = viabilityUpdateHandler
-        connection!.betterPathUpdateHandler = betterPathUpdateHandler
-        
-        connection!.start(queue: .global())
-    }
-    
-    func connectNonTls() {
-        
-        if(SettingsStore.global.takServerUrl.isEmpty || SettingsStore.global.takServerPort.isEmpty) {
-            TAKLogger.debug("[TCPMessage]: No TAK Server Endpoint configured")
-            return
-        }
-        
-        let host = NWEndpoint.Host(SettingsStore.global.takServerUrl)
-        let port = NWEndpoint.Port(SettingsStore.global.takServerPort)!
-        
-        connection = NWConnection(host: host, port: port, using: .tls)
         
         connection!.stateUpdateHandler = stateUpdateHandler
         connection!.viabilityUpdateHandler = viabilityUpdateHandler
