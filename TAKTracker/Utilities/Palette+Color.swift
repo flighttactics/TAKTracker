@@ -9,9 +9,6 @@ import Foundation
 import SwiftUI
 
 extension Color {
-    static let baseMediumGray = Color("baseMediumGray")
-    static let baseDarkGray = Color("baseDarkGray")
-    static let baseChatBackground = Color("baseChatBackground")
     static let baseChatButtonColor = Color("baseChatButtonColor")
     static let baseIncomingChatColor = Color("baseIncomingChatColor")
     static let baseIncomingTextColor = Color("baseIncomingTextColor")
@@ -20,9 +17,6 @@ extension Color {
 }
 
 extension UIColor {
-    static let baseMediumGray = Color("baseMediumGray")
-    static let baseDarkGray = Color("baseDarkGray")
-    static let baseChatBackground = Color("baseChatBackground")
     static let baseChatButtonColor = Color("baseChatButtonColor")
     static let baseIncomingChatColor = Color("baseIncomingChatColor")
     static let baseIncomingTextColor = Color("baseIncomingTextColor")
