@@ -31,7 +31,7 @@ struct TAKTrackerApp: App {
                         settingsStore.connectionStatus = "Disconnected"
                         settingsStore.isConnectedToServer = false
                         settingsStore.shouldTryReconnect = false
-                        settingsStore.lastAppVersionRun = AppConstants.getAppVersion()
+                        settingsStore.lastAppVersionRun = AppConstants.getAppReleaseVersion()
                         UIApplication.shared.isIdleTimerDisabled = settingsStore.disableScreenSleep
                     }
             } else {

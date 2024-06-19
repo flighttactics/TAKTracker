@@ -19,7 +19,7 @@ class TAKManager: NSObject, URLSessionDelegate, ObservableObject {
     @Published var isConnectedToServer = false
     
     override init() {
-        cotMessage = COTMessage(staleTimeMinutes: SettingsStore.global.staleTimeMinutes, deviceID: UIDevice.current.identifierForVendor!.uuidString, phoneModel: AppConstants.getPhoneModel(), phoneOS: AppConstants.getPhoneOS(), appPlatform: AppConstants.TAK_PLATFORM, appVersion: AppConstants.getAppVersion())
+        cotMessage = COTMessage(staleTimeMinutes: SettingsStore.global.staleTimeMinutes, deviceID: UIDevice.current.identifierForVendor!.uuidString, phoneModel: AppConstants.getPhoneModel(), phoneOS: AppConstants.getPhoneOS(), appPlatform: AppConstants.TAK_PLATFORM, appVersion: AppConstants.getAppReleaseAndBuildVersion())
         super.init()
         udpMessage.connect()
         TAKLogger.debug("[TAKManager]: establishing TCP Message Connect")

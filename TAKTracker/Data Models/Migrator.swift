@@ -16,10 +16,10 @@ struct MigrationStatus {
 }
 
 enum ReleasedAppVersions : String, CustomStringConvertible, CaseIterable {
-    case v10 = "1.0.27"
-    case v11 = "1.1.57"
-    case v12 = "1.2.59"
-    case v13 = "1.3.67"
+    case v10 = "1.0"
+    case v11 = "1.1"
+    case v12 = "1.2"
+    case v13 = "1.3"
     
     public var description: String {
         return self.rawValue
@@ -29,8 +29,9 @@ enum ReleasedAppVersions : String, CustomStringConvertible, CaseIterable {
 class Migrator: ObservableObject {
     static let RELEASED_VERSIONS = ReleasedAppVersions.allCases
     
+    
     static func currentReleasedVersion() -> ReleasedAppVersions {
-        guard let appVersion = ReleasedAppVersions(rawValue: AppConstants.getAppVersion()) else {
+        guard let appVersion = ReleasedAppVersions(rawValue: AppConstants.getAppReleaseVersion()) else {
             TAKLogger.error("UNCONFIGURED APP VERSION FOUND")
             return ReleasedAppVersions.v13
         }
@@ -71,8 +72,8 @@ class Migrator: ObservableObject {
         let settingsStore = SettingsStore.global
         
         guard settingsStore.serverCertificateTruststore.isEmpty else {
-            migrationStatus.migrationSucceeded = false
-            migrationStatus.migrationErrors.append("Truststore already existed so not overwriting")
+            migrationStatus.migrationSucceeded = true
+            TAKLogger.debug("[Migrator] Truststore setting was already set, so ignoring migration")
             status.append(migrationStatus)
             return
         }

@@ -279,12 +279,10 @@ struct MainScreen: View {
             serverStatus
         })
         .onAppear {
-            TAKLogger.debug("[MainScreen]: App Version? \(AppConstants.getAppVersion())")
-            TAKLogger.debug("[MainScreen]: Last App Version? \(SettingsStore.global.lastAppVersionRun)")
-            if(AppConstants.getAppVersion() != SettingsStore.global.lastAppVersionRun) {
+            if(AppConstants.getAppReleaseVersion() != SettingsStore.global.lastAppVersionRun) {
                 TAKLogger.debug("[MainScreen]: App Requires Migration, attempting to migrate")
                 migrator.migrate(from: settingsStore.lastAppVersionRun)
-                settingsStore.lastAppVersionRun = AppConstants.getAppVersion()
+                settingsStore.lastAppVersionRun = AppConstants.getAppReleaseVersion()
                 isShowingAlert = !migrator.migrationSucceeded
             }
             broadcastLocation()

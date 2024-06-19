@@ -63,7 +63,7 @@ struct CSRConfiguration {
     var csrPath: String {
         get { return TAKConstants.certificateSigningPath(
             clientUid: AppConstants.getClientID(),
-            appVersion: AppConstants.getAppVersion()) }
+            appVersion: AppConstants.getAppReleaseAndBuildVersion()) }
     }
     
     var configURL: URL {
@@ -86,7 +86,7 @@ class CSRRequestor: NSObject, ObservableObject, URLSessionDelegate {
     var tlsConfigPath = TAKConstants.CERT_CONFIG_PATH
     var csrRequestPath = TAKConstants.certificateSigningPath(
         clientUid: AppConstants.getClientID(),
-        appVersion: AppConstants.getAppVersion())
+        appVersion: AppConstants.getAppReleaseAndBuildVersion())
     
     func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
             if (challenge.protectionSpace.authenticationMethod == NSURLAuthenticationMethodClientCertificate) {

@@ -44,6 +44,7 @@
 		A55CE96D2AB1D8A20081AF86 /* ConverterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A55CE96C2AB1D8A20081AF86 /* ConverterTests.swift */; };
 		A55CE96E2AB1D8AA0081AF86 /* Converter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A55CE96A2AB1D8860081AF86 /* Converter.swift */; };
 		A56679832C04DACD00C453DC /* NIOSSL in Frameworks */ = {isa = PBXBuildFile; productRef = A56679822C04DACD00C453DC /* NIOSSL */; };
+		A5702A432C205772008E1763 /* CodeScanner in Frameworks */ = {isa = PBXBuildFile; productRef = A5702A422C205772008E1763 /* CodeScanner */; };
 		A59C08472AACF95100C33B44 /* CertificateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59C08462AACF95100C33B44 /* CertificateManager.swift */; };
 		A59C08482AAE105100C33B44 /* CertificateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59C08462AACF95100C33B44 /* CertificateManager.swift */; };
 		A5A49D902A5459B5009764C1 /* TAKManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5A49D8F2A5459B5009764C1 /* TAKManager.swift */; };
@@ -189,6 +190,7 @@
 				A507C0742C1BECE80022BB0F /* SwiftTAK in Frameworks */,
 				A56679832C04DACD00C453DC /* NIOSSL in Frameworks */,
 				B6C8997D4C1B298C733111DC /* Pods_TAKTracker.framework in Frameworks */,
+				A5702A432C205772008E1763 /* CodeScanner in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -460,6 +462,7 @@
 				A5FB4E612A8FDF430034966D /* X509 */,
 				A56679822C04DACD00C453DC /* NIOSSL */,
 				A507C0732C1BECE80022BB0F /* SwiftTAK */,
+				A5702A422C205772008E1763 /* CodeScanner */,
 			);
 			productName = "TAK Spike";
 			productReference = A5D8D37A2A53B0F9002F0E3E /* TAKTracker.app */;
@@ -544,6 +547,7 @@
 				A5FB4E672A9D2BE70034966D /* XCRemoteSwiftPackageReference "CertificateSigningRequest" */,
 				A5B5E68A2BEDC4DE00EB0FE4 /* XCRemoteSwiftPackageReference "swift-nio-ssl" */,
 				A507C0722C1BECE80022BB0F /* XCRemoteSwiftPackageReference "SwiftTAK" */,
+				A5702A412C205772008E1763 /* XCRemoteSwiftPackageReference "CodeScanner" */,
 			);
 			productRefGroup = A5D8D37B2A53B0F9002F0E3E /* Products */;
 			projectDirPath = "";
@@ -890,7 +894,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = TAKTracker/TAKTracker.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 67;
+				CURRENT_PROJECT_VERSION = 70;
 				DEVELOPMENT_ASSET_PATHS = "TAKTracker/Preview\\ Content";
 				DEVELOPMENT_TEAM = 5LZ5HR44P3;
 				ENABLE_PREVIEWS = YES;
@@ -899,6 +903,7 @@
 				INFOPLIST_FILE = "TAKTracker-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "TAK Tracker";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.navigation";
+				INFOPLIST_KEY_NSCameraUsageDescription = "TAK Tracker uses the camera to scan QR codes and to capture photos for sharing on the map";
 				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "Allow TAK Tracker to access the local network to broadcast CoT?";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "TAK Tracker can continue to share your location in the background with your teammates and connected TAK Servers for situational awareness";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "TAK Tracker uses your location to share with your teammates and connected TAK Servers for situational awareness";
@@ -929,7 +934,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = TAKTracker/TAKTracker.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 67;
+				CURRENT_PROJECT_VERSION = 70;
 				DEVELOPMENT_ASSET_PATHS = "TAKTracker/Preview\\ Content";
 				DEVELOPMENT_TEAM = 5LZ5HR44P3;
 				ENABLE_PREVIEWS = YES;
@@ -938,6 +943,7 @@
 				INFOPLIST_FILE = "TAKTracker-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "TAK Tracker";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.navigation";
+				INFOPLIST_KEY_NSCameraUsageDescription = "TAK Tracker uses the camera to scan QR codes and to capture photos for sharing on the map";
 				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "Allow TAK Tracker to access the local network to broadcast CoT?";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "TAK Tracker can continue to share your location in the background with your teammates and connected TAK Servers for situational awareness";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "TAK Tracker uses your location to share with your teammates and connected TAK Servers for situational awareness";
@@ -966,7 +972,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 67;
+				CURRENT_PROJECT_VERSION = 70;
 				DEVELOPMENT_TEAM = 5LZ5HR44P3;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -988,7 +994,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 67;
+				CURRENT_PROJECT_VERSION = 70;
 				DEVELOPMENT_TEAM = 5LZ5HR44P3;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1008,7 +1014,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 67;
+				CURRENT_PROJECT_VERSION = 70;
 				DEVELOPMENT_TEAM = 5LZ5HR44P3;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.1;
@@ -1026,7 +1032,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 67;
+				CURRENT_PROJECT_VERSION = 70;
 				DEVELOPMENT_TEAM = 5LZ5HR44P3;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.1;
@@ -1089,6 +1095,14 @@
 				kind = branch;
 			};
 		};
+		A5702A412C205772008E1763 /* XCRemoteSwiftPackageReference "CodeScanner" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/twostraws/CodeScanner";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.5.0;
+			};
+		};
 		A5B5E68A2BEDC4DE00EB0FE4 /* XCRemoteSwiftPackageReference "swift-nio-ssl" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/apple/swift-nio-ssl";
@@ -1109,7 +1123,7 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/apple/swift-certificates.git";
 			requirement = {
-				kind = upToNextMinorVersion;
+				kind = upToNextMajorVersion;
 				minimumVersion = 0.6.0;
 			};
 		};
@@ -1132,6 +1146,11 @@
 		A56679822C04DACD00C453DC /* NIOSSL */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = NIOSSL;
+		};
+		A5702A422C205772008E1763 /* CodeScanner */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A5702A412C205772008E1763 /* XCRemoteSwiftPackageReference "CodeScanner" */;
+			productName = CodeScanner;
 		};
 		A5B5E6912BEDC4F600EB0FE4 /* NIOSSL */ = {
 			isa = XCSwiftPackageProductDependency;

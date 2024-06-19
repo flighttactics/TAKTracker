@@ -34,14 +34,23 @@ struct AppConstants {
             .replacingOccurrences(of: "$VERSION", with: appVersion)
     }
     
-    static func getAppVersion() -> String {
+    static func getAppReleaseVersion() -> String {
+        if let appInfo = Bundle.main.infoDictionary {
+            if let appVersion = appInfo["CFBundleShortVersionString"] as? String {
+                return appVersion
+            }
+        }
+        return "1.u"
+    }
+    
+    static func getAppReleaseAndBuildVersion() -> String {
         if let appInfo = Bundle.main.infoDictionary {
             if let appVersion = appInfo["CFBundleShortVersionString"] as? String,
                let buildNumber = appInfo["CFBundleVersion"] as? String {
                 return "\(appVersion).\(buildNumber)"
             }
         }
-        return "1.0.u"
+        return "0.0.u"
     }
     
     static func getAppName() -> String {
