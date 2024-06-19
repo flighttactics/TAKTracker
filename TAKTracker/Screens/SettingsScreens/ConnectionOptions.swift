@@ -5,9 +5,11 @@
 //  Created by Cory Foy on 9/22/23.
 //
 
+import CodeScanner
 import Foundation
 import SwiftTAK
 import SwiftUI
+import AVFoundation
 
 struct CertificateEnrollmentParameters: View {
     @StateObject var settingsStore: SettingsStore = SettingsStore.global
@@ -239,6 +241,74 @@ struct ConnectionOptionsScreen: View {
     @StateObject var csrRequest: CSRRequestor = CSRRequestor()
     @Binding var isProcessingDataPackage: Bool
     
+    @State var isPresentingQRScanner = false
+    @State var qrCodeResult: String = ""
+    @State var shouldShowQRCodeFailureAlert = false
+    
+    @State var formServerURL = ""
+    @State var formServerPort = ""
+    @State var formUsername = ""
+    @State var formPassword = ""
+    @State var formCSRPort = ""
+    
+    var isAuthorized: Bool {
+        get {
+            let status = AVCaptureDevice.authorizationStatus(for: .video)
+            
+            // Determine if the user previously authorized camera access.
+            var isAuthorized = status == .authorized
+            
+            // If the system hasn't determined the user's authorization status,
+            // explicitly prompt them for approval.
+            if status == .notDetermined {
+                AVCaptureDevice.requestAccess(for: .video, completionHandler: { accessGranted in
+                    guard accessGranted == true else { return }
+                    isAuthorized = status == .authorized
+                    isPresentingQRScanner = true
+                })
+            }
+            
+            return isAuthorized
+        }
+    }
+
+
+    func setUpCaptureSession() {
+        if isAuthorized {
+            isPresentingQRScanner = true
+        } else {
+            TAKLogger.debug("[ConnectionOptions]: Camera Unauthorized")
+        }
+    }
+    
+    func processQRCode(_ scannedString: String) {
+        TAKLogger.debug("[ConnectionOptions] Parsing QR code \(scannedString)")
+        guard scannedString.count > 0 else {
+            shouldShowQRCodeFailureAlert = true
+            return
+        }
+
+        let codeParts = scannedString.split(separator: ",")
+        guard codeParts.count == 4 else {
+            shouldShowQRCodeFailureAlert = true
+            return
+        }
+
+        let serverName = codeParts[0]
+        let serverURL = codeParts[1]
+        let serverPort = codeParts[2]
+        let serverProtocol = codeParts[3]
+        TAKLogger.debug("[ConnectionOptions]: QR Code complete! \(serverName) at \(serverURL):\(serverPort) (\(serverProtocol))")
+        
+        guard let _ = URL(string: String(serverURL)), let _ = Int(serverPort) else {
+            shouldShowQRCodeFailureAlert = true
+            return
+        }
+        
+        formServerURL = String(serverURL)
+        formServerPort = String(serverPort)
+    }
+    
     var body: some View {
         VStack {
             List {
@@ -251,20 +321,17 @@ struct ConnectionOptionsScreen: View {
                             HStack {
                                 Text("Host Name")
                                     .foregroundColor(.secondary)
-                                TextField("Host Name", text: $settingsStore.takServerUrl)
+                                TextField("Host Name", text: $formServerURL)
                                     .autocorrectionDisabled(true)
                                     .textInputAutocapitalization(.never)
                                     .keyboardType(.URL)
-                                    .onSubmit {
-                                        SettingsStore.global.takServerChanged = true
-                                    }
                             }
                         }
                         VStack {
                             HStack {
                                 Text("Username")
                                     .foregroundColor(.secondary)
-                                TextField("Username", text: $settingsStore.takServerUsername)
+                                TextField("Username", text: $formUsername)
                                     .autocorrectionDisabled(true)
                                     .textInputAutocapitalization(.never)
                                     .keyboardType(.asciiCapable)
@@ -274,7 +341,7 @@ struct ConnectionOptionsScreen: View {
                             HStack {
                                 Text("Password")
                                     .foregroundColor(.secondary)
-                                SecureField("Password", text: $settingsStore.takServerPassword)
+                                SecureField("Password", text: $formPassword)
                             }
                         }
                     }
@@ -287,11 +354,8 @@ struct ConnectionOptionsScreen: View {
                             HStack {
                                 Text("Port")
                                     .foregroundColor(.secondary)
-                                TextField("Server Port", text: $settingsStore.takServerPort)
+                                TextField("Server Port", text: $formServerPort)
                                     .keyboardType(.numberPad)
-                                    .onSubmit {
-                                        SettingsStore.global.takServerChanged = true
-                                    }
                             }
                         }
                         
@@ -299,7 +363,7 @@ struct ConnectionOptionsScreen: View {
                             HStack {
                                 Text("CSR Port")
                                     .foregroundColor(.secondary)
-                                TextField("CSR Port", text: $settingsStore.takServerCSRPort)
+                                TextField("CSR Port", text: $formCSRPort)
                                     .keyboardType(.numberPad)
                             }
                         }
@@ -317,19 +381,57 @@ struct ConnectionOptionsScreen: View {
                         .buttonStyle(.borderedProminent)
                     } else {
                         Button("Start Enrollment", role: .none) {
+                            settingsStore.takServerUrl = formServerURL
+                            settingsStore.takServerPort = formServerPort
+                            settingsStore.takServerUsername = formUsername
+                            settingsStore.takServerPassword = formPassword
+                            settingsStore.takServerCSRPort = formCSRPort
                             csrRequest.beginEnrollment()
                         }
                         .buttonStyle(.borderedProminent)
-//                        Button("Scan QR", role: .none) {
-//                            
-//                        }
-//                        .buttonStyle(.borderedProminent)
+                        Button("Scan QR", role: .none) {
+                            setUpCaptureSession()
+                        }
+                        .buttonStyle(.borderedProminent)
                     }
                 }
                 
                 Text("Status: " + csrRequest.enrollmentStatus.description)
                 Text("For Server \(SettingsStore.global.takServerUrl)")
             }
+            .sheet(isPresented: $isPresentingQRScanner, onDismiss: {
+                processQRCode(qrCodeResult)
+            }) {
+                NavigationView {
+                    CodeScannerView(
+                        codeTypes: [.qr],
+                        showViewfinder: true,
+                        simulatedData: "MyTAK,tak.example.com,8089,SSL",
+                        shouldVibrateOnSuccess: true,
+                        videoCaptureDevice: AVCaptureDevice.zoomedCameraForQRCode()
+                    ) { response in
+                        if case let .success(result) = response {
+                            qrCodeResult = result.string
+                            isPresentingQRScanner = false
+                        }
+                    }
+                    .toolbar {
+                        ToolbarItem {
+                            Button("Cancel", action: { isPresentingQRScanner = false })
+                        }
+                    }
+                }
+            }
+            .alert(isPresented: $shouldShowQRCodeFailureAlert) {
+                Alert(title: Text("QR Code Failure"), message: Text("The QR Code you scanned did not contain connection information. Please try a different QR code"), dismissButton: .default(Text("OK")))
+            }
         }
+        .onAppear(perform: {
+            formServerURL = settingsStore.takServerUrl
+            formServerPort = settingsStore.takServerPort
+            formUsername = settingsStore.takServerUsername
+            formPassword = settingsStore.takServerPassword
+            formCSRPort = settingsStore.takServerCSRPort
+        })
     }
 }

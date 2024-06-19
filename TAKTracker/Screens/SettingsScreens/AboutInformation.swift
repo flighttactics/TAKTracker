@@ -51,7 +51,7 @@ struct AboutInformation: View {
             NavigationLink(destination: TAKTrackerInfo()) {
                 Text("About")
             }
-            Text("TAK Tracker v\(AppConstants.getAppVersion())")
+            Text("TAK Tracker v\(AppConstants.getAppReleaseAndBuildVersion())")
                 .frame(maxWidth: .infinity, alignment: .center)
                 .foregroundColor(.secondary)
         }

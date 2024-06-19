@@ -44,8 +44,12 @@ final class DataPackageParserTests: TAKTrackerTestCase {
         XCTAssert(!expectedChain.isEmpty, "No certificate chain found in the test p12 bundle")
         
         var contents = DataPackageContents()
-        contents.serverCertificate = certData
-        contents.serverCertificatePassword = TestConstants.DEFAULT_CERT_PASSWORD
+        
+        var pkg = TAKServerCertificatePackage()
+        pkg.certificateData = certData
+        pkg.certificatePassword = TestConstants.DEFAULT_CERT_PASSWORD
+        
+        contents.serverCertificates = [pkg]
         contents.serverURL = TestConstants.TEST_HOST
         
         parser!.storeServerCertificate(packageContents: contents)
