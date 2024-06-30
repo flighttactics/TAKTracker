@@ -76,7 +76,15 @@ class Converter {
     
     static func convertToSpeedUnit(unit: SpeedUnit, location:CLLocation) -> String {
         // CLLocation.speed is reported in meters per second from iOS
-        let metersPerSecond = location.speed as Double
+        var metersPerSecond = location.speed as Double
+        if(metersPerSecond < 0) {
+            #if targetEnvironment(simulator)
+            metersPerSecond = 3.1
+            #else
+            metersPerSecond = 0
+            #endif
+            
+        }
         let numFeetInOneMeter = 3.281
         let numFeetInOneMile = 5280.0
         switch(unit) {

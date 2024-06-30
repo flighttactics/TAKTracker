@@ -40,7 +40,15 @@ struct DisplayUIState {
     
     func headingValue(unit:DirectionUnit, heading: CLHeading?) -> String {
         guard let locationHeading = heading else {
+            #if targetEnvironment(simulator)
+            if(unit == DirectionUnit.TN) {
+                return "24"
+            } else {
+                return "18"
+            }
+            #else
             return "--"
+            #endif
         }
         if(unit == DirectionUnit.TN) {
             return Converter.formatOrZero(item: locationHeading.trueHeading) + "°"
@@ -272,6 +280,7 @@ struct MainScreen: View {
                 }
             }
         }
+        .navigationViewStyle(.stack)
         .fullScreenCover(item: $sheet, content: { Sheet(type: $0) })
         .background(Color.baseMediumGray)
         .ignoresSafeArea(edges: .bottom)
