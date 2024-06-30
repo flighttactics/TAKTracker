@@ -173,21 +173,19 @@ struct DataPackageEnrollment: View {
             VStack(alignment: .center) {
                 HStack {
                     Button {
-                        isProcessingDataPackage = true
                         isShowingFilePicker.toggle()
                     } label: {
                         HStack {
-                            Text("Upload Data Package")
+                            Text("Connect with a Data Package")
                             Spacer()
                             Image(systemName: "square.and.arrow.up")
                                 .multilineTextAlignment(.trailing)
                         }
+                        .contentShape(Rectangle())
                         
                     }
                     .buttonStyle(.plain)
-                    
                     .fileImporter(isPresented: $isShowingFilePicker, allowedContentTypes: [.zip], allowsMultipleSelection: false, onCompletion: { results in
-                        
                         switch results {
                         case .success(let fileurls):
                             isProcessingDataPackage = true
@@ -210,7 +208,9 @@ struct DataPackageEnrollment: View {
                                     TAKLogger.error("Unable to securely access  \(String(describing: fileurl))")
                                 }
                             }
+                            isProcessingDataPackage = false
                         case .failure(let error):
+                            isProcessingDataPackage = false
                             TAKLogger.debug(String(describing: error))
                         }
                         
@@ -229,7 +229,7 @@ struct ConnectionOptions: View {
     
     var body: some View {
         NavigationLink(destination: ConnectionOptionsScreen(isProcessingDataPackage: $isProcessingDataPackage)) {
-            Text("Connect to a TAK Server")
+            Text("Connect with credentials")
         }
         DataPackageEnrollment(isProcessingDataPackage: $isProcessingDataPackage)
     }
@@ -348,7 +348,7 @@ struct ConnectionOptionsScreen: View {
                     
                     Section(header:
                                 Text("Advanced Options")
-                        .font(.system(size: 14, weight: .medium))
+                                .font(.system(size: 14, weight: .medium))
                     ) {
                         VStack {
                             HStack {
