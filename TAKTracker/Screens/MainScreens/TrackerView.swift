@@ -65,6 +65,7 @@ struct TrackerView: View {
                 }
             }
         }
+        .navigationViewStyle(.stack)
         .fullScreenCover(item: $sheet, content: { Sheet(type: $0) })
         .background(Color.baseMediumGray)
         .ignoresSafeArea(edges: .bottom)

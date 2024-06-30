@@ -55,7 +55,15 @@ struct DisplayUIState {
     
     func headingValue(unit:DirectionUnit, heading: CLHeading?) -> String {
         guard let locationHeading = heading else {
-            return "--°"
+            #if targetEnvironment(simulator)
+            if(unit == DirectionUnit.TN) {
+                return "24"
+            } else {
+                return "18"
+            }
+            #else
+            return "--"
+            #endif
         }
         if(unit == DirectionUnit.TN) {
             return Converter.formatOrZero(item: locationHeading.trueHeading) + "°"
