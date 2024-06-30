@@ -60,6 +60,7 @@ struct TAKTrackerApp: App {
                         }
                     }
                     .preferredColorScheme(.dark)
+                
             }
         }
     }
