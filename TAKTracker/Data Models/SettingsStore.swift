@@ -30,9 +30,8 @@ class SettingsStore: ObservableObject {
     
     
     func storeIdentity(identity: SecIdentity, label: String) {
-        
         //Clean up any existing identities
-        clearAllIdentities()
+        self.clearAllIdentities()
         
         //Add the new identity in
         let addQuery: [String: Any] = [kSecValueRef as String: identity,

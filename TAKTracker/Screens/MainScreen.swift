@@ -158,6 +158,7 @@ struct MapView: UIViewRepresentable {
         mapView.mapType = MKMapType(rawValue: UInt(mapType))!
         mapView.layer.borderColor = UIColor.black.cgColor
         mapView.layer.borderWidth = 1.0
+        mapView.isHidden = false
         return mapView
     }
 

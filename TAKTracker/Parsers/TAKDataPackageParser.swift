@@ -32,18 +32,20 @@ class TAKDataPackageParser: NSObject {
     func storeUserCertificate(packageContents: DataPackageContents) {
         TAKLogger.debug("[TAKDataPackageParser]: Storing User Certificate")
         
-        //Parse the cert file
-        let parsedCert = PKCS12(data: packageContents.userCertificate, password: packageContents.userCertificatePassword)
-        
-        guard let identity = parsedCert.identity else {
-            parsingErrors.append("No User Certificate found")
-            TAKLogger.error("[TAKDataPackageParser]: Identity was not present in the parsed cert")
-            return
+        DispatchQueue.global(qos: .background).async {
+            //Parse the cert file
+            let parsedCert = PKCS12(data: packageContents.userCertificate, password: packageContents.userCertificatePassword)
+            
+            guard let identity = parsedCert.identity else {
+                self.parsingErrors.append("No User Certificate found")
+                TAKLogger.error("[TAKDataPackageParser]: Identity was not present in the parsed cert")
+                return
+            }
+            
+            SettingsStore.global.storeIdentity(identity: identity, label: packageContents.serverURL)
+            
+            TAKLogger.debug("[TAKDataPackageParser]: User Certificate Stored")
         }
-        
-        SettingsStore.global.storeIdentity(identity: identity, label: packageContents.serverURL)
-        
-        TAKLogger.debug("[TAKDataPackageParser]: User Certificate Stored")
     }
     
     func storeServerCertificate(packageContents: DataPackageContents) {
