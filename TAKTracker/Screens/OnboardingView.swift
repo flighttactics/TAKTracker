@@ -105,7 +105,7 @@ struct OnboardingView: View {
                 case .ConnectToServer:
                     HStack {
                         Spacer()
-                        Text("Connect to a TAK Server?")
+                        Text("Would you like to connect to a TAK Server?")
                             .bold()
                             .listRowSeparator(.hidden)
                         Spacer()
@@ -157,5 +157,6 @@ struct OnboardingView: View {
                 Spacer()
             }
         }
+        .navigationViewStyle(.stack)
     }
 }

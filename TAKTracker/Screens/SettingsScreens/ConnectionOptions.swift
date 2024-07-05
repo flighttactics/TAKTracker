@@ -177,7 +177,7 @@ struct DataPackageEnrollment: View {
                         isShowingFilePicker.toggle()
                     } label: {
                         HStack {
-                            Text("Upload Data Package")
+                            Text("Connect with a Data Package")
                             Spacer()
                             Image(systemName: "square.and.arrow.up")
                                 .multilineTextAlignment(.trailing)
@@ -209,9 +209,11 @@ struct DataPackageEnrollment: View {
                                 } else {
                                     TAKLogger.error("Unable to securely access  \(String(describing: fileurl))")
                                 }
+                                isProcessingDataPackage = false
                             }
                         case .failure(let error):
                             TAKLogger.debug(String(describing: error))
+                            isProcessingDataPackage = false
                         }
                         
                     })
@@ -229,7 +231,7 @@ struct ConnectionOptions: View {
     
     var body: some View {
         NavigationLink(destination: ConnectionOptionsScreen(isProcessingDataPackage: $isProcessingDataPackage)) {
-            Text("Connect to a TAK Server")
+            Text("Connect with credentials")
         }
         DataPackageEnrollment(isProcessingDataPackage: $isProcessingDataPackage)
     }
