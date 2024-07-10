@@ -5,37 +5,122 @@
 //  Created by Cory Foy on 6/22/24.
 //
 
+import CoreData
 import SwiftUI
 import MapKit
+
+final class MapPointAnnotation: NSObject, MKAnnotation {
+    var id: String
+    dynamic var title: String?
+    dynamic var coordinate: CLLocationCoordinate2D
+    dynamic var icon: String?
+    dynamic var cotType: String?
+    dynamic var image: UIImage? = UIImage.init(systemName: "circle.fill")
+    dynamic var color: UIColor?
+    dynamic var remarks: String?
+    
+    var annotationIdentifier: String {
+        return icon ?? cotType ?? "pli"
+    }
+    
+    init(mapPoint: COTData) {
+        self.id = mapPoint.id?.uuidString ?? UUID().uuidString
+        self.title = mapPoint.callsign ?? "NO CALLSIGN"
+        self.icon = mapPoint.icon ?? ""
+        self.cotType = mapPoint.cotType ?? "a-U-G"
+        self.coordinate = CLLocationCoordinate2D(latitude: mapPoint.latitude, longitude: mapPoint.longitude)
+        if mapPoint.iconColor != nil && mapPoint.iconColor!.isNotEmpty {
+            self.color = IconData.colorFromArgb(argbVal: Int(mapPoint.iconColor!)!)
+        }
+        self.remarks = mapPoint.remarks
+    }
+}
 
 struct MapView: UIViewRepresentable {
     @Binding var region: MKCoordinateRegion
     @Binding var mapType: UInt
+    @Binding var isAcquiringBloodhoundTarget: Bool
+    
+    @FetchRequest(sortDescriptors: []) var mapPointsData: FetchedResults<COTData>
 
-    let mapView = MKMapView()
+    @State var mapView: MKMapView = MKMapView()
+    @State var activeBloodhound: MKGeodesicPolyline?
 
     func makeUIView(context: Context) -> MKMapView {
         mapView.delegate = context.coordinator
         mapView.setRegion(region, animated: true)
         mapView.setCenter(region.center, animated: true)
         mapView.showsUserLocation = true
-        mapView.showsCompass = true
+        mapView.showsCompass = false
         mapView.userTrackingMode = .followWithHeading
         mapView.pointOfInterestFilter = .excludingAll
         mapView.mapType = MKMapType(rawValue: UInt(mapType))!
         mapView.layer.borderColor = UIColor.black.cgColor
         mapView.layer.borderWidth = 1.0
         mapView.isHidden = false
+        
+        let compassBtn = MKCompassButton(mapView: mapView)
+        compassBtn.frame.origin = CGPoint(x: 24.0, y: 54.0)
+        compassBtn.compassVisibility = .visible
+        mapView.addSubview(compassBtn)
+        
+//        let locateBtn = MKUserTrackingButton(mapView: mapView)
+//        locateBtn.frame.origin = CGPoint(x: 27.0, y: 114.0)
+//        locateBtn.tintColor = .yellow
+//        locateBtn.backgroundColor = .clear
+//        mapView.addSubview(locateBtn)
+
         return mapView
     }
 
     func updateUIView(_ view: MKMapView, context: Context) {
         view.mapType = MKMapType(rawValue: UInt(mapType))!
-        view.isHidden = view.frame.height < 150
+        print("[mapView] updateUIView")
+        updateAnnotations(from: view)
+    }
+    
+    private func updateAnnotations(from mapView: MKMapView) {
+        
+        if(!isAcquiringBloodhoundTarget && activeBloodhound != nil) {
+            mapView.removeOverlay(activeBloodhound!)
+            activeBloodhound = nil
+        }
+        
+        let incomingData = mapPointsData
+        
+        let existingAnnotations = mapView.annotations.filter { $0 is MapPointAnnotation }
+        let current = Set(existingAnnotations.map { ($0 as! MapPointAnnotation).id })
+        let new = Set(incomingData.map { $0.id!.uuidString })
+        let toRemove = Array(current.symmetricDifference(new))
+        let toAdd = Array(new.symmetricDifference(current))
+
+        if !toRemove.isEmpty {
+            let removableAnnotations = existingAnnotations.filter {
+                toRemove.contains(($0 as! MapPointAnnotation).id)
+            }
+            mapView.removeAnnotations(removableAnnotations)
+        }
+        
+        for annotation in mapView.annotations.filter({ $0 is MapPointAnnotation }) {
+            guard let mpAnnotation = annotation as? MapPointAnnotation else { continue }
+            guard let node = incomingData.first(where: {$0.id?.uuidString == mpAnnotation.id}) else { continue }
+            let updatedMp = MapPointAnnotation(mapPoint: node)
+            mpAnnotation.title = updatedMp.title
+            mpAnnotation.color = updatedMp.color
+            mpAnnotation.icon = updatedMp.icon
+            mpAnnotation.cotType = updatedMp.cotType
+            mpAnnotation.coordinate = updatedMp.coordinate
+            mpAnnotation.remarks = updatedMp.remarks
+        }
+
+        if !toAdd.isEmpty {
+            let insertingAnnotations = incomingData.filter { toAdd.contains($0.id!.uuidString)}
+            let newAnnotations = insertingAnnotations.map { MapPointAnnotation(mapPoint: $0) }
+            mapView.addAnnotations(newAnnotations)
+        }
     }
     
     func resetMap() {
-        mapView.showsCompass = true
         mapView.userTrackingMode = .followWithHeading
     }
 
@@ -62,7 +147,81 @@ struct MapView: UIViewRepresentable {
             // position on the map, CLLocationCoordinate2D
             let coordinate = self.parent.mapView.convert(location, toCoordinateFrom: self.parent.mapView)
             TAKLogger.debug("Map Tapped! \(String(describing: coordinate))")
-            parent.resetMap()
+        }
+        
+        func mapView(_ mapView: MKMapView, didSelect annotation: any MKAnnotation) {
+            guard let mpAnnotation = annotation as? MapPointAnnotation? else {
+                print("[mapView] Unknown annotation type selected")
+                return
+            }
+            print("[mapView] annotation selected")
+            let userLocation = mapView.userLocation.coordinate
+            let endPointLocation = mpAnnotation!.coordinate
+            
+            let mapReadyForBloodhoundTarget = parent.activeBloodhound == nil ||
+                !mapView.overlays.contains(where: { $0.isEqual(parent.activeBloodhound) })
+            
+            if(parent.isAcquiringBloodhoundTarget &&
+               mapReadyForBloodhoundTarget) {
+                print("[mapView] Adding Bloodhound line")
+                parent.activeBloodhound = MKGeodesicPolyline(coordinates: [userLocation, endPointLocation], count: 2)
+                
+                mapView.addOverlay(parent.activeBloodhound!)
+                mapView.deselectAnnotation(annotation, animated: false)
+            } else {
+                print("[mapView] Parent is acquiring bloodhount and ab is \(mapView.overlays.contains(where: { $0.isEqual(parent.activeBloodhound) }))")
+            }
+            
+            print("[mapView] Hello! \(mpAnnotation!.title ?? "N/A") clicked")
+        }
+        
+        func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+            guard let polyline = overlay as? MKPolyline else {
+                return MKOverlayRenderer()
+            }
+            
+            let renderer = MKPolylineRenderer(polyline: polyline)
+            renderer.lineWidth = 3.0
+            renderer.alpha = 0.5
+            renderer.strokeColor = UIColor.blue
+            
+            return renderer
+        }
+        
+        func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+            guard !annotation.isKind(of: MKUserLocation.self) else {
+                // Make a fast exit if the annotation is the `MKUserLocation`, as it's not an annotation view we wish to customize.
+                return nil
+            }
+            
+            guard let mpAnnotation = annotation as? MapPointAnnotation? else { return nil }
+            
+            let identifier = mpAnnotation!.annotationIdentifier
+            var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier)
+            
+            if annotationView == nil {
+                annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+                annotationView!.canShowCallout = true
+                let detailView = UIView()
+                let remarksView = UITextView()
+                remarksView.text = mpAnnotation?.remarks ?? ""
+
+                let widthConstraint = NSLayoutConstraint(item: detailView, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 40)
+                detailView.addConstraint(widthConstraint)
+
+                let heightConstraint = NSLayoutConstraint(item: detailView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 20)
+                detailView.addConstraint(heightConstraint)
+                annotationView!.detailCalloutAccessoryView = detailView
+                let icon = IconData.iconFor(type2525: mpAnnotation!.cotType ?? "", iconsetPath: mpAnnotation!.icon ?? "")
+                var pointIcon: UIImage = icon.icon
+                
+                if let pointColor = mpAnnotation!.color {
+                    pointIcon = pointIcon.mask(with: pointColor)
+                    //pointIcon = pointIcon.withTintColor(pointColor, renderingMode: .alwaysTemplate)
+                }
+                annotationView!.image = pointIcon
+            }
+            return annotationView
         }
     }
 }
@@ -70,11 +229,15 @@ struct MapView: UIViewRepresentable {
 struct AwarenessView: View {
     @EnvironmentObject var settingsStore: SettingsStore
     @EnvironmentObject var manager: LocationManager
+    @Environment(\.managedObjectContext) var dataContext
     
     @Binding var displayUIState: DisplayUIState
-    //@State private var displayUIState = DisplayUIState()
+    
+    @FetchRequest(sortDescriptors: []) var mapPointsData: FetchedResults<COTData>
+    
     @State private var tracking:MapUserTrackingMode = .none
     @State private var sheet: Sheet.SheetType?
+    @State private var isAcquiringBloodhoundTarget: Bool = false
     
     func formatOrZero(item: Double?, formatter: String = "%.0f") -> String {
         guard let item = item else {
@@ -99,29 +262,25 @@ struct AwarenessView: View {
         NavigationView {
             ZStack(alignment: .top) {
                 trackerStatus
-                HStack {
-                    Text("TAK Tracker").font(.headline)
-                    Spacer()
-                        Button(action: { sheet = .emergencySettings }) {
-                            Image(systemName: "exclamationmark.triangle")
-                                .imageScale(.large)
-                                .foregroundColor(settingsStore.isAlertActivated ? .red : .yellow)
-                        }
-                            Button(action: { sheet = .chat }) {
-                                Image(systemName: "bubble.left")
-                                    .imageScale(.large)
-                                    .foregroundColor(.yellow)
-                            }
-                    
-                    Button(action: { sheet = .settings }) {
-                        Image(systemName: "gear")
-                            .imageScale(.large)
-                            .foregroundColor(.yellow)
-                    }
-                }
-                .padding(.horizontal)
-                .padding(.top)
-                .foregroundColor(.yellow)
+                toolbarItemsRight
+//                HStack {
+//                    Spacer()
+//                    Button(action: { sheet = .emergencySettings }) {
+//                        Image(systemName: "exclamationmark.triangle")
+//                            .foregroundColor(settingsStore.isAlertActivated ? .red : .yellow)
+//                    }
+//                    Button(action: { sheet = .chat }) {
+//                        Image(systemName: "bubble.left")
+//                    }
+//                    Button(action: { sheet = .settings }) {
+//                        Image(systemName: "line.3.horizontal")
+//                    }
+//                }
+//                .padding(.horizontal)
+//                .padding(.top)
+//                .foregroundColor(.yellow)
+//                .imageScale(.large)
+//                .fontWeight(.bold)
             }
         }
         .navigationViewStyle(.stack)
@@ -135,128 +294,71 @@ struct AwarenessView: View {
     }
     
     var trackerStatus: some View {
-        VStack(spacing: 10) {
-            if(settingsStore.enableAdvancedMode) {
-                MapView(
-                    region: $manager.region,
-                    mapType: $settingsStore.mapTypeDisplay
-                )
-                .ignoresSafeArea(edges: .all)
-            } else {
-                Text(settingsStore.callSign)
-                    .foregroundColor(.white)
-                    .bold()
-                    .padding(.top, 10)
-                
-                VStack(alignment: .leading) {
-                    Text("Location (\(displayUIState.coordinateText()))").padding(.leading, 5)
-                    ForEach(displayUIState.coordinateValue(location: manager.lastLocation).lines, id: \.id) { line in
-                        HStack {
-                            if(line.hasLineTitle()) {
-                                Text(line.lineTitle).padding(.leading, 5)
-                                Spacer()
-                                Text(line.lineContents)
-                            } else {
-                                Spacer()
-                                Text(line.lineContents).padding(.leading, 5)
-                            }
-                            Spacer()
-                        }.font(.system(size: 30))
-                    }
-                }
-                .border(.blue)
-                .foregroundColor(.white)
-                .background(.black)
-                .padding(10)
-                .onTapGesture {
-                    displayUIState.nextLocationUnit()
-                }
-                
-                HStack(alignment: .center) {
-                    VStack {
-                        Text("Heading")
-                            .frame(maxWidth: .infinity)
-                        Text("(\(displayUIState.headingText(unit: displayUIState.currentHeadingUnit)))")
-                            .frame(maxWidth: .infinity)
-                        Text(displayUIState.headingValue(
-                            unit: displayUIState.currentHeadingUnit,
-                            heading: manager.lastHeading)).font(.system(size: 30))
-                    }
-                    .background(.black)
-                    .border(.blue)
-                    .onTapGesture {
-                        displayUIState.nextHeadingUnit()
-                    }
-                    VStack {
-                        Text("Compass")
-                            .frame(maxWidth: .infinity)
-                        Text("(\(displayUIState.headingText(unit: displayUIState.currentCompassUnit)))")
-                            .frame(maxWidth: .infinity)
-                        Text(displayUIState.headingValue(
-                            unit: displayUIState.currentCompassUnit,
-                            heading: manager.lastHeading)).font(.system(size: 30))
-                    }
-                    .background(.black)
-                    .border(.blue)
-                    .onTapGesture {
-                        displayUIState.nextCompassUnit()
-                    }
-                    
-                    VStack {
-                        Text("Speed")
-                            .frame(maxWidth: .infinity)
-                        Text("(\(displayUIState.speedText()))")
-                            .frame(maxWidth: .infinity)
-                        Text(displayUIState.speedValue(
-                            location: manager.lastLocation)).font(.system(size: 30))
-                    }
-                    .background(.black)
-                    .border(.blue)
-                    .onTapGesture {
-                        displayUIState.nextSpeedUnit()
-                    }
-                }
-                .foregroundColor(.white)
-                .padding(10)
-                Spacer()
-            }
-        }
+        MapView(
+            region: $manager.region,
+            mapType: $settingsStore.mapTypeDisplay,
+            isAcquiringBloodhoundTarget: $isAcquiringBloodhoundTarget
+        )
+        .ignoresSafeArea(edges: .all)
     }
-    var toolbarItemsLeft: some View {
-        Group {
+
+    var toolbarItemsRight: some View {
+        HStack {
+            Spacer()
+
+//            Button(action: {
+//                print("Clearing...")
+//                mapPointsData.forEach { row in
+//                    dataContext.delete(row)
+//                }
+//                do {
+//                    try dataContext.save()
+//                    print("All Clear")
+//                } catch {
+//                    print("ERROR saving deletes: \(error)")
+//                }
+//            }) {
+//                Image(systemName: "clear.fill")
+//            }
+//
+//            Button(action: {
+//                print("Adding...")
+//                let mapPointData = COTData(context: dataContext)
+//                mapPointData.id = UUID()
+//                mapPointData.callsign = "Point \(Int.random(in: 1...1000))"
+//                mapPointData.latitude = Double.random(in: 37.5...37.9)
+//                mapPointData.longitude = -Double.random(in: 122.1...122.5)
+//                try? dataContext.save()
+//            }) {
+//                Image(systemName: "plus")
+//            }
+
+            Button(action: { isAcquiringBloodhoundTarget.toggle() }) {
+                Image("bloodhound")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .colorMultiply((isAcquiringBloodhoundTarget ? .red : .yellow))
+                    .frame(width: 20.0)
+            }
+            
             Button(action: { sheet = .emergencySettings }) {
                 Image(systemName: "exclamationmark.triangle")
-                    .imageScale(.large)
-                    .foregroundColor(settingsStore.isAlertActivated ? .red : .white)
+                    .foregroundColor(settingsStore.isAlertActivated ? .red : .yellow)
             }
             
             Button(action: { sheet = .chat }) {
                 Image(systemName: "bubble.left")
-                    .imageScale(.large)
-                    .foregroundColor(.white)
-            }
-        }
-    }
-    var toolbarItems: some View {
-        Group {
-            Button(action: { sheet = .emergencySettings }) {
-                Image(systemName: "exclamationmark.triangle")
-                    .imageScale(.large)
-                    .foregroundColor(settingsStore.isAlertActivated ? .red : .white)
-            }
-            
-            Button(action: { sheet = .chat }) {
-                Image(systemName: "bubble.left")
-                    .imageScale(.large)
-                    .foregroundColor(.white)
             }
             
             Button(action: { sheet = .settings }) {
-                Image(systemName: "gear")
-                    .imageScale(.large)
-                    .foregroundColor(.white)
+                Image(systemName: "line.3.horizontal")
             }
         }
+        .padding(.horizontal)
+        .padding(.top)
+        .foregroundColor(.yellow)
+        .imageScale(.large)
+        .fontWeight(.bold)
     }
     
     var serverStatus: some View {

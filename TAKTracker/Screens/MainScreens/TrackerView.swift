@@ -151,16 +151,7 @@ struct TrackerView: View {
             }
             .foregroundColor(.white)
             .padding(10)
-            
-            if(settingsStore.enableAdvancedMode) {
-                MapView(
-                    region: $manager.region,
-                    mapType: $settingsStore.mapTypeDisplay
-                )
-                .ignoresSafeArea(edges: .all)
-            } else {
-                Spacer()
-            }
+            Spacer()
         }
     }
     var toolbarItemsLeft: some View {

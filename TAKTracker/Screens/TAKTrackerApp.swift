@@ -14,6 +14,7 @@ struct TAKTrackerApp: App {
     @StateObject var locationManager: LocationManager = LocationManager()
     @StateObject var takManager: TAKManager = TAKManager()
     @StateObject var settingsStore = SettingsStore.global
+    @StateObject private var dataController = DataController.shared
     
     init() {
         TAKLogger.debug("Hello, TAK Tracker!")
@@ -26,7 +27,9 @@ struct TAKTrackerApp: App {
                     .environmentObject(locationManager)
                     .environmentObject(takManager)
                     .environmentObject(settingsStore)
+                    .environment(\.managedObjectContext, dataController.cotDataContainer.viewContext)
                     .onAppear {
+                        dataController.startCleanUpTimer()
                         settingsStore.isConnectingToServer = false
                         settingsStore.connectionStatus = "Disconnected"
                         settingsStore.isConnectedToServer = false
@@ -39,7 +42,9 @@ struct TAKTrackerApp: App {
                     .environmentObject(locationManager)
                     .environmentObject(takManager)
                     .environmentObject(settingsStore)
+                    .environment(\.managedObjectContext, dataController.cotDataContainer.viewContext)
                     .onAppear {
+                        dataController.startCleanUpTimer()
                         settingsStore.isConnectingToServer = false
                         settingsStore.connectionStatus = "Disconnected"
                         settingsStore.isConnectedToServer = false
