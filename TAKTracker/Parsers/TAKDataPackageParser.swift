@@ -62,10 +62,8 @@ class TAKDataPackageParser: NSObject {
         
         do {
             try serverCerts.forEach { serverCert in
-                print(serverCert)
                 let p12Bundle = try NIOSSLPKCS12Bundle(buffer: Array(serverCert.certificateData), passphrase: Array(serverCert.certificatePassword.utf8))
                 try p12Bundle.certificateChain.forEach { cert in
-                    print(cert)
                     try serverCertChain.append(Data(cert.toDERBytes()))
                 }
             }
