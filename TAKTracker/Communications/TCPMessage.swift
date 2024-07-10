@@ -197,6 +197,18 @@ class TCPMessage: NSObject, ObservableObject {
         connection!.start(queue: .global())
     }
     
+    func receive(content: Data?, error: NWError?, connection: NWConnection?) {
+        guard let data = content else { return }
+
+        let parser = StreamParser()
+        parser.parseCoTStream(dataStream: data)
+
+        self.connection?.receive(minimumIncompleteLength: 0, maximumLength: 8000) { content, _, _, error in
+            self.receive(content: content, error: error, connection: connection)
+        }
+        
+      }
+    
     func connectionFailed() {
         DispatchQueue.main.async {
             SettingsStore.global.isConnectingToServer = false
@@ -205,7 +217,7 @@ class TCPMessage: NSObject, ObservableObject {
     
     func betterPathUpdateHandler(betterPathAvailable: Bool) {
         if (betterPathAvailable) {
-            TAKLogger.debug("[TCPMessage]: A better path is availble")
+            TAKLogger.debug("[TCPMessage]: A better path is available")
         } else {
             TAKLogger.debug("[TCPMessage]: No better path is available")
         }
@@ -245,6 +257,9 @@ class TCPMessage: NSObject, ObservableObject {
                 SettingsStore.global.isConnectedToServer = true
                 SettingsStore.global.isConnectingToServer = false
                 SettingsStore.global.connectionStatus = ConnectionStatus.Connected.description
+                self.connection?.receive(minimumIncompleteLength: 0, maximumLength: 8000) { content, _, _, error in
+                    self.receive(content: content, error: error, connection: self.connection)
+                }
             }
         case .setup:
             TAKLogger.debug("[TCPMessage]: Entered state: setup")
