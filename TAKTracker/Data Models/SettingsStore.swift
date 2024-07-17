@@ -115,6 +115,12 @@ class SettingsStore: ObservableObject {
         }
     }
     
+    @Published var takServerSecureAPIPort: String {
+        didSet {
+            UserDefaults.standard.set(takServerSecureAPIPort, forKey: "takServerSecureAPIPort")
+        }
+    }
+    
     @Published var takServerProtocol: String {
         didSet {
             UserDefaults.standard.set(takServerProtocol, forKey: "takServerProtocol")
@@ -271,6 +277,8 @@ class SettingsStore: ObservableObject {
         self.takServerPort = (UserDefaults.standard.object(forKey: "takServerPort") == nil ? TAKConstants.DEFAULT_STREAMING_PORT : UserDefaults.standard.object(forKey: "takServerPort") as! String)
         
         self.takServerCSRPort = (UserDefaults.standard.object(forKey: "takServerCSRPort") == nil ? TAKConstants.DEFAULT_CSR_PORT : UserDefaults.standard.object(forKey: "takServerCSRPort") as! String)
+        
+        self.takServerSecureAPIPort = (UserDefaults.standard.object(forKey: "takServerSecureAPIPort") == nil ? TAKConstants.DEFAULT_SECURE_API_PORT : UserDefaults.standard.object(forKey: "takServerSecureAPIPort") as! String)
         
         self.takServerProtocol = (UserDefaults.standard.object(forKey: "takServerProtocol") == nil ? "ssl" : UserDefaults.standard.object(forKey: "takServerProtocol") as! String)
         

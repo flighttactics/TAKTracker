@@ -249,6 +249,7 @@ struct ConnectionOptionsScreen: View {
     
     @State var formServerURL = ""
     @State var formServerPort = ""
+    @State var formSecureAPIPort = ""
     @State var formUsername = ""
     @State var formPassword = ""
     @State var formCSRPort = ""
@@ -354,9 +355,9 @@ struct ConnectionOptionsScreen: View {
                     ) {
                         VStack {
                             HStack {
-                                Text("Port")
+                                Text("Streaming Port")
                                     .foregroundColor(.secondary)
-                                TextField("Server Port", text: $formServerPort)
+                                TextField("Streaming Port", text: $formServerPort)
                                     .keyboardType(.numberPad)
                             }
                         }
@@ -366,6 +367,15 @@ struct ConnectionOptionsScreen: View {
                                 Text("CSR Port")
                                     .foregroundColor(.secondary)
                                 TextField("CSR Port", text: $formCSRPort)
+                                    .keyboardType(.numberPad)
+                            }
+                        }
+                        
+                        VStack {
+                            HStack {
+                                Text("Secure API Port")
+                                    .foregroundColor(.secondary)
+                                TextField("Secure API Port", text: $formSecureAPIPort)
                                     .keyboardType(.numberPad)
                             }
                         }
@@ -388,6 +398,7 @@ struct ConnectionOptionsScreen: View {
                             settingsStore.takServerUsername = formUsername
                             settingsStore.takServerPassword = formPassword
                             settingsStore.takServerCSRPort = formCSRPort
+                            settingsStore.takServerSecureAPIPort = formSecureAPIPort
                             csrRequest.beginEnrollment()
                         }
                         .buttonStyle(.borderedProminent)
@@ -434,6 +445,7 @@ struct ConnectionOptionsScreen: View {
             formUsername = settingsStore.takServerUsername
             formPassword = settingsStore.takServerPassword
             formCSRPort = settingsStore.takServerCSRPort
+            formSecureAPIPort = settingsStore.takServerSecureAPIPort
         })
     }
 }

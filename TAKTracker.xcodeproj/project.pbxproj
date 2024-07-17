@@ -3373,6 +3373,10 @@
 		A5D8D3992A53B0FB002F0E3E /* TAKTrackerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D8D3982A53B0FB002F0E3E /* TAKTrackerUITests.swift */; };
 		A5D8D39B2A53B0FB002F0E3E /* TAKTrackerUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D8D39A2A53B0FB002F0E3E /* TAKTrackerUITestsLaunchTests.swift */; };
 		A5D8D3A82A53B465002F0E3E /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D8D3A72A53B465002F0E3E /* LocationManager.swift */; };
+		A5E2D0BB2C3F1E47009FCD51 /* ChannelOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E2D0BA2C3F1E47009FCD51 /* ChannelOptions.swift */; };
+		A5E2D0BD2C3F218B009FCD51 /* ChannelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E2D0BC2C3F218B009FCD51 /* ChannelManager.swift */; };
+		A5E2D0BE2C3F218B009FCD51 /* ChannelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E2D0BC2C3F218B009FCD51 /* ChannelManager.swift */; };
+		A5E2D0C02C3F8D84009FCD51 /* ChannelManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E2D0BF2C3F8D84009FCD51 /* ChannelManagerTests.swift */; };
 		A5E7B00B2A70B5FA00D9203F /* TAKDataPackageParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E7B00A2A70B5F900D9203F /* TAKDataPackageParser.swift */; };
 		A5E7B0182A76AA8B00D9203F /* TAKLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E7B0172A76AA8B00D9203F /* TAKLogger.swift */; };
 		A5FB4E622A8FDF430034966D /* X509 in Frameworks */ = {isa = PBXBuildFile; productRef = A5FB4E612A8FDF430034966D /* X509 */; };
@@ -6784,6 +6788,9 @@
 		A5D8D3982A53B0FB002F0E3E /* TAKTrackerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TAKTrackerUITests.swift; sourceTree = "<group>"; };
 		A5D8D39A2A53B0FB002F0E3E /* TAKTrackerUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TAKTrackerUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		A5D8D3A72A53B465002F0E3E /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
+		A5E2D0BA2C3F1E47009FCD51 /* ChannelOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelOptions.swift; sourceTree = "<group>"; };
+		A5E2D0BC2C3F218B009FCD51 /* ChannelManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelManager.swift; sourceTree = "<group>"; };
+		A5E2D0BF2C3F8D84009FCD51 /* ChannelManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelManagerTests.swift; sourceTree = "<group>"; };
 		A5E7B00A2A70B5F900D9203F /* TAKDataPackageParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TAKDataPackageParser.swift; sourceTree = "<group>"; };
 		A5E7B0172A76AA8B00D9203F /* TAKLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TAKLogger.swift; sourceTree = "<group>"; };
 		A5FB4E632A8FE0020034966D /* CSRRequestor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CSRRequestor.swift; sourceTree = "<group>"; };
@@ -6889,6 +6896,7 @@
 				A55ABF522ABDC11900195AB7 /* AboutInformation.swift */,
 				A51B12E92BB1E28800C25239 /* AdvancedOptions.swift */,
 				A51B12EB2BB1E29800C25239 /* SituationalAwarenessOptions.swift */,
+				A5E2D0BA2C3F1E47009FCD51 /* ChannelOptions.swift */,
 			);
 			path = SettingsScreens;
 			sourceTree = "<group>";
@@ -10278,6 +10286,7 @@
 				A5014F9D2C17973E00BE40C1 /* MigratorTests.swift */,
 				A5B312C92C39D1F0007B3914 /* IconDataTests.swift */,
 				A5B312CB2C39DD03007B3914 /* StreamParserTests.swift */,
+				A5E2D0BF2C3F8D84009FCD51 /* ChannelManagerTests.swift */,
 			);
 			path = TAKTrackerTests;
 			sourceTree = "<group>";
@@ -10308,6 +10317,7 @@
 				A5BF01FF2A5EB63F0043065B /* UDPMessage.swift */,
 				A5FB4E632A8FE0020034966D /* CSRRequestor.swift */,
 				A59C08462AACF95100C33B44 /* CertificateManager.swift */,
+				A5E2D0BC2C3F218B009FCD51 /* ChannelManager.swift */,
 			);
 			path = Communications;
 			sourceTree = "<group>";
@@ -13958,6 +13968,7 @@
 				A51B12EA2BB1E28800C25239 /* AdvancedOptions.swift in Sources */,
 				A55ABF472ABDBFEA00195AB7 /* ServerInformation.swift in Sources */,
 				A5BF02022A5EBCA40043065B /* TCPMessage.swift in Sources */,
+				A5E2D0BD2C3F218B009FCD51 /* ChannelManager.swift in Sources */,
 				A55ABF452ABDBF9A00195AB7 /* UserInformation.swift in Sources */,
 				A50C5F5F2A6032D2001E52E6 /* EmergencyView.swift in Sources */,
 				A59C08472AACF95100C33B44 /* CertificateManager.swift in Sources */,
@@ -13967,6 +13978,7 @@
 				4630FD1A2B5071BD00988ED4 /* ChatViewModel.swift in Sources */,
 				A55ABF4B2ABDC05800195AB7 /* AdvancedModeToggle.swift in Sources */,
 				4630FD1E2B5072D300988ED4 /* Sheet.swift in Sources */,
+				A5E2D0BB2C3F1E47009FCD51 /* ChannelOptions.swift in Sources */,
 				A5B312CE2C39DD38007B3914 /* StreamParser.swift in Sources */,
 				A5B312D62C3AC940007B3914 /* COTUserIcon.swift in Sources */,
 			);
@@ -13992,9 +14004,11 @@
 				A54F70872AB0AEA400D8C541 /* DataPackageParserTests.swift in Sources */,
 				A5FB4E7C2AAA4B4F0034966D /* SettingsStore.swift in Sources */,
 				A55CE96D2AB1D8A20081AF86 /* ConverterTests.swift in Sources */,
+				A5E2D0C02C3F8D84009FCD51 /* ChannelManagerTests.swift in Sources */,
 				A5B312DA2C3AC94F007B3914 /* COTColor.swift in Sources */,
 				A5B312BC2C38C5A6007B3914 /* COTData.xcdatamodeld in Sources */,
 				A5582CC32AD5CB4600DE0D5C /* TAKTrackerTestCase.swift in Sources */,
+				A5E2D0BE2C3F218B009FCD51 /* ChannelManager.swift in Sources */,
 				A5FB4E782AAA49D30034966D /* TestConstants.swift in Sources */,
 				A5FB4E6B2AA751890034966D /* CertificateSigningRequestTests.swift in Sources */,
 				A5B1FF652C3B86D600C7F546 /* UIImage+Extension.swift in Sources */,
@@ -14158,7 +14172,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = TAKTracker/TAKTracker.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 72;
+				CURRENT_PROJECT_VERSION = 80;
 				DEVELOPMENT_ASSET_PATHS = "TAKTracker/Preview\\ Content";
 				DEVELOPMENT_TEAM = 5LZ5HR44P3;
 				ENABLE_PREVIEWS = YES;
@@ -14169,13 +14183,14 @@
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.navigation";
 				INFOPLIST_KEY_NSCameraUsageDescription = "TAK Tracker uses the camera to scan QR codes and to capture photos for sharing on the map";
 				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "Allow TAK Tracker to access the local network to broadcast CoT?";
-				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "TAK Tracker can continue to share your location in the background with your teammates and connected TAK Servers for situational awareness";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "TAK Tracker uses your location to share with your teammates and connected TAK Servers for situational awareness";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Allow TAK Tracker to access and share your location with teammates and connected TAK Servers for situational awareness";
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "TAK Tracker can continue to share your location in the background with your teammates and connected TAK Servers for situational awareness";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Allow TAK Tracker to access and share your location with teammates and connected TAK Servers for situational awareness";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -14198,7 +14213,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = TAKTracker/TAKTracker.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 72;
+				CURRENT_PROJECT_VERSION = 80;
 				DEVELOPMENT_ASSET_PATHS = "TAKTracker/Preview\\ Content";
 				DEVELOPMENT_TEAM = 5LZ5HR44P3;
 				ENABLE_PREVIEWS = YES;
@@ -14209,13 +14224,14 @@
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.navigation";
 				INFOPLIST_KEY_NSCameraUsageDescription = "TAK Tracker uses the camera to scan QR codes and to capture photos for sharing on the map";
 				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "Allow TAK Tracker to access the local network to broadcast CoT?";
-				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "TAK Tracker can continue to share your location in the background with your teammates and connected TAK Servers for situational awareness";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "TAK Tracker uses your location to share with your teammates and connected TAK Servers for situational awareness";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Allow TAK Tracker to access and share your location with teammates and connected TAK Servers for situational awareness";
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "TAK Tracker can continue to share your location in the background with your teammates and connected TAK Servers for situational awareness";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Allow TAK Tracker to access and share your location with teammates and connected TAK Servers for situational awareness";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -14236,7 +14252,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 72;
+				CURRENT_PROJECT_VERSION = 73;
 				DEVELOPMENT_TEAM = 5LZ5HR44P3;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -14258,7 +14274,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 72;
+				CURRENT_PROJECT_VERSION = 73;
 				DEVELOPMENT_TEAM = 5LZ5HR44P3;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -14278,7 +14294,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 72;
+				CURRENT_PROJECT_VERSION = 73;
 				DEVELOPMENT_TEAM = 5LZ5HR44P3;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.1;
@@ -14296,7 +14312,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 72;
+				CURRENT_PROJECT_VERSION = 73;
 				DEVELOPMENT_TEAM = 5LZ5HR44P3;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.1;

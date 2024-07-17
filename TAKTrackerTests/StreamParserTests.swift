@@ -34,4 +34,30 @@ final class StreamParserTests: TAKTrackerTestCase {
         XCTAssertEqual(1, events.count, "Parser did not split properly")
         XCTAssertEqual(event1, String(events[0]), "Parser split did not match event1")
     }
+    
+    func testWS() {
+        let urlSession = URLSession.shared
+        let url: URL = URL(string: "ws://localhost:8080")!
+        let body: Data = Data("<xml version='1.0'><event></event>".utf8)
+        var request = URLRequest(
+            url: url,
+            cachePolicy: .reloadIgnoringLocalCacheData
+        )
+        request.httpMethod = "PUT"
+
+        print("uploadTask")
+        let task = urlSession.uploadTask(
+            with: request,
+            from: body,
+            completionHandler: { data, response, error in
+                print(data)
+                print(response)
+                print(error)
+            }
+        )
+
+        print("Resuming")
+        task.resume()
+        sleep(5)
+    }
 }

@@ -75,7 +75,6 @@ struct MapView: UIViewRepresentable {
 
     func updateUIView(_ view: MKMapView, context: Context) {
         view.mapType = MKMapType(rawValue: UInt(mapType))!
-        print("[mapView] updateUIView")
         updateAnnotations(from: view)
     }
     
@@ -151,10 +150,10 @@ struct MapView: UIViewRepresentable {
         
         func mapView(_ mapView: MKMapView, didSelect annotation: any MKAnnotation) {
             guard let mpAnnotation = annotation as? MapPointAnnotation? else {
-                print("[mapView] Unknown annotation type selected")
+                TAKLogger.debug("[MapView] Unknown annotation type selected")
                 return
             }
-            print("[mapView] annotation selected")
+            TAKLogger.debug("[MapView] annotation selected")
             let userLocation = mapView.userLocation.coordinate
             let endPointLocation = mpAnnotation!.coordinate
             
@@ -163,16 +162,14 @@ struct MapView: UIViewRepresentable {
             
             if(parent.isAcquiringBloodhoundTarget &&
                mapReadyForBloodhoundTarget) {
-                print("[mapView] Adding Bloodhound line")
+                TAKLogger.debug("[MapView] Adding Bloodhound line")
                 parent.activeBloodhound = MKGeodesicPolyline(coordinates: [userLocation, endPointLocation], count: 2)
                 
                 mapView.addOverlay(parent.activeBloodhound!)
                 mapView.deselectAnnotation(annotation, animated: false)
             } else {
-                print("[mapView] Parent is acquiring bloodhount and ab is \(mapView.overlays.contains(where: { $0.isEqual(parent.activeBloodhound) }))")
+                TAKLogger.debug("[MapView] Parent is acquiring bloodhount and ab is \(mapView.overlays.contains(where: { $0.isEqual(parent.activeBloodhound) }))")
             }
-            
-            print("[mapView] Hello! \(mpAnnotation!.title ?? "N/A") clicked")
         }
         
         func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
@@ -284,7 +281,10 @@ struct AwarenessView: View {
             }
         }
         .navigationViewStyle(.stack)
-        .fullScreenCover(item: $sheet, content: { Sheet(type: $0) })
+        .sheet(item: $sheet, content: {
+            Sheet(type: $0)
+                //.presentationCompactAdaptation(.none)
+        })
         .background(Color.baseMediumGray)
         .ignoresSafeArea()
         .overlay(alignment: .bottomTrailing, content: {

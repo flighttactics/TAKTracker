@@ -31,6 +31,7 @@ class LocationManager: NSObject,CLLocationManagerDelegate, ObservableObject {
     }
     
     func requestAlwaysAuthorization() {
+        TAKLogger.debug("[LocationManager]: Request Location Authorization")
         manager.requestWhenInUseAuthorization()
         manager.requestAlwaysAuthorization()
     }
@@ -57,6 +58,7 @@ class LocationManager: NSObject,CLLocationManagerDelegate, ObservableObject {
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         locationStatus = status
+        TAKLogger.debug("[LocationManager]: Location Authorization Changed to \(statusString)")
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {

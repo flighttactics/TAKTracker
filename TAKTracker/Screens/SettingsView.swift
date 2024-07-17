@@ -35,6 +35,7 @@ struct SettingsView: View {
                 Section {
                     SituationalAwarenessOptions()
                     AdvancedOptions()
+                    ChannelOptions()
                     AboutInformation()
                 }
             }
