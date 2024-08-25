@@ -114,6 +114,12 @@ class SettingsStore: ObservableObject {
         }
     }
     
+    @Published var takServerSecureAPIPort: String {
+        didSet {
+            UserDefaults.standard.set(takServerSecureAPIPort, forKey: "takServerSecureAPIPort")
+        }
+    }
+    
     @Published var takServerProtocol: String {
         didSet {
             UserDefaults.standard.set(takServerProtocol, forKey: "takServerProtocol")
@@ -250,9 +256,34 @@ class SettingsStore: ObservableObject {
             UserDefaults.standard.set(lastAppVersionRun, forKey: "lastAppVersionRun")
         }
     }
+    
+    // @Published var sitxAuthToken: String {
+    //     didSet {
+    //         UserDefaults.standard.set(sitxAuthToken, forKey: "sitxAuthToken")
+    //     }
+    // }
+    
+    // @Published var sitxRefreshToken: String {
+    //     didSet {
+    //         UserDefaults.standard.set(sitxRefreshToken, forKey: "sitxRefreshToken")
+    //     }
+    // }
+    
+    // @Published var sitxDomain: String {
+    //     didSet {
+    //         UserDefaults.standard.set(sitxDomain, forKey: "sitxDomain")
+    //     }
+    // }
 
     private init() {
         let defaultSign = SettingsStore.generateDefaultCallSign()
+
+        // self.sitxDomain = (UserDefaults.standard.object(forKey: "sitxDomain") == nil ? "" : UserDefaults.standard.object(forKey: "sitxDomain") as! String)
+        
+        // self.sitxAuthToken = (UserDefaults.standard.object(forKey: "sitxAuthToken") == nil ? "" : UserDefaults.standard.object(forKey: "sitxAuthToken") as! String)
+        
+        // self.sitxRefreshToken = (UserDefaults.standard.object(forKey: "sitxRefreshToken") == nil ? "" : UserDefaults.standard.object(forKey: "sitxRefreshToken") as! String)
+        
         self.lastAppVersionRun = (UserDefaults.standard.object(forKey: "lastAppVersionRun") == nil ? "" : UserDefaults.standard.object(forKey: "lastAppVersionRun") as! String)
         
         self.callSign = (UserDefaults.standard.object(forKey: "callSign") == nil ? defaultSign : UserDefaults.standard.object(forKey: "callSign") as! String)
@@ -268,8 +299,10 @@ class SettingsStore: ObservableObject {
         self.takServerUrl = (UserDefaults.standard.object(forKey: "takServerUrl") == nil ? "" : UserDefaults.standard.object(forKey: "takServerUrl") as! String)
         
         self.takServerPort = (UserDefaults.standard.object(forKey: "takServerPort") == nil ? TAKConstants.DEFAULT_STREAMING_PORT : UserDefaults.standard.object(forKey: "takServerPort") as! String)
-        
+
         self.takServerCSRPort = (UserDefaults.standard.object(forKey: "takServerCSRPort") == nil ? TAKConstants.DEFAULT_CSR_PORT : UserDefaults.standard.object(forKey: "takServerCSRPort") as! String)
+        
+        self.takServerSecureAPIPort = (UserDefaults.standard.object(forKey: "takServerSecureAPIPort") == nil ? TAKConstants.DEFAULT_SECURE_API_PORT : UserDefaults.standard.object(forKey: "takServerSecureAPIPort") as! String)
         
         self.takServerProtocol = (UserDefaults.standard.object(forKey: "takServerProtocol") == nil ? "ssl" : UserDefaults.standard.object(forKey: "takServerProtocol") as! String)
         

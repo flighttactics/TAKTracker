@@ -25,9 +25,19 @@ struct AppConstants {
     static let CERT_CONFIG_PATH = "/Marti/api/tls/config"
     static let CSR_PATH = "/Marti/api/tls/signClient/v2?clientUid=$UID&version=$VERSION"
     
+    // static let SITX_DOMAIN = "parteamconnect.com"
+    // static let SITX_AUTH_CODE_REQUEST_PATH = "/api/v1/device/authorization/code"
+    // static let SITX_AUTH_CODE_TOKEN_PATH = "/api/v1/device/authorization/token"
+    // static let SITX_AUTH_CODE_ACCESS_TOKEN_PATH = "/api/v1/access/token"
+    
     static let UDP_BROADCAST_URL = "239.2.3.1"
     
     // Helper Functions
+    
+    // static func sitxUrl(path: String) -> String {
+    //     return "\(SettingsStore.global.sitxDomain).\(SITX_DOMAIN)\(path)"
+    // }
+    
     static func certificateSigningPath(clientUid: String, appVersion: String) -> String {
         return AppConstants.CSR_PATH
             .replacingOccurrences(of: "$UID", with: clientUid)
