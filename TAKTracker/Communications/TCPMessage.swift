@@ -26,12 +26,15 @@ enum ConnectionStatus : String, CustomStringConvertible {
 
 class TCPMessage: NSObject, ObservableObject {
     var connection: NWConnection?
+    var pendingPayload: Data
     
-    override init() {
+    init(initialPayload: Data) {
         TAKLogger.debug("[TCPMessage]: Init")
+        pendingPayload = initialPayload
     }
     
     func send(_ payload: Data) {
+        pendingPayload = payload
         let shouldForceReconnect = SettingsStore.global.takServerChanged
         let readyToSend = SettingsStore.global.isConnectedToServer && !shouldForceReconnect
         
@@ -246,6 +249,7 @@ class TCPMessage: NSObject, ObservableObject {
                 SettingsStore.global.isConnectingToServer = false
                 SettingsStore.global.connectionStatus = ConnectionStatus.Connected.description
             }
+            send(pendingPayload)
         case .setup:
             TAKLogger.debug("[TCPMessage]: Entered state: setup")
             DispatchQueue.main.async {

@@ -13,13 +13,15 @@ import UIKit
 
 class TAKManager: NSObject, URLSessionDelegate, ObservableObject {
     private let udpMessage = UDPMessage()
-    private let tcpMessage = TCPMessage()
-    private let cotMessage : COTMessage
+    private let tcpMessage: TCPMessage
+    private let cotMessage: COTMessage
     
     @Published var isConnectedToServer = false
     
     override init() {
         cotMessage = COTMessage(staleTimeMinutes: SettingsStore.global.staleTimeMinutes, deviceID: UIDevice.current.identifierForVendor!.uuidString, phoneModel: AppConstants.getPhoneModel(), phoneOS: AppConstants.getPhoneOS(), appPlatform: AppConstants.TAK_PLATFORM, appVersion: AppConstants.getAppReleaseAndBuildVersion())
+        let initialMsg = Data(cotMessage.generateCOTXml(positionInfo: COTPositionInformation(), callSign: SettingsStore.global.callSign, group: SettingsStore.global.team, role: SettingsStore.global.role).utf8)
+        tcpMessage = TCPMessage(initialPayload: initialMsg)
         super.init()
         udpMessage.connect()
         TAKLogger.debug("[TAKManager]: establishing TCP Message Connect")
