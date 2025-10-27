@@ -15,6 +15,28 @@
 		4630FD1C2B5071D200988ED4 /* MessageData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4630FD1B2B5071D200988ED4 /* MessageData.swift */; };
 		4630FD1E2B5072D300988ED4 /* Sheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4630FD1D2B5072D300988ED4 /* Sheet.swift */; };
 		4630FD4C2B51A34500988ED4 /* MessageModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4630FD4A2B51A34500988ED4 /* MessageModel.xcdatamodeld */; };
+		46936F3D2E95A15400F30B74 /* TeamColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46936F3C2E95A15400F30B74 /* TeamColor+Extension.swift */; };
+		469370972E97062200F30B74 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 469370952E97061400F30B74 /* AppCoordinator.swift */; };
+		4693709C2E970D3500F30B74 /* PermissionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4693709B2E970D3500F30B74 /* PermissionView.swift */; };
+		4693709E2E970D5700F30B74 /* UserInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4693709D2E970D5700F30B74 /* UserInfoView.swift */; };
+		469370A02E970D6700F30B74 /* ServerPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4693709F2E970D6700F30B74 /* ServerPageView.swift */; };
+		469370A22E970D7C00F30B74 /* FinishView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 469370A12E970D7C00F30B74 /* FinishView.swift */; };
+		469370A42E970EC700F30B74 /* OnboardingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 469370A32E970EC700F30B74 /* OnboardingManager.swift */; };
+		469370A62E970FB800F30B74 /* CustomNavigationButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 469370A52E970FB800F30B74 /* CustomNavigationButton.swift */; };
+		469370A72E970FB800F30B74 /* CustomNavigationButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 469370A52E970FB800F30B74 /* CustomNavigationButton.swift */; };
+		469371FF2E971EFD00F30B74 /* StepNavigationButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 469371FE2E971EFD00F30B74 /* StepNavigationButtons.swift */; };
+		469372002E971EFD00F30B74 /* StepNavigationButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 469371FE2E971EFD00F30B74 /* StepNavigationButtons.swift */; };
+		469372052E976D5E00F30B74 /* DataPackageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 469372042E976D5E00F30B74 /* DataPackageManager.swift */; };
+		469372062E976D5E00F30B74 /* DataPackageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 469372042E976D5E00F30B74 /* DataPackageManager.swift */; };
+		469372082E976D9800F30B74 /* CapsuleListButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 469372072E976D9800F30B74 /* CapsuleListButton.swift */; };
+		469372092E976D9800F30B74 /* CapsuleListButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 469372072E976D9800F30B74 /* CapsuleListButton.swift */; };
+		4693720B2E97776300F30B74 /* CertEnrollmentScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4693720A2E97776300F30B74 /* CertEnrollmentScreen.swift */; };
+		4693720D2E977AB500F30B74 /* ConnectionOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4693720C2E977AB500F30B74 /* ConnectionOptionsView.swift */; };
+		4693720F2E977ACF00F30B74 /* DataPackageEnrollment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4693720E2E977ACF00F30B74 /* DataPackageEnrollment.swift */; };
+		46A15B212EA22D2800DEDB25 /* ServerInformationDisplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A15B202EA22D2800DEDB25 /* ServerInformationDisplay.swift */; };
+		46A15B232EA24BB000DEDB25 /* QRScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A15B222EA24BB000DEDB25 /* QRScanner.swift */; };
+		46A15B242EA24BB000DEDB25 /* QRScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A15B222EA24BB000DEDB25 /* QRScanner.swift */; };
+		46A15B902EAD773E00DEDB25 /* FileUploadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A15B8F2EAD773E00DEDB25 /* FileUploadingView.swift */; };
 		479B8B617AB264363ABCD93B /* Pods_TAKTracker_TAKTrackerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEFD401A913144B7229D2781 /* Pods_TAKTracker_TAKTrackerTests.framework */; };
 		A5014F9B2C178C5300BE40C1 /* Migrator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5014F9A2C178C5300BE40C1 /* Migrator.swift */; };
 		A5014F9C2C178C5300BE40C1 /* Migrator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5014F9A2C178C5300BE40C1 /* Migrator.swift */; };
@@ -125,6 +147,23 @@
 		4630FD1B2B5071D200988ED4 /* MessageData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageData.swift; sourceTree = "<group>"; };
 		4630FD1D2B5072D300988ED4 /* Sheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sheet.swift; sourceTree = "<group>"; };
 		4630FD4B2B51A34500988ED4 /* Message.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Message.xcdatamodel; sourceTree = "<group>"; };
+		46936F3C2E95A15400F30B74 /* TeamColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TeamColor+Extension.swift"; sourceTree = "<group>"; };
+		469370952E97061400F30B74 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
+		4693709B2E970D3500F30B74 /* PermissionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionView.swift; sourceTree = "<group>"; };
+		4693709D2E970D5700F30B74 /* UserInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoView.swift; sourceTree = "<group>"; };
+		4693709F2E970D6700F30B74 /* ServerPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerPageView.swift; sourceTree = "<group>"; };
+		469370A12E970D7C00F30B74 /* FinishView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinishView.swift; sourceTree = "<group>"; };
+		469370A32E970EC700F30B74 /* OnboardingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingManager.swift; sourceTree = "<group>"; };
+		469370A52E970FB800F30B74 /* CustomNavigationButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavigationButton.swift; sourceTree = "<group>"; };
+		469371FE2E971EFD00F30B74 /* StepNavigationButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepNavigationButtons.swift; sourceTree = "<group>"; };
+		469372042E976D5E00F30B74 /* DataPackageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataPackageManager.swift; sourceTree = "<group>"; };
+		469372072E976D9800F30B74 /* CapsuleListButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapsuleListButton.swift; sourceTree = "<group>"; };
+		4693720A2E97776300F30B74 /* CertEnrollmentScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CertEnrollmentScreen.swift; sourceTree = "<group>"; };
+		4693720C2E977AB500F30B74 /* ConnectionOptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionOptionsView.swift; sourceTree = "<group>"; };
+		4693720E2E977ACF00F30B74 /* DataPackageEnrollment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataPackageEnrollment.swift; sourceTree = "<group>"; };
+		46A15B202EA22D2800DEDB25 /* ServerInformationDisplay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerInformationDisplay.swift; sourceTree = "<group>"; };
+		46A15B222EA24BB000DEDB25 /* QRScanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRScanner.swift; sourceTree = "<group>"; };
+		46A15B8F2EAD773E00DEDB25 /* FileUploadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileUploadingView.swift; sourceTree = "<group>"; };
 		4B2EC40D21C80BEBE05D29F8 /* Pods-TAKTracker.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TAKTracker.debug.xcconfig"; path = "Target Support Files/Pods-TAKTracker/Pods-TAKTracker.debug.xcconfig"; sourceTree = "<group>"; };
 		94A6A10561B512E86B0E9DC2 /* Pods-TAKTracker.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TAKTracker.release.xcconfig"; path = "Target Support Files/Pods-TAKTracker/Pods-TAKTracker.release.xcconfig"; sourceTree = "<group>"; };
 		A5014F9A2C178C5300BE40C1 /* Migrator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Migrator.swift; sourceTree = "<group>"; };
@@ -249,6 +288,7 @@
 		4630FD152B5071BD00988ED4 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				46936F3C2E95A15400F30B74 /* TeamColor+Extension.swift */,
 				4630FD162B5071BD00988ED4 /* String+Extension.swift */,
 			);
 			path = Extensions;
@@ -258,13 +298,47 @@
 			isa = PBXGroup;
 			children = (
 				4630FD182B5071BD00988ED4 /* ChatViewModel.swift */,
+				469370A32E970EC700F30B74 /* OnboardingManager.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		469370982E970CF000F30B74 /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				469370952E97061400F30B74 /* AppCoordinator.swift */,
+			);
+			path = Coordinator;
+			sourceTree = "<group>";
+		};
+		469370992E970D0700F30B74 /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				A5AA51092AC33488006696B2 /* OnboardingView.swift */,
+				4693709A2E970D1300F30B74 /* Pages */,
+			);
+			path = Onboarding;
+			sourceTree = "<group>";
+		};
+		4693709A2E970D1300F30B74 /* Pages */ = {
+			isa = PBXGroup;
+			children = (
+				46A15B8F2EAD773E00DEDB25 /* FileUploadingView.swift */,
+				4693720E2E977ACF00F30B74 /* DataPackageEnrollment.swift */,
+				4693720C2E977AB500F30B74 /* ConnectionOptionsView.swift */,
+				4693720A2E97776300F30B74 /* CertEnrollmentScreen.swift */,
+				4693709B2E970D3500F30B74 /* PermissionView.swift */,
+				4693709D2E970D5700F30B74 /* UserInfoView.swift */,
+				4693709F2E970D6700F30B74 /* ServerPageView.swift */,
+				469370A12E970D7C00F30B74 /* FinishView.swift */,
+			);
+			path = Pages;
 			sourceTree = "<group>";
 		};
 		A55ABF432ABDBF7600195AB7 /* SettingsScreens */ = {
 			isa = PBXGroup;
 			children = (
+				46A15B202EA22D2800DEDB25 /* ServerInformationDisplay.swift */,
 				A55ABF442ABDBF9A00195AB7 /* UserInformation.swift */,
 				A55ABF462ABDBFEA00195AB7 /* ServerInformation.swift */,
 				A55ABF482ABDC02200195AB7 /* ConnectionOptions.swift */,
@@ -309,6 +383,8 @@
 		A5D8D37C2A53B0F9002F0E3E /* TAKTracker */ = {
 			isa = PBXGroup;
 			children = (
+				469370992E970D0700F30B74 /* Onboarding */,
+				469370982E970CF000F30B74 /* Coordinator */,
 				4630FD152B5071BD00988ED4 /* Extensions */,
 				4630FD172B5071BD00988ED4 /* ViewModel */,
 				A5E2F8FC2A791F0600EDD0B4 /* Communications */,
@@ -390,7 +466,6 @@
 				A50C5F5C2A601CF0001E52E6 /* SettingsView.swift */,
 				A5D8D37D2A53B0F9002F0E3E /* TAKTrackerApp.swift */,
 				A50C5F5E2A6032D2001E52E6 /* EmergencyView.swift */,
-				A5AA51092AC33488006696B2 /* OnboardingView.swift */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -410,6 +485,11 @@
 		A5E2F8FF2A791F6B00EDD0B4 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				46A15B222EA24BB000DEDB25 /* QRScanner.swift */,
+				469372072E976D9800F30B74 /* CapsuleListButton.swift */,
+				469372042E976D5E00F30B74 /* DataPackageManager.swift */,
+				469371FE2E971EFD00F30B74 /* StepNavigationButtons.swift */,
+				469370A52E970FB800F30B74 /* CustomNavigationButton.swift */,
 				A5E7B0172A76AA8B00D9203F /* TAKLogger.swift */,
 				A55CE96A2AB1D8860081AF86 /* Converter.swift */,
 				4630FD0D2B506EC000988ED4 /* Palette+Color.swift */,
@@ -611,9 +691,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-TAKTracker-TAKTrackerTests/Pods-TAKTracker-TAKTrackerTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-TAKTracker-TAKTrackerTests/Pods-TAKTracker-TAKTrackerTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -672,9 +756,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-TAKTracker/Pods-TAKTracker-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-TAKTracker/Pods-TAKTracker-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -689,6 +777,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A5D8D3802A53B0F9002F0E3E /* MainScreen.swift in Sources */,
+				4693709C2E970D3500F30B74 /* PermissionView.swift in Sources */,
 				A55ABF4F2ABDC0A800195AB7 /* TAKOptions.swift in Sources */,
 				A5014F9B2C178C5300BE40C1 /* Migrator.swift in Sources */,
 				A5BF02002A5EB7440043065B /* UDPMessage.swift in Sources */,
@@ -697,34 +786,50 @@
 				4630FD0E2B506EC000988ED4 /* Palette+Color.swift in Sources */,
 				A5FB4E642A8FE0020034966D /* CSRRequestor.swift in Sources */,
 				A55ABF532ABDC11900195AB7 /* AboutInformation.swift in Sources */,
+				46A15B212EA22D2800DEDB25 /* ServerInformationDisplay.swift in Sources */,
+				46A15B242EA24BB000DEDB25 /* QRScanner.swift in Sources */,
 				A55ABF512ABDC0E900195AB7 /* MapOptions.swift in Sources */,
 				A5D8D37E2A53B0F9002F0E3E /* TAKTrackerApp.swift in Sources */,
 				A5CF9EEB2C5FFF37008ECFE2 /* OAuthEnrollment.swift in Sources */,
+				469370972E97062200F30B74 /* AppCoordinator.swift in Sources */,
+				469370A62E970FB800F30B74 /* CustomNavigationButton.swift in Sources */,
+				46A15B902EAD773E00DEDB25 /* FileUploadingView.swift in Sources */,
 				A5E7B00B2A70B5FA00D9203F /* TAKDataPackageParser.swift in Sources */,
+				4693709E2E970D5700F30B74 /* UserInfoView.swift in Sources */,
 				A5A49D902A5459B5009764C1 /* TAKManager.swift in Sources */,
 				4630FD4C2B51A34500988ED4 /* MessageModel.xcdatamodeld in Sources */,
 				A5390DA32C4A925100EEEEFE /* QRCodeParser.swift in Sources */,
+				46936F3D2E95A15400F30B74 /* TeamColor+Extension.swift in Sources */,
 				4630FD142B5071A100988ED4 /* MessageView.swift in Sources */,
 				A5AA510A2AC33488006696B2 /* OnboardingView.swift in Sources */,
 				A5E7B0182A76AA8B00D9203F /* TAKLogger.swift in Sources */,
+				469372092E976D9800F30B74 /* CapsuleListButton.swift in Sources */,
 				A508213F2AB3D19B00E0CBD8 /* TAKCAConfigResponseParser.swift in Sources */,
 				A55ABF492ABDC02200195AB7 /* ConnectionOptions.swift in Sources */,
 				A51B12EC2BB1E29800C25239 /* SituationalAwarenessOptions.swift in Sources */,
 				A5D8D3A82A53B465002F0E3E /* LocationManager.swift in Sources */,
 				A55ABF4D2ABDC08800195AB7 /* DeviceOptions.swift in Sources */,
 				A55CE96B2AB1D8860081AF86 /* Converter.swift in Sources */,
+				469371FF2E971EFD00F30B74 /* StepNavigationButtons.swift in Sources */,
+				4693720F2E977ACF00F30B74 /* DataPackageEnrollment.swift in Sources */,
 				4630FD1C2B5071D200988ED4 /* MessageData.swift in Sources */,
 				A51B12EA2BB1E28800C25239 /* AdvancedOptions.swift in Sources */,
+				469370A22E970D7C00F30B74 /* FinishView.swift in Sources */,
+				469370A02E970D6700F30B74 /* ServerPageView.swift in Sources */,
 				A55ABF472ABDBFEA00195AB7 /* ServerInformation.swift in Sources */,
+				4693720B2E97776300F30B74 /* CertEnrollmentScreen.swift in Sources */,
+				469372062E976D5E00F30B74 /* DataPackageManager.swift in Sources */,
 				A5BF02022A5EBCA40043065B /* TCPMessage.swift in Sources */,
 				A55ABF452ABDBF9A00195AB7 /* UserInformation.swift in Sources */,
 				A50C5F5F2A6032D2001E52E6 /* EmergencyView.swift in Sources */,
 				A59C08472AACF95100C33B44 /* CertificateManager.swift in Sources */,
 				A50C5F5D2A601CF0001E52E6 /* SettingsView.swift in Sources */,
 				A50C5F5B2A5F92FF001E52E6 /* SettingsStore.swift in Sources */,
+				469370A42E970EC700F30B74 /* OnboardingManager.swift in Sources */,
 				4630FD192B5071BD00988ED4 /* String+Extension.swift in Sources */,
 				4630FD1A2B5071BD00988ED4 /* ChatViewModel.swift in Sources */,
 				A55ABF4B2ABDC05800195AB7 /* AdvancedModeToggle.swift in Sources */,
+				4693720D2E977AB500F30B74 /* ConnectionOptionsView.swift in Sources */,
 				4630FD1E2B5072D300988ED4 /* Sheet.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -738,7 +843,10 @@
 				A5AA510F2AC35B75006696B2 /* SettingsStoreTests.swift in Sources */,
 				A5FB4E802AAA4BD70034966D /* TAKLogger.swift in Sources */,
 				A59C08482AAE105100C33B44 /* CertificateManager.swift in Sources */,
+				469372002E971EFD00F30B74 /* StepNavigationButtons.swift in Sources */,
+				469370A72E970FB800F30B74 /* CustomNavigationButton.swift in Sources */,
 				A55CE96E2AB1D8AA0081AF86 /* Converter.swift in Sources */,
+				46A15B232EA24BB000DEDB25 /* QRScanner.swift in Sources */,
 				A54F708A2AB0C41100D8C541 /* TCPMessage.swift in Sources */,
 				A5390DA42C4A925100EEEEFE /* QRCodeParser.swift in Sources */,
 				A5FB4E792AAA4B410034966D /* TAKDataPackageParser.swift in Sources */,
@@ -747,12 +855,14 @@
 				A54F70872AB0AEA400D8C541 /* DataPackageParserTests.swift in Sources */,
 				A5FB4E7C2AAA4B4F0034966D /* SettingsStore.swift in Sources */,
 				A55CE96D2AB1D8A20081AF86 /* ConverterTests.swift in Sources */,
+				469372052E976D5E00F30B74 /* DataPackageManager.swift in Sources */,
 				A5582CC32AD5CB4600DE0D5C /* TAKTrackerTestCase.swift in Sources */,
 				A5FB4E782AAA49D30034966D /* TestConstants.swift in Sources */,
 				A5390DA62C4A926800EEEEFE /* QRCodeParserTests.swift in Sources */,
 				A5FB4E6B2AA751890034966D /* CertificateSigningRequestTests.swift in Sources */,
 				A5FB4E7F2AAA4BCB0034966D /* TAKConstants.swift in Sources */,
 				A5FB4E7D2AAA4B570034966D /* CSRRequestor.swift in Sources */,
+				469372082E976D9800F30B74 /* CapsuleListButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -907,10 +1017,11 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = TAKTracker/TAKTracker.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 80;
+				CURRENT_PROJECT_VERSION = 83;
 				DEVELOPMENT_ASSET_PATHS = "TAKTracker/Preview\\ Content";
-				DEVELOPMENT_TEAM = 5LZ5HR44P3;
+				DEVELOPMENT_TEAM = 28788VBS76;
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -925,7 +1036,7 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -933,6 +1044,7 @@
 				MARKETING_VERSION = 1.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.flighttactics.TAKTracker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -947,10 +1059,11 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = TAKTracker/TAKTracker.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 80;
+				CURRENT_PROJECT_VERSION = 83;
 				DEVELOPMENT_ASSET_PATHS = "TAKTracker/Preview\\ Content";
-				DEVELOPMENT_TEAM = 5LZ5HR44P3;
+				DEVELOPMENT_TEAM = 28788VBS76;
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -965,7 +1078,7 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -973,6 +1086,7 @@
 				MARKETING_VERSION = 1.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.flighttactics.TAKTracker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -986,7 +1100,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 77;
+				CURRENT_PROJECT_VERSION = 83;
 				DEVELOPMENT_TEAM = 5LZ5HR44P3;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1008,7 +1122,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 77;
+				CURRENT_PROJECT_VERSION = 83;
 				DEVELOPMENT_TEAM = 5LZ5HR44P3;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1028,7 +1142,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 77;
+				CURRENT_PROJECT_VERSION = 83;
 				DEVELOPMENT_TEAM = 5LZ5HR44P3;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.1;
@@ -1046,7 +1160,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 77;
+				CURRENT_PROJECT_VERSION = 83;
 				DEVELOPMENT_TEAM = 5LZ5HR44P3;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.1;

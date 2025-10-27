@@ -43,29 +43,3 @@ struct ServerInformation: View {
     }
 }
 
-struct ServerInformationDisplay: View {
-    @StateObject var settingsStore: SettingsStore = SettingsStore.global
-    
-    var body: some View {
-        Group {
-            VStack {
-                HStack {
-                    Text("Host Name")
-                        .foregroundColor(.secondary)
-                    Spacer()
-                    Text(settingsStore.takServerUrl)
-                }
-            }
-            
-            VStack {
-                HStack {
-                    Text("Port")
-                        .foregroundColor(.secondary)
-                    Spacer()
-                    Text(settingsStore.takServerPort)
-                }
-            }
-        }
-        .multilineTextAlignment(.trailing)
-    }
-}

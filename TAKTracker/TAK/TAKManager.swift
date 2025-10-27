@@ -20,7 +20,7 @@ class TAKManager: NSObject, URLSessionDelegate, ObservableObject {
     
     override init() {
         cotMessage = COTMessage(staleTimeMinutes: SettingsStore.global.staleTimeMinutes, deviceID: UIDevice.current.identifierForVendor!.uuidString, phoneModel: AppConstants.getPhoneModel(), phoneOS: AppConstants.getPhoneOS(), appPlatform: AppConstants.TAK_PLATFORM, appVersion: AppConstants.getAppReleaseAndBuildVersion())
-        let initialMsg = Data(cotMessage.generateCOTXml(positionInfo: COTPositionInformation(), callSign: SettingsStore.global.callSign, group: SettingsStore.global.team, role: SettingsStore.global.role).utf8)
+        let initialMsg = Data(cotMessage.generateCOTXml(positionInfo: COTPositionInformation(), callSign: SettingsStore.global.callSign, group: SettingsStore.global.team, role: SettingsStore.global.role, phone: "").utf8)
         tcpMessage = TCPMessage(initialPayload: initialMsg)
         super.init()
         udpMessage.connect()
@@ -70,7 +70,7 @@ class TAKManager: NSObject, URLSessionDelegate, ObservableObject {
             
             let postionInfo = self.generatePositionInfo(location: location, heading: heading)
             
-            let message = self.cotMessage.generateCOTXml(positionInfo: postionInfo, callSign: SettingsStore.global.callSign, group: SettingsStore.global.team, role: SettingsStore.global.role, phoneBatteryStatus: AppConstants.getPhoneBatteryStatus().description)
+            let message = self.cotMessage.generateCOTXml(positionInfo: postionInfo, callSign: SettingsStore.global.callSign, group: SettingsStore.global.team, role: SettingsStore.global.role, phone: "", phoneBatteryStatus: AppConstants.getPhoneBatteryStatus().description)
 
             TAKLogger.debug("[TAKManager]: Getting ready to broadcast location CoT")
             TAKLogger.debug(message)

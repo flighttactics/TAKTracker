@@ -257,29 +257,30 @@ struct MainScreen: View {
             .background(Color.baseMediumGray)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                ToolbarItemGroup(placement: .principal) {
+                ToolbarItem(placement: .principal) {
                     HStack {
-                        Text("TAK Tracker").font(.headline)
+                        Text("TAK Tracker")
+                            .font(.headline)
+                            .lineLimit(1)
                         Spacer()
-                        Button(action: { sheet = .emergencySettings }) {
-                            Image(systemName: "exclamationmark.triangle")
-                                .imageScale(.large)
-                                .foregroundColor(settingsStore.isAlertActivated ? .red : .white)
-                        }
-//                        Button(action: { sheet = .chat }) {
-//                            Image(systemName: "bubble.left")
-//                                .imageScale(.large)
-//                                .foregroundColor(.white)
-//                        }
                         
-                        Button(action: { sheet = .settings }) {
-                            Image(systemName: "gear")
-                                .imageScale(.large)
-                                .foregroundColor(.white)
+                        HStack {
+                            Button(action: { sheet = .emergencySettings }) {
+                                Image(systemName: "exclamationmark.triangle")
+                                    .imageScale(.large)
+                                    .foregroundColor(settingsStore.isAlertActivated ? .red : .white)
+                            }
+                            
+                            Button(action: { sheet = .settings }) {
+                                Image(systemName: "line.3.horizontal")
+                                    .imageScale(.large)
+                                    .foregroundColor(.white)
+                            }
                         }
+                        .buttonStyle(.plain)
                     }
                 }
-            }
+            }.navigationBarTitleDisplayMode(.inline)
         }
         .navigationViewStyle(.stack)
         .fullScreenCover(item: $sheet, content: { Sheet(type: $0) })
@@ -431,7 +432,7 @@ struct MainScreen: View {
             }
             
             Button(action: { sheet = .settings }) {
-                Image(systemName: "gear")
+                Image(systemName: "line.3.horizontal")
                     .imageScale(.large)
                     .foregroundColor(.white)
             }

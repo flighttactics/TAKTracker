@@ -15,6 +15,7 @@ struct SettingsView: View {
     @StateObject var settingsStore: SettingsStore = SettingsStore.global
     let defaultBackgroundColor = Color(UIColor.systemBackground)
     @State var isProcessingDataPackage: Bool = false
+    var teamColor: TeamColor? { TeamColor(rawValue: settingsStore.team) }
 
     var body: some View {
         NavigationView {
@@ -23,15 +24,30 @@ struct SettingsView: View {
                             Text("User Information")
                     .font(.system(size: 14, weight: .medium))
                 ) {
-                    UserInformation()
+                    NavigationLink(destination: UserInformation()) {
+                        HStack {
+                            Circle()
+                                .fill(teamColor?.color ?? .secondary)
+                                .frame(width: 20, height: 20)
+                            Text(settingsStore.callSign)
+                                .foregroundColor(.secondary)
+                        }
+                    }
                 }
+                
                 Section(header:
                             Text("Server Information")
                     .font(.system(size: 14, weight: .medium))
                 ) {
-                    ServerInformationDisplay()
-                    ConnectionOptions(isProcessingDataPackage: $isProcessingDataPackage)
+                    NavigationLink(destination: ServerInformationDisplay()) {
+                        Text(settingsStore.takServerUrl.isEmpty ? "takserver.takps.org" : settingsStore.takServerUrl)
+                    }
                 }
+                
+                Section {
+                    ConnectionOptionsView(displayMode: .button)
+                }
+                
                 Section {
                     SituationalAwarenessOptions()
                     AdvancedOptions()
@@ -46,3 +62,4 @@ struct SettingsView: View {
         .navigationViewStyle(StackNavigationViewStyle())
     }
 }
+

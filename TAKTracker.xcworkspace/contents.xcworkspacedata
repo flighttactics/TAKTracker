@@ -2,9 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:../swift-nio-ssl">
-   </FileRef>
-   <FileRef
       location = "group:TAKTracker.xcodeproj">
    </FileRef>
    <FileRef

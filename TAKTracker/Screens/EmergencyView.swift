@@ -27,9 +27,11 @@ struct EmergencyView: View {
                 .frame(maxWidth: .infinity, alignment: .center)
                 .font(.system(size: 18, weight: .heavy))
                 .listRowSeparator(.hidden)
+           
             Text("Turn on both switches to initiate emergency beacon")
                 .frame(maxWidth: .infinity, alignment: .center)
                 .listRowSeparator(.hidden)
+            
             Group {
                 VStack {
                     HStack {
@@ -38,6 +40,7 @@ struct EmergencyView: View {
                             .foregroundColor(.secondary)
                         Spacer()
                     }
+                    
                     Picker(selection: $alertActivated, label: Text("Activate Alert"), content: {
                         Text("Off").tag(false)
                         Text("On").tag(true)
@@ -63,6 +66,7 @@ struct EmergencyView: View {
                             .foregroundColor(.secondary)
                         Spacer()
                     }
+                    
                     Picker(selection: $alertConfirmed, label: Text("Confirm Alert"), content: {
                         Text("Off").tag(false)
                         Text("On").tag(true)
@@ -81,6 +85,7 @@ struct EmergencyView: View {
                             .foregroundColor(.secondary)
                         Spacer()
                     }
+                    
                     Picker(selection: $alertType, label: Text("Alert Type"), content: {
                         ForEach(EmergencyType.allCases) { emergency_type in
                             Text(emergency_type.rawValue)

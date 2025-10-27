@@ -13,15 +13,15 @@ struct UserInformation: View {
     @StateObject var settingsStore: SettingsStore = SettingsStore.global
     
     var body: some View {
-        Group {
-            VStack {
-                HStack {
-                    Text("Call Sign")
-                        .foregroundColor(.secondary)
-                    TextField("Call Sign", text: $settingsStore.callSign)
-                        .keyboardType(.asciiCapable)
-                        .multilineTextAlignment(.trailing)
-                }
+        VStack {
+            HStack {
+                Text("Call Sign")
+                    .foregroundColor(.secondary)
+                TextField("Call Sign", text: $settingsStore.callSign)
+                    .keyboardType(.asciiCapable)
+                    .multilineTextAlignment(.trailing)
+            }
+            HStack {
                 Picker("Choose your team", selection: $settingsStore.team) {
                     ForEach(TAKConstants.TEAM_COLORS, id: \.self) {
                                     Text($0)
@@ -29,6 +29,9 @@ struct UserInformation: View {
                             }
                             .pickerStyle(.menu)
                             .foregroundColor(.secondary)
+                
+            }
+            HStack {
                 Picker("Choose your role", selection: $settingsStore.role) {
                     ForEach(TAKConstants.TEAM_ROLES, id: \.self) {
                                     Text($0)
@@ -36,8 +39,8 @@ struct UserInformation: View {
                             }
                             .pickerStyle(.menu)
                             .foregroundColor(.secondary)
-                
             }
+            Spacer()
         }
     }
 }

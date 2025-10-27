@@ -94,6 +94,18 @@ class SettingsStore: ObservableObject {
         }
     }
     
+    @Published var phoneNumber: String {
+        didSet {
+            UserDefaults.standard.set(phoneNumber, forKey: "phoneNumber")
+        }
+    }
+    
+    @Published var additionalInformation: String {
+        didSet {
+            UserDefaults.standard.set(additionalInformation, forKey: "additionalInformation")
+        }
+    }
+    
     @Published var cotType: String {
         didSet {
             UserDefaults.standard.set(cotType, forKey: "cotType")
@@ -355,5 +367,9 @@ class SettingsStore: ObservableObject {
         self.activeAlertType = (UserDefaults.standard.object(forKey: "activeAlertType") == nil ? "" : UserDefaults.standard.object(forKey: "activeAlertType") as! String)
         
         self.hasOnboarded = (UserDefaults.standard.object(forKey: "hasOnboarded") == nil ? false : UserDefaults.standard.object(forKey: "hasOnboarded") as! Bool)
+        
+        self.additionalInformation = (UserDefaults.standard.object(forKey: "additionalInformation") == nil ? "" : UserDefaults.standard.object(forKey: "additionalInformation") as! String)
+        
+        self.phoneNumber = (UserDefaults.standard.object(forKey: "phoneNumber") == nil ? "" : UserDefaults.standard.object(forKey: "phoneNumber") as! String)
     }
 }
